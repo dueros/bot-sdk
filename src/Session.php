@@ -12,7 +12,7 @@ class Session{
         $this->data = []; 
     }
 
-    public toResponse($request){
+    public function toResponse($request){
         $data = $this->data;
         if(!$data) {
             $data = ['empty' => true]; 

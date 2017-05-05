@@ -1,5 +1,7 @@
 <?php
-class UsResponse{
+namespace Baidu\Duer\Botsdk;
+
+class Response{
     private $ret;
     private $request;
     private $session;
@@ -144,7 +146,7 @@ class UsResponse{
                 //'server_query_intent'=>json_encode($server_query_intent[0]?$server_query_intent[0]:"",JSON_UNESCAPED_UNICODE),
                 'server_query_intent'=>json_encode($this->nlu->toQueryIntent(), JSON_UNESCAPED_UNICODE),
             ],
-            'bot_sessions'=>[$this->session->toResponse()],
+            'bot_sessions'=>[$this->session->toResponse($this->request)],
         ];
         if($this->shouldEndSession === false){
             $ret['should_end_session'] = false;
