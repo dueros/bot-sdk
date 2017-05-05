@@ -1,0 +1,8 @@
+PHP 5.4.42 Development Server started at Thu May  4 21:19:08 2017
+Listening on http://0.0.0.0:8000
+Document root is /home/work/code/bot-sdk/samples/rent_car
+Press Ctrl-C to quit.
+[Thu May  4 21:20:08 2017] 10.44.119.48:63589 Invalid request (Unexpected EOF)
+[Thu May  4 21:20:08 2017] 10.44.119.48:63588 Invalid request (Unexpected EOF)
+[Thu May  4 21:20:49 2017] 10.44.119.48:63612 Invalid request (Unexpected EOF)
+[Thu May  4 22:33:03 2017] 10.44.119.48:65521 Invalid request (Unexpected EOF)

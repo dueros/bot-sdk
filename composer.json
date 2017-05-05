@@ -1,0 +1,13 @@
+{
+    "name": "bot-sdk",                             
+    "type": "library" ,
+    "description": "度秘bot开发的PHP SDK",
+    "keywords": ["duer","bot"],
+    "require": {
+    },
+    "authors": [
+    ],
+    "autoload": {
+        "psr-4": { "Baidu\\Duer\\Botsdk\\": "src/" }   
+    }
+}
