@@ -21,7 +21,7 @@ class Response{
         $this->confirm = 1; 
     }
 
-    public function setShouldEndSession($val=true){
+    public function setShouldEndSession($val){
         if($val === false) {
             $this->shouldEndSession = false; 
         }
@@ -148,7 +148,8 @@ class Response{
             ],
             'bot_sessions'=>[$this->session->toResponse($this->request)],
         ];
-        if($this->shouldEndSession === false){
+        if($this->shouldEndSession === false 
+            || ($this->shouldEndSession !== true && $this->nlu->hasAsk())){
             $ret['should_end_session'] = false;
         }
         

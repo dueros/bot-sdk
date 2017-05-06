@@ -2,7 +2,7 @@
 
 namespace Baidu\Duer\Botsdk;
 
-class Bot{
+abstract class Bot{
 
     private $handler = [];
     private $intercept = [];
@@ -29,6 +29,9 @@ class Bot{
 
 
     /**
+     * @desc 条件处理。顺序相关，优先匹配先添加的条件：
+     *       1、如果满足，则执行，有返回值则停止
+     *       2、满足条件，执行回调返回null，继续寻找下一个满足的条件
      * @param string|array $mix
      * @param function $func
      * @return null
@@ -53,10 +56,21 @@ class Bot{
         }
     }
 
-    protected function addIntercept($intercept){
+    /**
+     * @desc  拦截器
+     *        1、在event处理、条件处理之前执行Intercept.before，返回非null，终止后续执行。将返回值返回
+     *        1、在event处理、条件处理之之后执行Intercept.after
+     *
+     * @param Intercept $intercept
+     * @return null;
+     **/
+    protected function addIntercept(Intercept $intercept){
         $this->intercept[] = $intercept;
     }
 
+    /**
+     * @desc 有event，不执行handler
+     **/
     protected function addEventListener($eventName, $func){
         $this->event[$eventName] = $func;
     }
@@ -134,8 +148,27 @@ class Bot{
         }
 
         //intercept beforeHandler
-        $ret = $this->dispatch();
+        $ret = [];
+        foreach($this->intercept as $intercept) {
+            $ret = $intercept->before($this);
+            if($ret) {
+                break; 
+            }
+        }
+
+        //event process
+
+
+        //
+        if(!$ret) {
+            $ret = $this->dispatch();
+        }
+
         //intercept afterHandler
+        foreach($this->intercept as $intercept) {
+            $ret = $intercept->after($this, $ret);
+        }
+
         return $this->response->build($ret);
     }
 
@@ -146,7 +179,11 @@ class Bot{
 
         foreach($this->handler as $item) {
             if($this->checkHandler($item['rule'])) {
-                $ret = $item['func'](); 
+                if(is_string($item['func'])){
+                    $ret = call_user_func([$this, $item['func']]);
+                }else{
+                    $ret = $item['func'](); 
+                }
                 if($ret) {
                     return $ret;
                 }

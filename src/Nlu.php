@@ -74,12 +74,12 @@ class Nlu{
                             "content"=> "",
                             "result_list"=> array_map(function($slot){
                                 return [
-                                    "key"=>$slot['key'],
+                                    "key"=>$slot['name'],
                                     "type"=>"text",
                                     "score"=>100,
                                     "value"=>[
                                         [
-                                            "name"=>$slot['key'],
+                                            "name"=>$slot['name'],
                                             "value"=>$slot['value'],
                                         ],
                                     ],
@@ -91,6 +91,14 @@ class Nlu{
             ]
         ];
         return $service_query_info;
+    }
+
+    /**
+     * @desc 是否有询问用户
+     *
+     **/
+    public function hasAsk(){
+        return !!$this->ask; 
     }
 
     /**
@@ -111,7 +119,7 @@ class Nlu{
         }
         $intent = [self::SLOT_NOT_UNDERSTAND];
         array_splice($intent, -1, 0, $slot);
-        $this->ask = $intent;
+        $this->ask = array_values(array_unique($intent));
     }
 
     /**
@@ -128,6 +136,11 @@ class Nlu{
             $s['action'] = 'slot_merge';
             return $s;
         }, $list);
+
+        //set ask
+        $this->needAsk(array_map(function($item){
+            return $item['slot'];
+        }, $list));
     }
 
     /**
@@ -141,6 +154,11 @@ class Nlu{
             'true_action'  => ['slot' => $slotYes['slot'], 'value' => $slotYes['value'].''],
             'false_action' => ['slot' => $slotNo['slot'], 'value' => $slotNo['value'].''],
         ];
+
+        //set ask
+        $this->needAsk(array_map(function($item){
+            return $item['slot'];
+        }, [$slotYes, $slotNo]));
     }
 
     public function toQueryIntent(){

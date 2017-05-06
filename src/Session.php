@@ -5,6 +5,9 @@ class Session{
     use DataObject;
 
     public function __construct($data) {
+        if(!$data || $data['empty'] == true) {
+            $data = []; 
+        }
         $this->data = $data; 
     }
 
