@@ -127,7 +127,7 @@ class Nlu{
      * @param array $list , ['query' => '', 'slot' => '', 'value' => '']
      * @return
      **/
-    public function needSelect($list){
+    public function needSelect($list, $addAsk=true){
         if(array_keys($list) != range(0, count($list) - 1)){
             $list = [$list];
         }
@@ -138,9 +138,11 @@ class Nlu{
         }, $list);
 
         //set ask
-        $this->needAsk(array_map(function($item){
-            return $item['slot'];
-        }, $list));
+        if($addAsk){
+            $this->needAsk(array_map(function($item){
+                return $item['slot'];
+            }, $list));
+        }
     }
 
     /**
@@ -149,16 +151,18 @@ class Nlu{
      * @param array $slotNo eg: ['slot'=>'name of slot', 'value'=>'如果是否定回答，填充的值']
      * @return null
      **/
-    public function needCheck($slotYes, $slotNo){
+    public function needCheck($slotYes, $slotNo, $addAsk=true){
         $this->check = [
             'true_action'  => ['slot' => $slotYes['slot'], 'value' => $slotYes['value'].''],
             'false_action' => ['slot' => $slotNo['slot'], 'value' => $slotNo['value'].''],
         ];
 
         //set ask
-        $this->needAsk(array_map(function($item){
-            return $item['slot'];
-        }, [$slotYes, $slotNo]));
+        if($addAsk){
+            $this->needAsk(array_map(function($item){
+                return $item['slot'];
+            }, [$slotYes, $slotNo]));
+        }
     }
 
     public function toQueryIntent(){

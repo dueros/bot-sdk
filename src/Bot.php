@@ -135,7 +135,7 @@ abstract class Bot{
      * @desc 中控是否同意进行副作用的操作
      **/
     protected function effectConfirmed(){
-    
+        return $this->request->getConfirm() == 1; 
     }
 
     /**
@@ -144,6 +144,7 @@ abstract class Bot{
      **/
     protected function waitAnswer(){
         //should_end_session 
+        $this->response->setShouldEndSession(false);
     }
 
     public function run(){

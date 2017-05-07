@@ -1,0 +1,139 @@
+{
+    "user_id": "jiangfeng01",
+    "baiduid": "",
+    "dumi_id": "",
+    "cuid": "jiangfeng01",
+    "query": "",
+    "raw_query": "",
+    "rewrite_query_type": "no_rewrite",
+    "last_query": "",
+    "version": 1,
+    "msg": {
+        "debug": 0,
+        "operation_system": "android",
+        "app_ver": "1.0.0",
+        "searchbox_ver": "",
+        "from": "sdk",
+        "query_type": "30",
+        "request_uid": "jiangfeng01",
+        "request_from": "0",
+        "request_type": "0",
+        "sample_name": "bear_brain_wireless",
+        "latitude": 40.0408,
+        "longitude": 116.266,
+        "service_id": "",
+        "CUID": "jiangfeng01",
+        "channel_from": "",
+        "channel_ctag": "",
+        "device_data": "{\"device_event\":{\"header\":{\"namespace\":\"Alerts\",\"name\":\"DeleteAlertSucceeded\"},\"payload\":{\"token\":\"14938960862852\"}},\"device_status\":{\"Alerts\":{\"active_alerts\":[],\"all_alerts\":[]}}}",
+        "dumi_id": "",
+        "baidu_uid": ""
+    },
+    "log_id": "14939496501384",
+    "request_type": "dumi",
+    "params": {
+        "loc": "%7B%22crd%22%3A%2212944235.780523_4845225.992200_200%22%2C%22city%22%3A%22%5Cu5317%5Cu4eac%5Cu5e02%22%2C%22addr%22%3A%22%5Cu5317%5Cu4eac%5Cu5e02%5Cu6d77%5Cu6dc0%5Cu533a%5Cu8f6f%5Cu4ef6%5Cu56ed%5Cu5357%5Cu8857%22%2C%22city_code%22%3A131%7D",
+        "cip": "172.20.108.11",
+        "bear_params": {
+            "nlu_response": "{}"
+        },
+        "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
+        "client_from": "sdk",
+        "voice_assistant": 2,
+        "assistant_name": "lenovo_speaker",
+        "appid": "dm0914D36EDEC94150",
+        "joke_type": 1,
+        "intervene_from": "lenovo_speaker",
+        "sc_response": "{}",
+        "session_tag": "dm0914D36EDEC94150"
+    },
+    "location": {
+        "la": 40.0408,
+        "lo": 116.266,
+        "bd_la": 40.0484,
+        "bd_lo": 116.279,
+        "mi_la": 4845230,
+        "mi_lo": 12944200,
+        "address": "北京市海淀区软件园南街",
+        "city": "北京市",
+        "city_code": 131,
+        "country": "中国",
+        "country_code": 0,
+        "direction": "",
+        "distance": "",
+        "district": "海淀区",
+        "province": "北京市",
+        "street": "软件园南街",
+        "street_number": "",
+        "cip": "172.20.108.11",
+        "cip_type": "user_db",
+        "location_type": "real",
+        "sematic_description": "百度科技园4号楼附近39米"
+    },
+    "page_cnt": 10,
+    "page_num": 1,
+    "sessions": [
+        {
+            "action": "get",
+            "type": "string",
+            "name": "alarm",
+            "key": "jiangfeng01",
+            "list_sessions": [],
+            "list_sessions_str": [
+                ""
+            ],
+            "hash_sessions": []
+        }
+    ],
+    "user_info": {
+        "user_id": "",
+        "user_name": "",
+        "last_online_time": 0,
+        "last_online_ip": "",
+        "ct_time": 0,
+        "age_sysprofile": "",
+        "name_sysprofile": "",
+        "gender_sysprofile": "",
+        "constellation_sysprofile": "",
+        "extra": [],
+        "base_table": {
+            "last_online_ip": "",
+            "last_online_time": 0,
+            "ct_time": 0
+        }
+    },
+    "data": {
+        "status": 0,
+        "msg": "OK",
+        "params": [
+            {
+                "key": "wmos",
+                "value": "{\"status\":\"hit\", \"verify\":\"中文测试\"}"
+            }
+        ]
+    },
+    "multi_cards": [
+        "multi_movie",
+        "multi_meishi",
+        "multi_normal",
+        "multi_news",
+        "multi_product",
+        "multi_trailer",
+        "multi_tour"
+    ],
+    "query_emoji": "",
+    "meta_data_flag": 1,
+    "bot_name": "ai.dueros.bot.alarm",
+    "bot_sessions": [
+        {
+            "action": "get",
+            "type": "string",
+            "key": "jiangfeng01",
+            "list_sessions": [],
+            "hash_sessions": [],
+            "list_sessions_str": [
+                ""
+            ]
+        }
+    ]
+}
