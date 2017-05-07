@@ -48,6 +48,10 @@ abstract class Bot{
         }
         foreach($mix as $item){
             foreach($item as $k => $v) {
+                if(!$k || !$v) {
+                    continue; 
+                }
+
                 $this->handler[] = [
                     'rule' => $k,
                     'func' => $v,
@@ -70,9 +74,12 @@ abstract class Bot{
 
     /**
      * @desc 有event，不执行handler
+     * @param string  $event。namespace.name
      **/
-    protected function addEventListener($eventName, $func){
-        $this->event[$eventName] = $func;
+    protected function addEventListener($event, $func){
+        if($event && $func) {
+            $this->event[$event] = $func;
+        }
     }
 
     protected function getIntent(){
@@ -141,10 +148,11 @@ abstract class Bot{
 
     public function run(){
         //handler event
+        $eventHandler = $this->getRegisterEvent();
 
         //check domain
-        if(!$this->nlu) {
-            return; 
+        if(!$this->nlu && !$eventHandler) {
+            return $this->response->defaultResult(); 
         }
 
         //intercept beforeHandler
@@ -156,12 +164,14 @@ abstract class Bot{
             }
         }
 
-        //event process
-
-
-        //
         if(!$ret) {
-            $ret = $this->dispatch();
+            //event process
+            if($eventHandler) {
+                $event = $this->request->getDeviceData()['device_event'];
+                $ret = $this->callFunc($eventHandler, $event); 
+            }else{
+                $ret = $this->dispatch();
+            }
         }
 
         //intercept afterHandler
@@ -179,16 +189,35 @@ abstract class Bot{
 
         foreach($this->handler as $item) {
             if($this->checkHandler($item['rule'])) {
-                if(is_string($item['func'])){
-                    $ret = call_user_func([$this, $item['func']]);
-                }else{
-                    $ret = $item['func'](); 
-                }
+                $ret = $this->callFunc($item['func']);
+                
                 if($ret) {
                     return $ret;
                 }
             }
         }
+    }
+
+    protected function getRegisterEvent() {
+        $deviceData = $this->request->getDeviceData();
+        if($deviceData['device_event']) {
+            $deviceEvent = $deviceData['device_event'];
+            $key = implode('.', [$deviceEvent['header']['namespace'], $deviceEvent['header']['name']]);
+            if($this->event[$key]) {
+                return $this->event[$key];
+            }
+        }
+    }
+
+    private function callFunc($func, $arg=null){
+        $ret;
+        if(is_string($func)){
+            $ret = call_user_func([$this, $func], [$arg]);
+        }else{
+            $ret = $func($arg); 
+        }
+
+        return $ret;
     }
 
     /**

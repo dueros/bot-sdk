@@ -10,7 +10,8 @@ class Request {
     private $daQueryInfoResults;
     private $data;
     private $backendServiceInfo;
-    private $dumiDecisionInfo;
+    //private $dumiDecisionInfo;
+    private $deviceData;
 
     public function getUserProfile() {
         return $this->arrUserProfile;
@@ -38,10 +39,7 @@ class Request {
     }
     
     public function getDeviceData(){
-        if(isset($this->data["msg"]['device_data'])){
-            return json_decode($this->data["msg"]["device_data"],true);
-        }
-        return [];
+        return $this->deviceData;
     }
     public function getAppVer() {
         return $this->data['msg']['app_ver'];
@@ -274,13 +272,19 @@ class Request {
 
         //\Logger::debug("us request parse time use:".(microtime(1) - $__time));
 
+        //device_data
+        $deviceData = [];
+        if($data['msg']['device_data']) {
+            $deviceData = json_decode($data['msg']['device_data'], true);
+        }
+
         return new self([
             'user_profile' => $arrUserProfile,
             'session' => new Session($session),
             'daQueryInfoResults' => $daQueryInfoResults,
             'daQueryInfo' => $daQueryInfo,
             'backendServiceInfo' => $backendServiceInfo,
-            'dumiDecisionInfo' => $dumiDecisionInfo,
+            'deviceData' => $deviceData,
             'data' => $data,
             'parsed_text' => $parsed_text,
         ]);
@@ -291,7 +295,7 @@ class Request {
         $this->daQueryInfoResults = $data['daQueryInfoResults'];
         $this->daQueryInfo = $data['daQueryInfo'];
         $this->backendServiceInfo = $data['backendServiceInfo'];
-        $this->dumiDecisionInfo = $data['dumiDecisionInfo'];
+        $this->deviceData = $data['deviceData'];
         $this->data = $data['data'];
         $this->parsedText = $data['parsed_text'];
     }

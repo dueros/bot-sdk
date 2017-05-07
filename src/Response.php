@@ -61,6 +61,10 @@ class Response{
         
     }
 
+    public function defaultResult(){
+        return json_encode(['status'=>0, 'msg'=>null]);
+    }
+
     /** 
      * $data =
      * result_list:
@@ -73,8 +77,9 @@ class Response{
      */
     public function build($data){
         if(!isset($data['result_list']) && !isset($data['views'])){
-            return false;
+            return $this->defaultResult();
         }
+
         $msgData=[
             'type'=>"server",
         ];
