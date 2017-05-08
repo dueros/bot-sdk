@@ -29,11 +29,6 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 
         $this->addHandler('#rent_car.book && !slot.car_type', 'askCarType');
 
-        $this->addHandler('#rent_car.book && session.status=="or\'d\"e\"r.e_d" && session.key == "gag li" && slot.key>1', function(){
-        //$this->addHandler('#rent_car.book && session.status=="or\'d\"e\"r.e_d" && session.key == "gag li" && isset(slot.key) && slot.key>1', function(){
-            //use $this 
-            var_dump('gaga');
-        });
     }
 
     public function askCarType(){
