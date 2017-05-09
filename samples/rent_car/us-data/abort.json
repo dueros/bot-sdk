@@ -1,0 +1,549 @@
+{
+  "user_id": "test",
+  "baiduid": "",
+  "dumi_id": "",
+  "cuid": "",
+  "query": "天气咋样",
+  "raw_query": "天气咋样",
+  "rewrite_query_type": "no_rewrite",
+  "last_query": "天气咋样",
+  "version": 1,
+  "msg": {
+    "operation_system": "android",
+    "app_ver": "1.0.0",
+    "searchbox_ver": "",
+    "from": "sdk",
+    "query_type": "0",
+    "request_uid": "test",
+    "request_from": "0",
+    "request_type": "20",
+    "sample_name": "bear_brain_wireless",
+    "latitude": 40.1181,
+    "longitude": 116.385,
+    "service_id": "5",
+    "CUID": "",
+    "channel_from": "",
+    "channel_ctag": "",
+    "bduss": "RHYmpzSGRQVVhFWWI4NlRYYjRTREpHb1BKRC0yck43T21pVi1vU1VhcG5qNjVZSVFBQUFBJCQAAAAAAAAAAAEAAAA2CHUKa2lyYTMwMDcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGcCh1hnAodYdj"
+  },
+  "log_id": "14941605475300",
+  "request_type": "dumi",
+  "params": {
+    "loc": "%7B%22crd%22%3A%2212957471.607656_4856449.290858_200%22%2C%22city%22%3A%22%5Cu5317%5Cu4eac%5Cu5e02%22%2C%22addr%22%3A%22%5Cu5317%5Cu4eac%5Cu5e02%5Cu660c%5Cu5e73%5Cu533a%5Cu4e1c%5Cu6c99%5Cu8def%22%2C%22city_code%22%3A131%7D",
+    "cip": "10.94.214.213",
+    "bear_params": {
+      "nlu_response": "{\"analysis\":{},\"parsed_text\":\"天气 咋 样\",\"raw_text\":\"天气咋样\",\"results\":[{\"demand\":0,\"domain\":\"info_weather\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":1.0,\"str_result_content\":{},\"str_result_type\":\"\"},{\"demand\":0,\"domain\":\"universal_search\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":0.9136971235275269,\"str_result_content\":{},\"str_result_type\":\"\"}],\"sugs\":\"天气咋样\",\"sugs_types\":\"PAT_EC\"}\n"
+    },
+    "client_from": "sdk",
+    "voice_assistant": 2,
+    "assistant_name": "lenovo_speaker",
+    "appid": "dm0914D36EDEC94150",
+    "joke_type": 1,
+    "intervene_from": "lenovo_speaker",
+    "sc_response": "{}",
+    "session_tag": "dm0914D36EDEC94150"
+  },
+  "location": {
+    "la": 40.1181,
+    "lo": 116.385,
+    "bd_la": 40.1258,
+    "bd_lo": 116.398,
+    "mi_la": 4856450,
+    "mi_lo": 12957500,
+    "address": "北京市昌平区东沙路",
+    "city": "北京市",
+    "city_code": 131,
+    "country": "中国",
+    "country_code": 0,
+    "direction": "",
+    "distance": "",
+    "district": "昌平区",
+    "province": "北京市",
+    "street": "东沙路",
+    "street_number": "",
+    "cip": "10.94.214.213",
+    "cip_type": "user_db",
+    "location_type": "real",
+    "sematic_description": "北京市宏福跃汽车修理厂西北478米"
+  },
+  "page_cnt": 10,
+  "page_num": 1,
+  "sessions": [
+    {
+      "action": "get",
+      "type": "string",
+      "name": "rent_car",
+      "key": "test",
+      "list_sessions": [],
+      "list_sessions_str": [
+        "{\"rent_car\":{\"param\":{\"start_latitude\":40.1181,\"start_longitude\":116.385,\"start_latitude_bd\":4856450,\"start_longitude_bd\":12957500,\"start_position\":\"北京市宏福跃汽车修理厂西北478米\",\"city_code\":131,\"end_position\":\"西二旗\",\"end_latitude\":40.051594055736,\"end_longitude\":116.30007392709,\"end_latitude_bd\":4846750.4644491,\"end_longitude_bd\":12948002.625819,\"end_latitude_gcj\":40.052854055736,\"end_longitude_gcj\":116.30616392709},\"info\":{\"taxi\":{\"nearby_driver_desc\":\"最近司机约2分钟抵达\",\"count\":3},\"fast_car\":{\"nearby_driver_desc\":null,\"count\":0,\"price_desc\":null,\"server_params\":null,\"surge\":null,\"select_car_type\":null},\"vip\":{\"nearby_driver_desc\":\"最近司机约12分钟抵达\",\"count\":1,\"price_desc\":\"80\",\"vender\":\"首汽约车\",\"car_type_id\":1,\"partner_id\":2,\"discount\":8}},\"start_point\":\"\",\"car_type\":\"出租车\",\"vender\":null,\"service_time\":\"\"}}"
+      ],
+      "hash_sessions": []
+    }
+  ],
+  "user_info": {
+    "user_id": ""
+  },
+  "data": {
+    "status": 0,
+    "msg": "OK",
+    "da_query_info": [
+      {
+        "type": "rsse",
+        "result_list": [
+          {
+            "type": "rssequery",
+            "score": 0,
+            "result_list": [
+              {
+                "type": "querylist",
+                "score": 0,
+                "content": "[\"4月底富国岛天气咋样\",\"5月末去厦门天气咋样\",\"天气预报\",\"上海天气\",\"北京天气\",\"深圳天气\",\"广州天气\",\"武汉天气\",\"杭州天气\",\"南京天气\"]\n"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "control.hardware",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "o2o_satisfy",
+        "result_list": []
+      },
+      {
+        "type": "sac",
+        "result_list": []
+      },
+      {
+        "type": "life_common",
+        "result_list": []
+      },
+      {
+        "type": "online_shopping",
+        "result_list": []
+      },
+      {
+        "query": "我要打车",
+        "type": "rent_car",
+        "result_list": [
+          {
+            "type": "rent_car",
+            "score": 100,
+            "result_list": [
+              {
+                "type": "rent_car.book",
+                "score": 0,
+                "content": "{\"from_star_atlas\":1}",
+                "result_list": [
+                  {
+                    "key": "车型",
+                    "type": "",
+                    "value": [
+                      {
+                        "value": "出租车",
+                        "name": "car_type",
+                        "source": "session",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 2
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "目的地",
+                    "type": "",
+                    "value": [
+                      {
+                        "value": "西二旗",
+                        "name": "end_point",
+                        "source": "session",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 3
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "from_loc",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "from_loc",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "loc_fragment",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "loc_fragment",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "reserve_order",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "reserve_order",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "resubmit_order",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "resubmit_order",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "出行时间",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "service_time",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "出发地",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "start_point",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "to_loc",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "to_loc",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "资源方",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "",
+                        "name": "vender",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  },
+                  {
+                    "key": "da_system_not_understand",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "2",
+                        "name": "da_system_not_understand",
+                        "source": "query",
+                        "type": "number",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 100
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "hotel",
+        "result_list": []
+      },
+      {
+        "type": "restaurant_bot",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "movie_satisfy",
+        "result_list": []
+      },
+      {
+        "type": "baojie",
+        "result_list": []
+      },
+      {
+        "type": "recharge",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "nba",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "phone",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "music",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "map",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "remind",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "user_profile",
+        "result_list": []
+      },
+      {
+        "type": "image_service",
+        "result_list": []
+      },
+      {
+        "query": "天气咋样",
+        "type": "confirm",
+        "result_list": []
+      },
+      {
+        "type": "sys_profile",
+        "result_list": []
+      },
+      {
+        "type": "audio.unicast",
+        "result_list": []
+      },
+      {
+        "type": "audio.music",
+        "result_list": []
+      },
+      {
+        "type": "audio.live",
+        "result_list": []
+      },
+      {
+        "type": "audio.news",
+        "result_list": []
+      },
+      {
+        "type": "audio.comedy",
+        "result_list": []
+      },
+      {
+        "type": "audio.scene",
+        "result_list": []
+      },
+      {
+        "type": "time",
+        "result_list": []
+      },
+      {
+        "type": "cookbook",
+        "result_list": []
+      },
+      {
+        "type": "ucp_content",
+        "result_list": []
+      },
+      {
+        "type": "cooker",
+        "result_list": []
+      },
+      {
+        "type": "fridge",
+        "result_list": []
+      },
+      {
+        "type": "recommend_service_wireless",
+        "result_list": []
+      },
+      {
+        "type": "memory",
+        "result_list": []
+      },
+      {
+        "type": "fridge_play",
+        "result_list": [
+          {
+            "type": "fridge_play",
+            "score": 100,
+            "result_list": [
+              {
+                "type": "fridge_play",
+                "score": 100,
+                "content": "",
+                "result_list": [
+                  {
+                    "key": "_da_tag",
+                    "type": "text",
+                    "value": [
+                      {
+                        "value": "mock",
+                        "name": "_da_tag",
+                        "source": "query",
+                        "type": "string",
+                        "tag_op": 1,
+                        "session_num": 0
+                      }
+                    ],
+                    "score": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "smart_tv",
+        "result_list": []
+      },
+      {
+        "type": "audio.joke",
+        "result_list": []
+      },
+      {
+        "type": "slot.decode",
+        "result_list": []
+      },
+      {
+        "type": "story.children",
+        "result_list": []
+      }
+    ],
+    "params": [
+      {
+        "key": "mmsda_response",
+        "value": "{\"voiceguidesidentify\":{\"is_fullreplace\":false, \"fullreplace_query\":\"\", \"last_query\":\"天气咋样\", \"fullreplace_strategy\":0, \"strategy_type\":0}, \"wise_rewrite\":{\"res\":[{\"srcidsort\":[{\"srcid\":4178, \"sortflag\":1, \"sort\":1}, {\"srcid\":17, \"sortflag\":1, \"sort\":2}, {\"srcid\":28339, \"sortflag\":1, \"sort\":5}], \"rewrite_query\":\"天气咋样\", \"confidence\":11, \"rw_type\":8, \"srcid\":[4178, 17, 28339]}, {\"srcidsort\":[{\"srcid\":32253, \"sort\":-1}, {\"srcid\":32257, \"sort\":-1}, {\"srcid\":32245, \"sort\":-1}], \"rewrite_query\":\"的天气怎么样\", \"confidence\":8, \"srcid\":[32253, 32257, 32245]}], \"normalize\":[]}}"
+      },
+      {
+        "key": "dumi_timeline",
+        "value": "{\"result_count\":1, \"result_list\":[{\"rewrite_query\":\"天气咋样\", \"srcid_num\":3, \"srcids\":[4178, 17, 28339], \"positions\":[1, 6, 9], \"position_flags\":[1, 1, 1], \"rw_type\":8, \"confidence\":11}], \"disp_num\":568, \"click_num\":144}"
+      },
+      {
+        "key": "qu_service_single_response",
+        "value": "{\"status\":0, \"timestamp\":0, \"raw_query\":\"天气咋样\", \"intent_candidates\":[{\"intent\":\"0\", \"intent_confidence\":0, \"func_slot\":\"\", \"slots\":[{\"offset\":-1, \"length\":-1, \"original_word\":\"\", \"normalized_word\":\"\", \"type\":\"\", \"confidence\":0, \"word_type\":\"\"}], \"extra_info\":{\"parser_qu_da_sug\":\"\"}}]}"
+      },
+      {
+        "key": "gssda_response",
+        "value": "{\"result\":[{\"normal\":{\"danormalanalysis\":{\"query_composition\":\"\", \"dummy\":0}, \"dummy\":0}}]}"
+      },
+      {
+        "key": "qu_responce",
+        "value": "{\"err_no\":0, \"result\":[{\"normal\":{}, \"qu\":{\"query_voice\":{\"res\":[{\"domain\":\"weather\", \"intent\":\"F->weather\", \"score\":100, \"objects\":[{\"key\":\"WeatherFocus\", \"value\":\"WeatherStatus\", \"score\":1, \"offset\":0, \"length\":8}, {\"key\":\"_WeatherFocus\", \"value\":\"\", \"score\":1, \"offset\":0, \"length\":8}], \"reduce_tree_info\":\"(query(F->weather(WeatherFocus(WeatherStatus 天气咋样))))\"}]}}, \"queryId\":1}]}"
+      },
+      {
+        "key": "da_sug_query",
+        "value": "{\"log_id\":\"14941605475300\",\"query\":\"天气咋样\",\"rewrite_query_type\":\"no_rewrite\"}\n"
+      },
+      {
+        "key": "personal_com_query",
+        "value": "{\"home\":\"\",\"office\":\"\",\"offset\":0,\"query\":\"\",\"type\":\"\"}\n"
+      },
+      {
+        "key": "apollo",
+        "value": "null\n"
+      },
+      {
+        "key": "apollo_debug_features",
+        "value": "[{\"features\":[\"SEG_天气:term,1,1\",\"SEG_咋:term,1,1\",\"SEG_样:term,1,1\"],\"name\":\"basic_wordseg\",\"type\":\"term\"},{\"features\":[\"UP_CURRENT_BURST_LIMIT_NO:burst_level,1,1\",\"UP_RECENT_BURST_LIMIT_NO:burst_level,1,1\"],\"name\":\"burst_level_instance1\",\"type\":\"burst_level\"},{\"features\":[\"QUERY_IN_DICT_NO:query_in_dict,1,1\"],\"name\":\"music_query_in_dict\",\"type\":\"query_in_dict\"},{\"features\":[\"BF_TERM_天气_咋:bf,1,1\",\"FF_TERM_咋_样:bf,1,1\"],\"name\":\"term_level_bf\",\"type\":\"bf\"},{\"features\":[\"NGRAM_2_LEVEL_TERM_天气_咋:ngram,1,1\",\"NGRAM_2_LEVEL_TERM_咋_样:ngram,1,1\"],\"name\":\"term_level_bigram\",\"type\":\"ngram\"},{\"features\":[\"NGRAM_3_LEVEL_TERM_天气_咋_样:ngram,1,1\"],\"name\":\"term_level_trigram\",\"type\":\"ngram\"},{\"features\":[\"NGRAM_3_LEVEL_TERM_天气_咋_样_BF_TERM_天气_咋:conjunction,1,1\",\"NGRAM_3_LEVEL_TERM_天气_咋_样_FF_TERM_咋_样:conjunction,1,1\"],\"name\":\"vector_conjunction\",\"type\":\"conjunction\"},{\"features\":[\"NGRAM_3_LEVEL_TERM_天气_咋_样:ngram,1,1\",\"BF_TERM_天气_咋:bf,1,1\",\"FF_TERM_咋_样:bf,1,1\"],\"name\":\"vector_merge\",\"type\":\"merge\"},{\"features\":[\"SRCID_IN_TOPN_YES:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_4178:wise_srcid_in_topn,1,1\",\"POS_2_SRCID_17:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance1\",\"type\":\"wise_srcid_in_topn\"},{\"features\":[\"SRCID_IN_TOPN_NO:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_4178:wise_srcid_in_topn,1,1\",\"POS_2_SRCID_17:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance2\",\"type\":\"wise_srcid_in_topn\"},{\"features\":[\"SRCID_IN_TOPN_NO:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_4178:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance3\",\"type\":\"wise_srcid_in_topn\"},{\"features\":[\"SRCID_IN_TOPN_YES:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_4178:wise_srcid_in_topn,1,1\",\"POS_2_SRCID_17:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance4\",\"type\":\"wise_srcid_in_topn\"}]\n"
+      },
+      {
+        "key": "nlu_responce",
+        "value": "{\"analysis\":{},\"parsed_text\":\"天气 咋 样\",\"raw_text\":\"天气咋样\",\"results\":[{\"demand\":0,\"domain\":\"info_weather\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":1.0,\"str_result_content\":{},\"str_result_type\":\"\"},{\"demand\":0,\"domain\":\"universal_search\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":0.9136971235275269,\"str_result_content\":{},\"str_result_type\":\"\"}],\"sugs\":\"天气咋样\",\"sugs_types\":\"PAT_EC\"}\n"
+      },
+      {
+        "key": "lexical_analysis",
+        "value": "[{\"flag\":2,\"name\":\"basic\",\"ner\":\"\",\"postag\":\"天气_n 咋_r 样_Ng\",\"wordrank\":\"天气_2_0.623722 咋_1_0.165 样_2_0.211278\",\"wordseg\":\"天气 咋 样\"},{\"flag\":4,\"name\":\"segment\",\"ner\":\"\",\"postag\":\"天气_n 咋_r 样_Ng\",\"wordrank\":\"天气_2_0.623722 咋_1_0.165 样_2_0.211278\",\"wordseg\":\"天气 咋 样\"},{\"flag\":8,\"name\":\"sub_phrase\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"},{\"flag\":16,\"name\":\"human_name\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"},{\"flag\":32,\"name\":\"book_name\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"},{\"flag\":64,\"name\":\"new_word\",\"ner\":\"\",\"postag\":\"咋样_r\",\"wordrank\":\"\",\"wordseg\":\"咋样\"},{\"flag\":128,\"name\":\"crf_multi\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"}]\n"
+      }
+    ]
+  },
+  "multi_cards": [
+    "multi_movie",
+    "multi_meishi",
+    "multi_normal",
+    "multi_news",
+    "multi_product",
+    "multi_trailer",
+    "multi_tour"
+  ],
+  "query_emoji": "天气咋样",
+  "meta_data_flag": 1,
+  "bot_name": "rent_car",
+  "bot_sessions": [
+    {
+      "action": "get",
+      "type": "string",
+      "key": "test",
+      "list_sessions": [],
+      "hash_sessions": [],
+      "list_sessions_str": [
+        "{\"rent_car\":{\"param\":{\"start_latitude\":40.1181,\"start_longitude\":116.385,\"start_latitude_bd\":4856450,\"start_longitude_bd\":12957500,\"start_position\":\"北京市宏福跃汽车修理厂西北478米\",\"city_code\":131,\"end_position\":\"西二旗\",\"end_latitude\":40.051594055736,\"end_longitude\":116.30007392709,\"end_latitude_bd\":4846750.4644491,\"end_longitude_bd\":12948002.625819,\"end_latitude_gcj\":40.052854055736,\"end_longitude_gcj\":116.30616392709},\"info\":{\"taxi\":{\"nearby_driver_desc\":\"最近司机约2分钟抵达\",\"count\":3},\"fast_car\":{\"nearby_driver_desc\":null,\"count\":0,\"price_desc\":null,\"server_params\":null,\"surge\":null,\"select_car_type\":null},\"vip\":{\"nearby_driver_desc\":\"最近司机约12分钟抵达\",\"count\":1,\"price_desc\":\"80\",\"vender\":\"首汽约车\",\"car_type_id\":1,\"partner_id\":2,\"discount\":8}},\"start_point\":\"\",\"car_type\":\"出租车\",\"vender\":null,\"service_time\":\"\"}}"
+      ]
+    }
+  ]
+}

@@ -5,9 +5,10 @@ require '../../vendor/autoload.php';
 class Bot extends Baidu\Duer\Botsdk\Bot{
     public function __construct($domain, $postData = []) {
         parent::__construct($domain, $postData);
-        //$this->addIntercept(new LoginIntercept());
+
+        //$this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
         //$this->addIntercept(new BindCardIntercept());
-        //$this->addIntercept(new DuerSessionIntercept());
+        $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
 
         $this->addHandler('#rent_car.book && !slot.end_point', function(){
             $this->nlu->needAsk('end_point');
@@ -27,8 +28,35 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
             ];
         });
 
+        //问车型
         $this->addHandler('#rent_car.book && !slot.car_type', 'askCarType');
 
+        //下单前确认
+        $this->addHandler('#rent_car.book && !slot.confirm_intent', function(){
+            $this->nlu->needCheck([
+                'slot' => 'confirm_intent',
+                'value' => '1',
+            ], [
+                'slot' => 'abort',
+                'value' => '1',
+            ]);
+
+            return [
+                'views' => [$this->getTxtView('你确认要叫车吗？')]
+            ];
+        });
+
+        //下单
+        $this->addHandler('#rent_car.book', function(){
+            if(!$this->effectConfirmed()) {
+                return $this->declareEffect(); 
+            }
+
+            //create order
+            return [
+                'views' => [$this->getTxtView('下单去啦，很快就有车来接你了')]
+            ];
+        });
     }
 
     public function askCarType(){

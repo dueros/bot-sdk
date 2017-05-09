@@ -22,7 +22,7 @@ composer require baidu/duer/botsdk
 
 为了开始使用BOT SDK，你需要先新建一个php文件，比如文件名是Bot.php。你先需要require autoload.php文件，这个文件一般在vendor目录，如果没有这个目录，请先执行composer dump-autoload。
 
-```php
+```javascript
 require 'vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
@@ -60,6 +60,18 @@ $this->addHandler('#remind && slot.remind_time', function(){
         ],
     ];
 });
+
+/**
+ * 或者，可以不通过匿名函数，还支持传入成员函数名
+ */
+
+$this->addHandler('#remind && slot.remind_time', 'create');
+
+//定义一个成员函数
+public function create(){
+    $remindTime = $this->getSlot('remind_time');
+    return [...];
+}
 ```
 这里`addHandler`可以用来建立(intent, slot, session) => handler的映射，第一个参数是条件，如果满足则执行对应的回调函数(第二个参数)。
 其中，$this指向当前的Bot，`getSlot`继承自父类Bot，通过slot名字来获取对应的值。返回值是一个数组，包含两个字段`views`和`directives`。
@@ -151,9 +163,90 @@ clearSession();
 你的Bot可以订阅端上触发的事件，通过接口`addEventListener`实现，比如端上设置闹钟成功后，会下发`SetAlertSucceeded`的事件，Bot通过注册事件处理函数，进行相关的操作。
 
 ## NLU交互协议ask, select, check
+多轮对话的bot，会通过询问用户来收集完成任务所需要的信息（slot），询问用户的特点总结为3点，`ask`：问啥啥，`select`：给出候选集让用户选择，`check`：是非问题。如果你的bot在询问用户的时候，也能告诉NLU你的bot在问什么，能在用户回答你的问题时，NLU可以很针对性的去解析用户的query，大大提高理解用户的准确率，你bot的多轮对话在用户看来就是非常流畅的。bot-sdk提供了接口，帮助你完成这些工作：
+```javascript
+//打车intent，但是没有提供目的地
+$this->addHandler('#rent_car.book && !slot.end_point', function(){
+    //询问slot: end_point
+    $this->nlu->needAsk('end_point'/*, slot2, slot3,..., slotN*/);
+
+    return [
+        'views' => [$this->getTxtView('打车去哪呢')]
+    ];
+});
+
+//select
+//...
+//起始地、目的地都有了，问车型
+$this->addHandler('#rent_car.book && !slot.car_type', function(){
+    //搜索周边车辆，拿到报价
+    //纪录车辆id到session
+    $this->setSession('param', ['vip'=>11213, 'taxi'=>'323992']);
+
+    /**
+     * 询问车型，提供列表给用户选择。
+     * query 是用户可能说的query
+     * slot 这种类型query 对应的slot名
+     * value slot的值
+     * tip: 同一个slot可以提供多种query，可以提高准确率
+     */
+    $this->nlu->needSelect([
+        ['query' => '出租车', 'slot' => 'car_type', 'value' => '出租车'],
+        ['query' => '出租', 'slot' => 'car_type', 'value' => '出租车'],
+        ['query' => '专车', 'slot' => 'car_type', 'value' => '专车'],
+    ]);
+
+    return [
+        'views' => [$this->getTxtView('查询车辆了，提供列表让用户选择。坐啥车呢')]
+    ];
+});
+
+//check 
+//....
+//槽位搜集完全，下单前确认
+$this->addHandler('#rent_car.book && !slot.confirm_intent', function(){
+    /**
+     * 是非问题
+     * 第一个参数 Yes回答，如何填充slot
+     * 第二个参数 No 回答，如何填充slot
+     */
+    $this->nlu->needCheck([
+        'slot' => 'confirm_intent',
+        'value' => '1',
+    ], [
+        'slot' => 'abort',
+        'value' => '1',
+    ]);
+
+    return [
+        'views' => [$this->getTxtView('你确认要叫车吗？')]
+    ];
+});
+```
 
 ## 声明副作用操作
+暂存信息推荐使用session，中控会在确定用你的bot返回的结果之后，才会更新session。不建议将状态数据存储到私有的永久存储上，如果中控没有使用你的结果，会导致你的bot状态不一致。
+如果一定要使用永久存储，比如存储打车订单、闹钟记录。需要先声明要进行一个副作用的操作，等待中控确认，调用bot-sdk 提供的接口`declareEffect`。如果中控确认，会在一次请求你的bot，请求与上一次一致。你可以通过接口`effectConfirmed`获得确认状态
+```javascript
+if(!$this->effectConfirmed()){
+    return declareEffect();
+}else{
+    //do some permanent store
+}
+```
 
 ## 插件
-你还可以写插件(拦截器)
+你还可以写插件(拦截器`Intercept`)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应intent，可以使用`LoginIntercept`：
+```javascript
+public function __construct($domain, $postData = []) {
+    parent::__construct($domain, $postData);
+    $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
+    //...
+}
+```
 
+## 如何调试
+### 本地测试
+
+
+## 如何部署，接入度秘中控条件

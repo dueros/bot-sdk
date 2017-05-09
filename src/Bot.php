@@ -82,31 +82,31 @@ abstract class Bot{
         }
     }
 
-    protected function getIntent(){
+    public function getIntent(){
         return $this->nlu->getIntent();
     }
 
-    protected function getSession($field=null, $default=null){
+    public function getSession($field=null, $default=null){
         return $this->session->getData($field, $default);
     }
 
-    protected function setSession($field, $value, $default=null){
+    public function setSession($field, $value, $default=null){
         return $this->session->setData($field, $value, $default); 
     }
 
-    protected function clearSession(){
+    public function clearSession(){
         return $this->session->clear(); 
     }
 
-    protected function getSlot($field){
+    public function getSlot($field){
         return $this->nlu->getSlot($field);
     }
 
-    protected function setSlot($field, $value){
+    public function setSlot($field, $value){
         return $this->nlu->setSlot($field, $value); 
     }
 
-    protected function getTxtView($text, $url=''){
+    public function getTxtView($text, $url=''){
         $view = [
             'type' => 'txt',
             'content' => $text,
@@ -121,7 +121,7 @@ abstract class Bot{
     /**
      * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
      * */
-    protected function declareEffect(){
+    public function declareEffect(){
         //TODO return a confirm message
         $this->response->setConfirm();
         return [
@@ -134,7 +134,7 @@ abstract class Bot{
     /**
      * @desc 中控是否同意进行副作用的操作
      **/
-    protected function effectConfirmed(){
+    public function effectConfirmed(){
         return $this->request->getConfirm() == 1; 
     }
 
@@ -142,14 +142,14 @@ abstract class Bot{
      * @desc 告诉中控，在多轮对话中，等待用户的回答
      *       注意：如果有设置Nlu的ask，自动告诉中控，不用调用
      **/
-    protected function waitAnswer(){
+    public function waitAnswer(){
         //should_end_session 
         $this->response->setShouldEndSession(false);
     }
 
     public function run(){
         //handler event
-        $eventHandler = $this->getRegisterEvent();
+        $eventHandler = $this->getRegisterEventHandler();
 
         //check domain
         if(!$this->nlu && !$eventHandler) {
@@ -199,7 +199,7 @@ abstract class Bot{
         }
     }
 
-    protected function getRegisterEvent() {
+    private function getRegisterEventHandler() {
         $deviceData = $this->request->getDeviceData();
         if($deviceData['device_event']) {
             $deviceEvent = $deviceData['device_event'];
