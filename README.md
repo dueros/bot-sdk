@@ -26,6 +26,9 @@ composer require baidu/duer/botsdk
 require 'vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
+    /**
+     * $postData可以不传，由于中控对bot是post请求，sdk默认自动获取
+     */
     public function __construct($postData = []) {
        $domain = 'remind';
        parent::__construct($domain, $postData); 
@@ -104,7 +107,7 @@ php -S 0.0.0.0:8000 index.php
 往往用户一次表达的需求，信息不一定完整，比如：'给我创建一个闹钟'，由于query中没有提醒的时间，一个好的bot实现会问用户：'我应该什么时候提醒你呢？'，这时用户说明天上午8点，这样bot就能获取设置时间，可以为用户创建一个闹钟。比如，你可以这样来实现：
 
 ```php
-//提醒意图而且有提醒时间
+//提醒意图而且有提醒时间slot
 $this->addHandler('#remind && slot.remind_time', function(){
     $remindTime = $this->getSlot('remind_time');
     return [/*设置闹钟指令*/];
@@ -163,7 +166,7 @@ clearSession();
 你的Bot可以订阅端上触发的事件，通过接口`addEventListener`实现，比如端上设置闹钟成功后，会下发`SetAlertSucceeded`的事件，Bot通过注册事件处理函数，进行相关的操作。
 
 ## NLU交互协议ask, select, check
-多轮对话的bot，会通过询问用户来收集完成任务所需要的信息（slot），询问用户的特点总结为3点，`ask`：问啥啥，`select`：给出候选集让用户选择，`check`：是非问题。如果你的bot在询问用户的时候，也能告诉NLU你的bot在问什么，能在用户回答你的问题时，NLU可以很针对性的去解析用户的query，大大提高理解用户的准确率，你bot的多轮对话在用户看来就是非常流畅的。bot-sdk提供了接口，帮助你完成这些工作：
+多轮对话的bot，会通过询问用户来收集完成任务所需要的信息（slot），询问用户的特点总结为3点，`ask`：问啥啥，`select`：给出候选集让用户选择，`check`：是非问题。如果你的bot在询问用户的时候，也能告诉NLU你的bot在问什么，能在用户回答你的问题时，NLU可以很针对性的去解析用户的query，大大提高理解用户的准确率，你bot的多轮对话在用户看来就是非常流畅的。bot-sdk提供了接口`needAsk`, `needSelect`, `needCheck`，帮助你完成这些工作：
 ```javascript
 //打车intent，但是没有提供目的地
 $this->addHandler('#rent_car.book && !slot.end_point', function(){
@@ -226,10 +229,10 @@ $this->addHandler('#rent_car.book && !slot.confirm_intent', function(){
 
 ## 声明副作用操作
 暂存信息推荐使用session，中控会在确定用你的bot返回的结果之后，才会更新session。不建议将状态数据存储到私有的永久存储上，如果中控没有使用你的结果，会导致你的bot状态不一致。
-如果一定要使用永久存储，比如存储打车订单、闹钟记录。需要先声明要进行一个副作用的操作，等待中控确认，调用bot-sdk 提供的接口`declareEffect`。如果中控确认，会在一次请求你的bot，请求与上一次一致。你可以通过接口`effectConfirmed`获得确认状态
+如果一定要使用永久存储，比如存储打车订单、闹钟记录。需要先声明要进行一个副作用的操作，等待中控确认，调用bot-sdk 提供的接口`declareEffect`。如果中控确认，会再一次请求你的bot，请求与上一次一致。你可以通过接口`effectConfirmed`获得确认状态
 ```javascript
 if(!$this->effectConfirmed()){
-    return declareEffect();
+    return $this->declareEffect();
 }else{
     //do some permanent store
 }
@@ -244,9 +247,47 @@ public function __construct($domain, $postData = []) {
     //...
 }
 ```
+开发自己的拦截器，继承`\Baidu\Duer\Botsdk\Intercept`，通过重载`before`，能够在处理通过`addHandler`，`addEventListener`添加的回调之前，定义一些逻辑。通过重载`after`能够对回调函数的返回值，进行统一的处理：
+```php
+class YourIntercept extends \Baidu\Duer\Botsdk\Intercept{
+    public function before($bot) {
+        //$bot: 你的bot实例化对象
+    }
+
+    public function after($bot, $result) {
+        //maybe format $result
+        return $result;
+    }
+}
+```
+`intercept`可以定义多个，执行顺序，以调用`addIntercept`的顺序来执行
 
 ## 如何调试
 ### 本地测试
+bot-sdk提供了一个简单的工具，方便用户在没有接入中控时调试自己的bot。
+首先你需要通过PHP内置的webserver，将你的bot运行起来，这里假设是监听的`8000`端口。然后，构造你的`NLU`、`session`等数据，如打车bot构造的数据结构，具体可以参考`samples/rent\_car`中part目录的例子，比如：`./post-part.sh part/create.php`
+```php
+<?php
+return [
+    'nlu' => [
+        'domain' => 'rent_car',
+        'intent' => 'rent_car.book',
+        'slots' => [
+            [
+                'name' => 'start_point',
+                'value' => '百度大厦',
+            ],
+            [
+                'name' => 'end_point',
+                'value' => '西二旗地铁站',
+            ],
+            //more slots
+        ]
+    ],
+    'session' => [],
+];
+```
+### 连接中控调试（TODO）
 
 
 ## 如何部署，接入度秘中控条件

@@ -81,6 +81,9 @@ class Nlu{
                                         [
                                             "name"=>$slot['name'],
                                             "value"=>$slot['value'],
+                                            "type"=>"string",
+                                            "source"=>"query",
+                                            "session_num"=>0,
                                         ],
                                     ],
                                 ];

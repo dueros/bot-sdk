@@ -147,7 +147,7 @@ abstract class Bot{
         $this->response->setShouldEndSession(false);
     }
 
-    public function run(){
+    public function run($build=true){
         //handler event
         $eventHandler = $this->getRegisterEventHandler();
 
@@ -180,6 +180,9 @@ abstract class Bot{
             $ret = $intercept->after($this, $ret);
         }
 
+        if(!$build) {
+            return $ret; 
+        }
         return $this->response->build($ret);
     }
 
@@ -297,6 +300,9 @@ abstract class Bot{
         }
         
         $str = implode('', $arr);
+        //字符串中有$
+        $str = str_replace('$', '\$', $str);
+        //var_dump($str);
         $func = create_function('', 'return ' . implode('', $arr) . ';');
         return $func();
     }

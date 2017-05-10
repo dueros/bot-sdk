@@ -27,10 +27,14 @@ class Response{
         }
     }
 
-    private static function convertViews2ResultList($views){
-        $resultList=array_map(function($view){
+    private function convertViews2ResultList($views){
+        $sourceType = $this->sourceType;
+        $resultList=array_map(function($view) use($sourceType){
             if($view['type']=="txt"){
                 return [
+                    'result_confidence' => 100,
+                    'source_type' => $sourceType,
+                    'voice' => $view['content'],
                     'result_type'=>"txt",
                     "result_content"=>[
                         'answer'=>$view['content'],
@@ -40,6 +44,9 @@ class Response{
             if($view['type']=="list"){
                 return [
                     "result_type"=>"multi_news",
+                    'source_type' => $sourceType,
+                    'voice' => $view['content'],
+                    'result_confidence' => 100,
                     "result_content"=>[
                         "objects"=>array_map(function($item){
                             return array_filter([
@@ -91,7 +98,7 @@ class Response{
             }
         }
         if(!isset($data['result_list']) || !$data['result_list']){
-            $msgData['result_list'] = self::convertViews2ResultList($data['views']);
+            $msgData['result_list'] = $this->convertViews2ResultList($data['views']);
         }
 
 

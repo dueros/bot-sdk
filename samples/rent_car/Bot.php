@@ -6,7 +6,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
     public function __construct($domain, $postData = []) {
         parent::__construct($domain, $postData);
 
-        //$this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
+        $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
         //$this->addIntercept(new BindCardIntercept());
         $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
 

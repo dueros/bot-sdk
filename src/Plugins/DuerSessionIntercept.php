@@ -25,17 +25,9 @@ class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
                 'bot_global_state' => [
                     "bot_state" => "abnormal_finish"
                 ],
-                'result_list' => [
-                    0 => [
-                        'result_confidence' => 100,
-                        'result_content' => [
-                            'answer' => $this->tip,
-                        ],
-                        'result_type' => 'txt',
-                        'voice' => $this->tip,
-                        'source_type' => $bot->request->getBotName(),
-                    ],
-                ]
+                'views' => [
+                    $bot->getTxtView($this->tip)
+                ],
             ];
         }
     }
