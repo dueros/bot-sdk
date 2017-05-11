@@ -17,7 +17,7 @@
 ## 安装、使用BOT SDK进行开发 
 度秘BOT SDK采用[PSR-4规范](http://www.php-fig.org/psr/psr-4/)自动加载 , PHP版本确保在5.4.42及以上。使用[composer](https://getcomposer.org/)执行如下命令进行安装：
 ```shell
-composer require baidu/duer/botsdk
+composer require dueros/bot-sdk
 ```
 
 为了开始使用BOT SDK，你需要先新建一个php文件，比如文件名是Bot.php。你先需要require autoload.php文件，这个文件一般在vendor目录，如果没有这个目录，请先执行composer dump-autoload。
