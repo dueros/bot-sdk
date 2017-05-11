@@ -13,19 +13,21 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
         $this->addHandler('#remind && slot.remind_time', function(){
             $remindTime = $this->getSlot('remind_time');
             return [
-                'views' => [$this->getTxtView('创建中')],
-                'directives' => [
-                    'header' => [
-                        'namespace' => 'Alerts',
-                        'name' => 'SetAlert',
-                        'message_id' => "msg id", 
-                    ],
-                    'payload' => [
-                        'token' => 'token',
-                        'type' => 'ALARM',
-                        'scheduled_time' => $remindTime,// 闹钟设置的时间
-                        'content' => date('Y-m-d H:i:s',  $remindTime) . '提醒你', 
-                    ],
+                //'views' => [$this->getTxtView('创建中')],
+                'directives' =>[
+                    [
+                        'header' => [
+                            'namespace' => 'Alerts',
+                            'name' => 'SetAlert',
+                            'message_id' => "msg id", 
+                        ],
+                        'payload' => [
+                            'token' => 'token',
+                            'type' => 'ALARM',
+                            'scheduled_time' => $remindTime,// 闹钟设置的时间
+                            'content' => date('Y-m-d H:i:s',  $remindTime) . '提醒你', 
+                        ],
+                    ]
                 ],
             ];
         });

@@ -60,6 +60,10 @@ class Nlu{
 
     public function toQueryInfo(){
         $nlu = $this->data;
+        if(!$nlu) {
+            return; 
+        }
+
         $service_query_info = [
             "query"=> "",
             "type"=> $nlu['domain'],

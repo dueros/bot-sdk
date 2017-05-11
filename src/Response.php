@@ -84,7 +84,21 @@ class Response{
      */
     public function build($data){
         if(!isset($data['result_list']) && !isset($data['views'])){
-            return $this->defaultResult();
+            //有点trick，如果只有directives，回复会被干掉
+            if(!$data['directives']){
+                return $this->defaultResult();
+            }else{
+                //补下result_list 
+                $data['result_list'] = [
+                    [
+                        "result_content" => [
+                            "answer" => "command",
+                        ],
+                        "result_type" => "command",
+                        "source_type" =>  $this->sourceType,
+                    ],
+                ];
+            }
         }
 
         $msgData=[
@@ -154,14 +168,14 @@ class Response{
                 'page_num' => 1,
                 'page_cnt' => 1,
                 'result_num' => 1,
-                'service_query_info'=>[$this->nlu->toQueryInfo()],
+                'service_query_info'=>$this->nlu?[$this->nlu->toQueryInfo()]:[],
                 //'server_query_intent'=>json_encode($server_query_intent[0]?$server_query_intent[0]:"",JSON_UNESCAPED_UNICODE),
-                'server_query_intent'=>json_encode($this->nlu->toQueryIntent(), JSON_UNESCAPED_UNICODE),
+                'server_query_intent'=>json_encode($this->nlu?$this->nlu->toQueryIntent():"", JSON_UNESCAPED_UNICODE),
             ],
             'bot_sessions'=>[$this->session->toResponse($this->request)],
         ];
         if($this->shouldEndSession === false 
-            || ($this->shouldEndSession !== true && $this->nlu->hasAsk())){
+            || ($this->shouldEndSession !== true && $this->nlu && $this->nlu->hasAsk())){
             $ret['should_end_session'] = false;
         }
         

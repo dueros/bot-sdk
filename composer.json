@@ -1,11 +1,22 @@
 {
-    "name": "bot-sdk",                             
+    "name": "dueros/bot-sdk",                             
     "type": "library" ,
     "description": "度秘bot开发的PHP SDK",
     "keywords": ["duer","bot"],
     "require": {
+        "php": ">=5.4.0"
     },
     "authors": [
+        {
+            "name" : "wangpeng",
+            "email": "wangpeng20@baidu.com",
+            "role":"Developer"
+        },
+        {
+            "name" : "yuanpeng",
+            "email": "yuanpeng01@baidu.com",
+            "role":"Developer"
+        }
     ],
     "autoload": {
         "psr-4": { "Baidu\\Duer\\Botsdk\\": "src/" }   

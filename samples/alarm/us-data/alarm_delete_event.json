@@ -25,7 +25,7 @@
         "CUID": "jiangfeng01",
         "channel_from": "",
         "channel_ctag": "",
-        "device_data": "{\"device_event\":{\"header\":{\"namespace\":\"Alerts\",\"name\":\"DeleteAlertSucceeded\"},\"payload\":{\"token\":\"14938960862852\"}},\"device_status\":{\"Alerts\":{\"active_alerts\":[],\"all_alerts\":[]}}}",
+        "device_data": "{\"device_event\":{\"header\":{\"namespace\":\"Alerts\",\"name\":\"SetAlertSucceeded\"},\"payload\":{\"token\":\"14938960862852\"}},\"device_status\":{\"Alerts\":{\"active_alerts\":[],\"all_alerts\":[]}}}",
         "dumi_id": "",
         "baidu_uid": ""
     },
