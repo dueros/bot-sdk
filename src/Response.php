@@ -1,15 +1,47 @@
 <?php
+/**
+ * 封装Bot对中控的返回结果
+ * @author yuanpeng01@baidu.com
+ **/
 namespace Baidu\Duer\Botsdk;
 
 class Response{
-    private $ret;
+    /**
+     * Requset 实例。中控的请求
+     **/
     private $request;
+
+    /**
+     * Session
+     **/
     private $session;
+
+    /**
+     * Nlu
+     **/
     private $nlu;
+
+    /**
+     * 返回结果的标识。
+     **/
     private $sourceType;
+
+    /**
+     * 对中控的confirm标识。标识是否需要对中控confirm
+     **/
     private $confirm;
+
+    /**
+     * 多轮情况下，是否需要client停止对用户的等待输入
+     **/
     private $shouldEndSession;
 
+    /**
+     * @param Request $request
+     * @param Session $session
+     * @param Nlu $nlu
+     * @return null
+     **/
     public function __construct($request, $session, $nlu){
         $this->request = $request;
         $this->session = $session;
@@ -17,16 +49,28 @@ class Response{
         $this->sourceType = $this->request->getBotName();
     }
 
+    /**
+     * @param null
+     * @return null
+     **/
     public function setConfirm(){
         $this->confirm = 1; 
     }
 
+    /**
+     * @param null
+     * @return null
+     **/
     public function setShouldEndSession($val){
         if($val === false) {
             $this->shouldEndSession = false; 
         }
     }
 
+    /**
+     * @param array $views
+     * @return array
+     **/
     private function convertViews2ResultList($views){
         $sourceType = $this->sourceType;
         $resultList=array_map(function($view) use($sourceType){
@@ -64,23 +108,28 @@ class Response{
         $resultList=array_values(array_filter($resultList));
         return $resultList;
     }
-    private static function convertNlu2QueryInfo($nlu){
         
-    }
 
+    /**
+     * @desc 当没有结果时，返回默认值
+     * @param null
+     * @return null
+     **/
     public function defaultResult(){
         return json_encode(['status'=>0, 'msg'=>null]);
     }
 
     /** 
+     * @param array $data
      * $data =
      * result_list:
      * views: view和resultlist2选一
      * directives: 可选
      * resource: 可选
      * speech: 可选
-     * should_end_session:可选，默认true
      * confidence 可选
+     *
+     * @return string
      */
     public function build($data){
         if(!isset($data['result_list']) && !isset($data['views'])){
@@ -114,23 +163,6 @@ class Response{
         if(!isset($data['result_list']) || !$data['result_list']){
             $msgData['result_list'] = $this->convertViews2ResultList($data['views']);
         }
-
-
-        /*if(isset($data['nlu'])){
-            $service_query_info=self::convertNlu2QueryInfo($data['nlu']);
-            $responseData['ret'][$request->getBotName()]['service_query_info']=$service_query_info;
-        }
-        if(isset($data['should_end_session'])){
-            $responseData['ret'][$request->getBotName()]['should_end_session']=$data['should_end_session'];
-        }
-         */
-
-        //$this->source_sub_type=$data['source_sub_type'];
-        /*if (!isset($data['form_confidence'])) {
-            $this->form_confidence = 0;
-        } else {
-            $this->form_confidence = $data['form_confidence'];
-        }*/
 
         //TODO: 后续这个还有用？ 现在直接全部写死为1，
         //确认US没有用，就删除
@@ -183,6 +215,11 @@ class Response{
         return $str;
     }
 
+    /**
+     * @desc 中控rank依赖此数据
+     * @param array $msgData
+     * @return array
+     **/
     public static function getMiddleData($msgData){
         $result_list=$msgData['result_list'];
         $ret=[];

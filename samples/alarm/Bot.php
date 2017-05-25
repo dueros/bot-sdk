@@ -3,6 +3,11 @@
 require '../../vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
+
+    /**
+     * @param null
+     * @return null
+     **/
     public function __construct($postData = []) {
         parent::__construct('remind', $postData);
         //$this->addIntercept(new LoginIntercept());

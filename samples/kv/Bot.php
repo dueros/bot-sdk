@@ -3,10 +3,6 @@
 require '../../vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
-    /**
-     * @param null
-     * @return null
-     **/
     public function __construct($postData = []) {
         $domain = 'recharge';
         parent::__construct($domain, $postData);
@@ -25,10 +21,6 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 
     }
 
-    /**
-     * @param null
-     * @return null
-     **/
     public function createOrder(){
         //下面的操作有毒，需要确认下一定会出我的结果吗
         if(!$this->effectConfirmed()) {
@@ -42,11 +34,6 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
             'views' => [$this->getTxtView('下单去啦，电话：'.$phone.', 金额：'.$fee)]
         ];
     }
-
-    /**
-     * @param null
-     * @return null
-     **/
     public function askPhone(){
         $this->nlu->needAsk('phone');
         return [
@@ -54,10 +41,6 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
         ];   
     }
 
-    /**
-     * @param null
-     * @return null
-     **/
     public function askFee(){
         //可能一句话就包含了phone和fee
         //这个时候说电话号码也是可以的

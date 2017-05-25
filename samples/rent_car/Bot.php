@@ -3,6 +3,10 @@
 require '../../vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
+    /**
+     * @param null
+     * @return null
+     **/
     public function __construct($domain, $postData = []) {
         parent::__construct($domain, $postData);
 
@@ -59,6 +63,10 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
         });
     }
 
+    /**
+     * @param null
+     * @return null
+     **/
     public function askCarType(){
         //搜索周边车辆，拿到报价
         //纪录车辆id到session
