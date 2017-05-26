@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Bot-sdk基类。使用都需要继承这个类
+ * @author yuanpeng01@baidu.com
+ **/
 namespace Baidu\Duer\Botsdk;
 
 abstract class Bot{
@@ -8,11 +11,32 @@ abstract class Bot{
     private $intercept = [];
     private $event = [];
 
+    /**
+     * 中控对Bot的请求
+     **/
     public $request;
+
+    /**
+     * Bot返回给中控的结果
+     **/
     public $response;
+
+    /**
+     * 中控提供的session。
+     * 短时记忆能力
+     **/
     public $session;
+
+    /**
+     * 度秘NLU对query解析的结果
+     **/
     public $nlu;
     
+    /**
+     * @param string $domain 关注的domain
+     * @param array $postData us对bot的数据
+     * @return null
+     **/
     public function __construct($domain, $postData=[] ) {
         if(!$postData){
             $rawInput = file_get_contents("php://input");
@@ -75,6 +99,8 @@ abstract class Bot{
     /**
      * @desc 有event，不执行handler
      * @param string  $event。namespace.name
+     * @param function $func
+     * @return null
      **/
     protected function addEventListener($event, $func){
         if($event && $func) {
@@ -82,30 +108,62 @@ abstract class Bot{
         }
     }
 
+    /**
+     * @param null
+     * @return string
+     **/
     public function getIntent(){
         return $this->nlu->getIntent();
     }
 
+    /**
+     * @param string $field
+     * @param string $default
+     * @return string
+     **/
     public function getSession($field=null, $default=null){
         return $this->session->getData($field, $default);
     }
 
+    /**
+     * @param string $field
+     * @param string $value
+     * @param string $default
+     **/
     public function setSession($field, $value, $default=null){
         return $this->session->setData($field, $value, $default); 
     }
 
+    /**
+     * @param null
+     * @return null
+     **/
     public function clearSession(){
         return $this->session->clear(); 
     }
 
+    /**
+     * @param string $field
+     * @return string
+     **/
     public function getSlot($field){
         return $this->nlu->getSlot($field);
     }
 
+    /**
+     * @param string $field
+     * @param string $value
+     * @return string
+     **/
     public function setSlot($field, $value){
         return $this->nlu->setSlot($field, $value); 
     }
 
+    /**
+     * @param string $text
+     * @param string $url
+     * @return array
+     **/
     public function getTxtView($text, $url=''){
         $view = [
             'type' => 'txt',
@@ -120,6 +178,8 @@ abstract class Bot{
 
     /**
      * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
+     * @param null
+     * @return array
      * */
     public function declareEffect(){
         //TODO return a confirm message
@@ -133,6 +193,8 @@ abstract class Bot{
 
     /**
      * @desc 中控是否同意进行副作用的操作
+     * @param null
+     * @return boolean
      **/
     public function effectConfirmed(){
         return $this->request->getConfirm() == 1; 
@@ -141,12 +203,18 @@ abstract class Bot{
     /**
      * @desc 告诉中控，在多轮对话中，等待用户的回答
      *       注意：如果有设置Nlu的ask，自动告诉中控，不用调用
+     * @param null
+     * @return null
      **/
     public function waitAnswer(){
         //should_end_session 
         $this->response->setShouldEndSession(false);
     }
 
+    /**
+     * @param boolean $build  false：不进行封装，直接返回handler的result
+     * @return array|string  封装后的结果为json string
+     **/
     public function run($build=true){
         //handler event
         $eventHandler = $this->getRegisterEventHandler();
@@ -186,6 +254,10 @@ abstract class Bot{
         return $this->response->build($ret);
     }
 
+    /**
+     * @param null
+     * @return array
+     **/
     protected function dispatch(){
         if(!$this->handler) {
             return; 
@@ -202,6 +274,10 @@ abstract class Bot{
         }
     }
 
+    /**
+     * @param null
+     * @return function
+     **/
     private function getRegisterEventHandler() {
         $deviceData = $this->request->getDeviceData();
         if($deviceData['device_event']) {
@@ -213,6 +289,11 @@ abstract class Bot{
         }
     }
 
+    /**
+     * @param function $func
+     * @param mixed  $arg
+     * @return mixed
+     **/
     private function callFunc($func, $arg=null){
         $ret;
         if(is_string($func)){
@@ -243,6 +324,10 @@ abstract class Bot{
         return $this->_getToken($token, $rule);
     }
 
+    /**
+     * @param null
+     * @return null
+     **/
     private function _getToken(&$token, $rule) {
         if($rule === "" || $rule === null) {
             return $token; 
@@ -284,6 +369,10 @@ abstract class Bot{
         return $token;
     }
 
+    /**
+     * @param string $handler
+     * @return boolean
+     **/
     private function checkHandler($handler){
         $token = $this->getToken($handler);
         if(!is_array($token)) {
@@ -307,6 +396,10 @@ abstract class Bot{
         return $func();
     }
 
+    /**
+     * @param string $str
+     * @return string
+     **/
     private function tokenValue($str){
         if($str === '' || $str === null) {
             return ''; 

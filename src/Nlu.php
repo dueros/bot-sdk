@@ -1,13 +1,37 @@
 <?php
+/**
+ * DA解析query，分析的结果
+ * @author yuanpeng01@baidu.com
+ **/
 namespace Baidu\Duer\Botsdk;
 
 class Nlu{
+    /**
+     * @desc 一般处于多轮的服务，会对一个slot进行询问。
+     * 但是，会出现答非所问的情况，或者解析覆盖不到的地方
+     * 如果出现上述情况，解析会填这个字段, value为int，计数出现了多少次
+     **/
     const SLOT_NOT_UNDERSTAND = "da_system_not_understand";
+
+    /**
+     * 数据
+     **/
     private $data = [];
+
+
+    /**
+     * @param array $data
+     * @return null
+     **/
     public function __construct($data) {
         $this->data = $data; 
     }
 
+    /**
+     * @desc 将复杂的NLU结构化简
+     * @param array $data
+     * @return array
+     **/
     public static function parseQueryInfo($data){
         $slot = $data['result_list'][0]['result_list'];
         $ret = [
@@ -24,6 +48,12 @@ class Nlu{
         return new self($ret);
     }
 
+    /**
+     * @desc 设置slot。如果不存在，新增一个slot
+     * @param string $field
+     * @param string $value
+     * @return null
+     **/
     public function setSlot($field, $value){
         if(empty($field)){
             return;
@@ -42,6 +72,10 @@ class Nlu{
         ];
     }
 
+    /**
+     * @param string $field
+     * @return string
+     **/
     public function getSlot($field) {
         if(empty($field)){
             return;
@@ -54,10 +88,20 @@ class Nlu{
         }
     }
 
+    /**
+     * @desc 获取当前domain的intent
+     * @param null
+     * @return string
+     **/
     public function getIntent(){
         return $this->data['intent'];
     }
 
+    /**
+     * @desc 转化为复杂结果
+     * @param null
+     * @return array
+     **/
     public function toQueryInfo(){
         $nlu = $this->data;
         if(!$nlu) {
@@ -102,7 +146,10 @@ class Nlu{
 
     /**
      * @desc 是否有询问用户
+     * 通过ask判断
      *
+     * @param null
+     * @return boolean
      **/
     public function hasAsk(){
         return !!$this->ask; 
@@ -111,6 +158,7 @@ class Nlu{
     /**
      * @desc 询问某些槽位。如果有询问一些槽位，表明多轮进行中
      * @param string|array $slot
+     * @return null
      **/
     public function needAsk($slot){
         if(!$slot) {
@@ -132,7 +180,7 @@ class Nlu{
     /**
      * @desc 给出一些选项，让用户进行选择
      * @param array $list , ['query' => '', 'slot' => '', 'value' => '']
-     * @return
+     * @return null
      **/
     public function needSelect($list, $addAsk=true){
         if(array_keys($list) != range(0, count($list) - 1)){
@@ -172,6 +220,11 @@ class Nlu{
         }
     }
 
+    /**
+     * @desc 打包NLU交互协议
+     * @param null
+     * @return array
+     **/
     public function toQueryIntent(){
         $intents=[];
 

@@ -1,26 +1,75 @@
 <?php
+/**
+ * 中控对Bot的请求封装
+ * @author yuanpeng01@baidu.com
+ **/
 namespace Baidu\Duer\Botsdk;
 
 class Request {
+    /**
+     * Session
+     **/
     private $session;
-    private $msg;
+
+    /**
+     * UIC 用户信息
+     **/
     private $arrUserProfile;
+
+    /**
+     * NLU原始结构
+     **/
     private $daQueryInfo;
-    private $parsedText = '';
     private $daQueryInfoResults;
+
+    /**
+     * 原始数据
+     **/
     private $data;
+
+    /**
+     * ??
+     **/
     private $backendServiceInfo;
-    //private $dumiDecisionInfo;
+
+
+    /**
+     * 设备信息。比如闹钟列表
+     **/
     private $deviceData;
 
+    /**
+     * @desc 返回request data
+     * @param null
+     * @return array
+     **/
+    public function getData(){
+        return $this->data; 
+    }
+
+    /**
+     * @desc 返回用户信息
+     * @param null
+     * @return array
+     **/
     public function getUserProfile() {
         return $this->arrUserProfile;
     }
 
+    /**
+     * @desc 返回session
+     * @param null
+     * @return Session
+     **/
     public function getSession() {
         return $this->session;
     }
 
+    /**
+     * @desc 返回nlu
+     * @param string $domain
+     * @return Nlu
+     **/
     public function getNlu($domain){
         $info = $this->daQueryInfo[$domain];
         if(!$info) {
@@ -38,12 +87,24 @@ class Request {
         return $this->data['msg'];
     }
     
+    /**
+     * @desc 返回设备信息
+     * @param null
+     * @return Nlu
+     **/
     public function getDeviceData(){
         return $this->deviceData;
     }
+
+    /**
+     * @desc 返回app版本
+     * @param null
+     * @return Nlu
+     **/
     public function getAppVer() {
         return $this->data['msg']['app_ver'];
     }
+
     /**
      * @param null
      * @return string
@@ -51,6 +112,7 @@ class Request {
     public function getBduss(){
         return $this->data['msg']['bduss'];
     }
+
     /**
      * @param null
      * @return string
@@ -58,12 +120,24 @@ class Request {
     public function getSessionTag(){
         return $this->data['params']['session_tag'];
     }
+
+    /**
+     * @deprecated
+     * @param null
+     * @return string
+     **/
     public function getSearchBoxVer() {
         if (empty($this->data['msg']['searchbox_ver'])) {
             return '';
         }
         return $this->data['msg']['searchbox_ver'];
     }
+
+    /**
+     * @deprecated
+     * @param null
+     * @return string
+     **/
     public function getOperationSystem() {
         if (empty($this->data['msg']['operation_system'])) {
             return '';
@@ -71,13 +145,27 @@ class Request {
         return $this->data['msg']['operation_system'];
     }
     
+    /**
+     * @param null
+     * @return array
+     **/
     public function getUserInfo() {
         return $this->data['user_info'];
     }
+
+    /**
+     * @param null
+     * @return array
+     **/
     public function getDaQueryInfo() {
         return $this->daQueryInfo;
     }
     
+    /**
+     * @deprecated
+     * @param string
+     * @return array
+     **/
     public function getBackendServiceInfo($type = "all") {
         if (empty($type) || $type == "all") {
             return $this->backendServiceInfo;
@@ -90,6 +178,7 @@ class Request {
         }
         return $this->backendServiceInfo[$type];
     }
+
     /**
      * 获取daqueryinfo指定服务的结果
      * @param $type da service name
@@ -111,12 +200,22 @@ class Request {
     }
     
 
+    /**
+     * @param null
+     * @return string
+     **/
     public function getRequestType() {
         return $this->data['request_type'];
     }
+
+    /**
+     * @param null
+     * @return string
+     **/
     public function getUserId() {
         return $this->data['user_id'];
     }
+
     /**
      * @desc 获cuid
      * @param null
@@ -125,18 +224,38 @@ class Request {
     public function getCuid() {
         return $this->data['cuid'];
     }
+
+    /**
+     * @param null
+     * @return string
+     **/
     public function getDumiId() {
         return $this->data['dumi_id'];
     }
+
+    /**
+     * @param null
+     * @return string
+     **/
     public function getQuery() {
         return $this->data['query'];
     }
+
+    /**
+     * @param null
+     * @return string
+     **/
     public function getQueryType() {
         if (empty($this->data['msg']['query_type'])) {
             return '';
         }
         return $this->data['msg']['query_type'];
     }
+
+    /**
+     * @param null
+     * @return string
+     **/
     public function getChannelFrom()
     {
         if (empty($this->data['msg']['channel_from'])) {
@@ -144,15 +263,36 @@ class Request {
         }
         return $this->data['msg']['channel_from'];
     }
+
+    /**
+     * @param null
+     * @return array
+     **/
     public function getLocation() {
         return $this->data['location'];
     }
+
+    /**
+     * @deprecated
+     * @param null
+     * @return array
+     **/
     public function getLastLocation() {
         return $this->data['last_location'];
     }
+
+    /**
+     * @param null
+     * @return string
+     **/
     public function getClientFrom() {
         return $this->data['params']['client_from'];
     }
+
+    /**
+     * @param null
+     * @return array
+     **/
     public function getParam($key) {
         if (!isset($this->data['params'])) {
             return null;
@@ -165,6 +305,7 @@ class Request {
         }
         return $this->data['params'][$key];
     }
+
     /**
      * 获取assistant_name
      * @param null
@@ -192,15 +333,30 @@ class Request {
         return $this->data['params']['appid'];
     }
 
+    /**
+     * @param null
+     * @return boolean
+     **/
     public function hasLogin() {
         return !empty($this->data['baiduid']);
     }
+
+    /**
+     * @param null
+     * @return boolean
+     **/
     public function isLaunchRequest(){
         return !!$this->data['launch'];
     }
+
+    /**
+     * @param null
+     * @return boolean
+     **/
     public function isEndRequest(){
         return !!$this->data['end_session'];
     }
+
     /**
      * 获取log_id
      * @param null
@@ -217,18 +373,30 @@ class Request {
     public function getBotName() {
         return $this->data['bot_name']; 
     }
+
+    /**
+     * @param null
+     * @return boolean
+     **/
     public function getConfirm() {
         if (!isset($this->data['confirm'])) {
             return 0;
         }
         return intval($this->data['confirm']);
     }
+
+    /**
+     * @deprecated
+     * @param null
+     * @return boolean
+     **/
     public function getConfirmData() {
         if (!isset($this->data['callback_data'])) {
             return '';
         }
         return $this->data['callback_data'];
     }
+
     /**
      * 获取baiduid
      * @param null
@@ -238,8 +406,11 @@ class Request {
         return $this->data['baiduid'];
     }
 
+    /**
+     * @param array $data
+     * @return self
+     **/
     public static function parse($data) {
-        $parsed_text = '';
         if (isset($data['data']['params'])) {
             foreach ($data['data']['params'] as $param) {
                 if ($param['key'] == 'user_profile') {
@@ -286,9 +457,13 @@ class Request {
             'backendServiceInfo' => $backendServiceInfo,
             'deviceData' => $deviceData,
             'data' => $data,
-            'parsed_text' => $parsed_text,
         ]);
     }
+
+    /**
+     * @param array
+     * @return null
+     **/
     private function __construct($data) {
         $this->arrUserProfile = $data['user_profile'];
         $this->session = $data['session'];
@@ -297,7 +472,6 @@ class Request {
         $this->backendServiceInfo = $data['backendServiceInfo'];
         $this->deviceData = $data['deviceData'];
         $this->data = $data['data'];
-        $this->parsedText = $data['parsed_text'];
     }
-
 }
+

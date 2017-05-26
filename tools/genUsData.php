@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @param null
+ * @return null
+ **/
 function genUsData($usData, $sendData){
     //for da_query_info
     $daQueryInfo = $usData['data']['da_query_info'];
