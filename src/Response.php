@@ -156,8 +156,6 @@ class Response{
         foreach(['resource',"directives",'views','result_list','speech'] as $key){
             if(isset($data[$key])){
                 $msgData[$key] = $data[$key];
-            }else{
-                $msgData[$key] = null;
             }
         }
         if(!isset($data['result_list']) || !$data['result_list']){
@@ -174,8 +172,12 @@ class Response{
         $confidence=isset($data['confidence'])?$data['confidence']:300;
 
         $msgData['user_id'] = $this->request->getUserId();
-        $msgData['bot_global_state'] = $data['bot_global_state']?$data['bot_global_state']:null;
-        $msgData['bot_intent'] = $data['bot_intent']?$data['bot_intent']:null;
+        if(isset($data['bot_global_state'])) {
+            $msgData['bot_global_state'] = $data['bot_global_state'];
+        }
+        if(isset($data['bot_intent'])) {
+            $msgData['bot_intent'] = $data['bot_intent'];
+        }
 
         $result = [
             "confidence"=>$confidence,
