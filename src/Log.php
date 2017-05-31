@@ -3,7 +3,6 @@ namespace Baidu\Duer\Botsdk;
 class Log{
     //log级别 1:fatal2:notice3:debug 4:print out
     private $_level;
-    private $_fp;
     private $_path;
     private $_filename;
     private $options;
@@ -17,6 +16,10 @@ class Log{
     const DEBUG=4;
     const PRINT_OUT=5;
 
+    /**
+     * @param array $options
+     * @return null
+     **/
     public function __construct($options=[]){
         $options=array_merge([
             'level'=>self::FATAL,
@@ -35,6 +38,11 @@ class Log{
         date_default_timezone_set('Asia/Shanghai');
     }
 
+    /**
+     * @desc 时间记录，计时开始
+     * @param string $key
+     * @return null
+     **/
     public function markStart($key){
         if(!$key) {
             return; 
@@ -42,6 +50,11 @@ class Log{
         $this->timeSt[$key] = microtime(1);
     }
 
+    /**
+     * @desc 时间记录，计时结束
+     * @param string $key
+     * @return null
+     **/
     public function markEnd($key){
         if(!isset($this->timeSt[$key])) {
             return; 
@@ -52,10 +65,20 @@ class Log{
         $this->data[$key] = intval(1000*(microtime(1) - $start));
     }
 
+    /**
+     * @desc 获取log记录的某个字段
+     * @param string $key
+     * @return string
+     **/
     public function getField($key){
         return isset($this->data[$key]) ? $this->data[$key]:'';
     }
 
+    /**
+     * @desc 设置log记录一个字段
+     * @param string $key
+     * @return null
+     **/
     public function setField($key, $value){
         if(!$key) {
             return; 
@@ -68,25 +91,30 @@ class Log{
      * 设置log级别
      *
      * @param num $level
+     * @return null
      */
     public function setLevel($level = self::FATAL) {
         $this->_level = $level;
     }
     
-    public function open($path = false) {
+    /**
+     * @param string $path
+     * @return null
+     **/
+    private function open($path = false) {
         $this->_filename = $this->getFileName();
         $this->_path = $path ? $path : $this->_path;
     }
     
-    public function close() {
-        
-    }
-    
+    /**
+     * @param string $str
+     * @param string $filename
+     * @return null
+     **/
     private function put($str, $filename='') {
         if(!$filename){
             $newname = $this->getFileName();
             if ($newname != $this->_filename) {
-                $this->close();
                 $this->open();
             }
 
@@ -108,7 +136,7 @@ class Log{
     /**
      * 输出fatal日志
      * @param string $str
-     * @param string $logType ui/trace
+     * @return null
      */
     public function fatal($str) {
         if ($this->_level >= self::FATAL) {
@@ -120,7 +148,7 @@ class Log{
     /**
      * 输入notice日志
      * @param string $str
-     * @param string $logType ui/trace
+     * @return null
      */
     public function notice($str='') {
         if ($this->_level >= self::NOTICE) {
@@ -135,7 +163,7 @@ class Log{
     /**
      * 输出warn日志
      * @param string $str
-     * @param string $logType ui/trace
+     * @return null
      */
     public function warn($str, $logType = "") {
         if ($this->_level >= self::WARN) {
@@ -143,12 +171,21 @@ class Log{
         }
     }
     
+    /**
+     * 输出debug 日志
+     * @param string $str
+     * @return null
+     */
     public function debug($str) {
         if ($this->_level >= self::DEBUG) {
             $this->put("[DEBUG] [$str] ".$this->caller());
         }
     }
     
+    /**
+     * @param null
+     * @return null
+     **/
     private function getFileName() {
         if($this->_file_prefix && !$this->options['time_split']){
             return $this->_file_prefix.".log";
@@ -156,7 +193,10 @@ class Log{
         return $this->_file_prefix.date('YmdH').".log";
     }
     
-    
+    /**
+     * @param null
+     * @return null
+     **/
     private function caller() {
         $bt = debug_backtrace();
         array_shift($bt);
@@ -177,6 +217,10 @@ class Log{
         return $data;
     }
     
+    /**
+     * @param null
+     * @return null
+     **/
     private function backtrace($basePath = "") {
         $bt = debug_backtrace();
         array_shift($bt);
