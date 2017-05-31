@@ -4,6 +4,14 @@ require "Bot.php";
 $rentCar = new Bot('rent_car');
 
 header("Content-Type: application/json");
-#print json_encode($rentCar->run(), JSON_UNESCAPED_UNICODE);
-print $rentCar->run();
-//var_dump(microtime(1) - $t);
+
+//记录整体执行时间
+$rentCar->log->markStart('all_t');
+$ret = $rentCar->run();
+$rentCar->log->markEnd('all_t');
+
+//打印日志
+//or 在register_shutdown_function增加一个执行函数
+$rentCar->log->notice();
+
+print $ret;
