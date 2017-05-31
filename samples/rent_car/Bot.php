@@ -10,12 +10,28 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
     public function __construct($domain, $postData = []) {
         parent::__construct($domain, $postData);
 
-        $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
+        $this->log = new Baidu\Duer\Botsdk\Log([
+            //日志存储路径
+            'path' => 'log/',
+            //日志打印最低输出级别
+            'level' => Baidu\Duer\Botsdk\Log::NOTICE,
+        ]);
+
+        //test fatal log
+        $this->log->fatal("this is a fatal log");
+
+        //log 一个字段
+        $this->log->setField('query', $this->request->getQuery());
+        //$this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
         //$this->addIntercept(new BindCardIntercept());
         $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
 
         $this->addHandler('#rent_car.book && !slot.end_point', function(){
+            //记录执行时间-start
+            $this->log->markStart('lbs_t');
             $this->nlu->needAsk('end_point');
+            //记录执行时间-end
+            $this->log->markEnd('lbs_t');
             return [
                 'views' => [$this->getTxtView('打车去哪呢')]
             ];
