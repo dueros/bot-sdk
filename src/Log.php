@@ -4,7 +4,6 @@ class Log{
     //log级别 1:fatal2:notice3:debug 4:print out
     private $_level;
     private $_path;
-    private $_filename;
     private $options;
     private $_wfName = 'wf.log';
     private $data = [];
@@ -102,8 +101,6 @@ class Log{
      * @return null
      **/
     private function open($path = false) {
-        $this->_filename = $this->getFileName();
-        $this->_path = $path ? $path : $this->_path;
     }
     
     /**
@@ -111,23 +108,18 @@ class Log{
      * @param string $filename
      * @return null
      **/
-    private function put($str, $filename='') {
-        if(!$filename){
-            $newname = $this->getFileName();
-            if ($newname != $this->_filename) {
-                $this->open();
-            }
+    private function put($str, $level) {
+        $filename = $this->getFileName($level);
 
-            $filename = $this->_filename;
-        }
-        
+        $map = ["FATAL", "WARN", "NOTICE", "DEBUG", "PRINT_OUT"];
+        $levelName = $map[$level - 1];
         $now = date('[Y-m-d H:i:s:');
         $t = gettimeofday();
         if($this->_in_line){
             $str=str_replace(["\r","\n"],'',$str);
         }
         
-        file_put_contents($this->_path.$filename, $now.$t["usec"]."] [".$this->logid."] ".$str."\n",FILE_APPEND|LOCK_EX);
+        file_put_contents($this->_path.$filename,"[$levelName] ". $now.$t["usec"]."] [".$this->logid."] ".$str."\n",FILE_APPEND|LOCK_EX);
         if ($this->_level == self::PRINT_OUT) {
             echo "<div style='color:red'>".$now.$t["usec"]."] ".$str."</div>\n";
         }
@@ -141,7 +133,8 @@ class Log{
     public function fatal($str) {
         if ($this->_level >= self::FATAL) {
             //$this->put("[FATAL] $str".$this->backtrace(), $this->_wfName);
-            $this->put("[FATAL] [$str] ".$this->caller(), $this->_wfName);
+            //$this->put("[FATAL] [$str] ".$this->caller(), $this->_wfName);
+            $this->put("$str ".$this->caller(), self::FATAL);
         }
     }
     
@@ -154,9 +147,10 @@ class Log{
         if ($this->_level >= self::NOTICE) {
             $arr = [];
             foreach($this->data as $k=>$v){
-                $arr[] = "$k:$v"; 
+                $arr[] = str_replace(" ", "%20", "$k:$v"); 
             }
-            $this->put("[NOTICE] [$str] ".implode(' ', $arr));
+            //$this->put("[NOTICE] [$str] ".implode(' ', $arr));
+            $this->put("[$str] ".implode(' ', $arr), self::NOTICE);
         }
     }
     
@@ -167,7 +161,8 @@ class Log{
      */
     public function warn($str, $logType = "") {
         if ($this->_level >= self::WARN) {
-            $this->put("[WARN] [$str] ".$this->caller(), $this->_wfName);
+            //$this->put("[WARN] [$str] ".$this->caller(), $this->_wfName);
+            $this->put("$str ".$this->caller(), self::WARN);
         }
     }
     
@@ -178,7 +173,7 @@ class Log{
      */
     public function debug($str) {
         if ($this->_level >= self::DEBUG) {
-            $this->put("[DEBUG] [$str] ".$this->caller());
+            $this->put("$str ".$this->caller(), self::DEBUG);
         }
     }
     
@@ -186,11 +181,13 @@ class Log{
      * @param null
      * @return null
      **/
-    private function getFileName() {
+    private function getFileName($level) {
+        $part = $level >= self::NOTICE ? "" : ".wf";
+        $prefix = $this->_file_prefix ? $this->_file_prefix.".log$part" : "log$part";
         if($this->_file_prefix && !$this->options['time_split']){
-            return $this->_file_prefix.".log";
+            return $prefix;
         }
-        return $this->_file_prefix.date('YmdH').".log";
+        return "$prefix.".date('YmdH');
     }
     
     /**
