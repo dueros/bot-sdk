@@ -265,7 +265,7 @@ class YourIntercept extends \Baidu\Duer\Botsdk\Intercept{
 ## 如何调试
 ### 本地测试
 bot-sdk提供了一个简单的工具，方便用户在没有接入中控时调试自己的bot。
-首先你需要通过PHP内置的webserver，将你的bot运行起来，这里假设是监听的`8000`端口。然后，构造你的`NLU`、`session`等数据，如打车bot构造的数据结构，具体可以参考`samples/rent\_car`中part目录的例子，比如：`./post-part.sh part/create.php`
+首先你需要通过PHP内置的webserver，将你的bot运行起来，这里假设是监听的`8000`端口。然后，构造你的`NLU`、`session`等数据，如打车bot构造的数据结构，具体可以参考`samples/rent_car`中part目录的例子，比如：`./post-part.sh part/create.php`
 ```php
 <?php
 return [
@@ -287,6 +287,50 @@ return [
     'session' => [],
 ];
 ```
+### 如何打印日志
+bot-sdk提供了日志打印的工具，开发者可以直接使用，当然也可以用自己习惯的日志工具。一次请求只打印一条`NOTICE`日志；`FATAL`，`WARN`日志可以打印多条。
+日志按小时切分，fatal，warn日志存储到一个文件，notice日志存储到一个文件。可以参考`samples/rent_car`的例子
+#### 定义日志
+```php
+//可以在构造函数中执行
+$this->log = new Baidu\Duer\Botsdk\Log([
+    //日志存储路径
+    'path' => 'log/',
+    //日志打印最低输出级别
+    'level' => Baidu\Duer\Botsdk\Log::NOTICE,
+]);
+```
+
+#### 统计耗时
+```php
+//标记开始，search_t 是对应的字段名
+$this->log->markStart('search_t');
+$res = \Utils::curl(['url'=>$url, 'timeout'=>2000]);
+//标记结束
+$this->log->markEnd('search_t');
+```
+
+#### 记录某个字段
+```php
+//记录这次请求的query
+$this->log->setField('query', $this->request->getQuery());
+
+//获取某个字段的值，比如，获取统计的时间
+$this->log->getField('search_t');
+```
+
+#### 打印日志
+*最后将NOTICE日志打印出来*
+```
+$bot->log->notice('remind');
+```
+
+#### 打印fatal、warn
+```php
+//test fatal log
+$this->log->fatal("this is a fatal log");
+```
+
 ### 连接中控调试（TODO）
 
 
