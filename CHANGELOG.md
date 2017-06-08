@@ -8,3 +8,6 @@
     * 日志存储配置
         * 配置存储目录(wf, notice)
         * 切分方式
+
+#1.0.5
+* Response 中针对只返回resource，补command，确保不被中控干掉

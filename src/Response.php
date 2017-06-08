@@ -134,7 +134,8 @@ class Response{
     public function build($data){
         if(!isset($data['result_list']) && !isset($data['views'])){
             //有点trick，如果只有directives，回复会被干掉
-            if(!$data['directives']){
+            //有点trick，如果只有resource，回复会被干掉
+            if(!$data['directives'] && !$data['resource']){
                 return $this->defaultResult();
             }else{
                 //补下result_list 
