@@ -172,7 +172,7 @@ class Nlu{
         if(!is_array($slot)) {
             return; 
         }
-        $intent = [self::SLOT_NOT_UNDERSTAND];
+        $intent = $this->ask ? $this->ask : [self::SLOT_NOT_UNDERSTAND];
         array_splice($intent, -1, 0, $slot);
         $this->ask = array_values(array_unique($intent));
     }
