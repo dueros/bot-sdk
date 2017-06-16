@@ -31,6 +31,11 @@ abstract class Bot{
      * 度秘NLU对query解析的结果
      **/
     public $nlu;
+
+    /**
+     * 是否第三方自有解析
+     **/
+    private $nluSelf = false;
     
     /**
      * @param string $domain 关注的domain
@@ -47,6 +52,10 @@ abstract class Bot{
         $this->request = Request::parse($postData);
 
         $this->session = $this->request->getSession();
+        if($domain === false) {
+            $this->nluSelf = true; 
+        }
+
         $this->nlu = $this->request->getNlu($domain);
         $this->response = new Response($this->request, $this->session, $this->nlu);
     }
@@ -220,7 +229,7 @@ abstract class Bot{
         $eventHandler = $this->getRegisterEventHandler();
 
         //check domain
-        if(!$this->nlu && !$eventHandler) {
+        if(!$this->nlu && !$eventHandler && !$this->nluSelf) {
             return $this->response->defaultResult(); 
         }
 
