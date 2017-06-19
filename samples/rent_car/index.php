@@ -12,6 +12,6 @@ $rentCar->log->markEnd('all_t');
 
 //打印日志
 //or 在register_shutdown_function增加一个执行函数
-$rentCar->log->notice();
+$rentCar->log->notice('rent_car');
 
 print $ret;
