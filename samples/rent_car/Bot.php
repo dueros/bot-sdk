@@ -88,7 +88,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
         //纪录车辆id到session
         $this->setSession('param', ['vip'=>11213, 'taxi'=>'323992']);
 
-        $this->nlu->needAsk('content');
+        //$this->nlu->needAsk('car_type');
         //引导用户
         /**
          * 为什么要引导用户？
