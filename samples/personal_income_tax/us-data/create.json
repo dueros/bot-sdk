@@ -1,0 +1,1024 @@
+{
+    "user_id": "test",
+    "baiduid": "",
+    "dumi_id": "",
+    "cuid": "",
+    "query": "我要打车",
+    "raw_query": "我要打车",
+    "rewrite_query_type": "no_rewrite",
+    "last_query": "",
+    "version": 1,
+    "msg": {
+        "operation_system": "android",
+        "app_ver": "1.0.0",
+        "searchbox_ver": "",
+        "from": "sdk",
+        "query_type": "0",
+        "request_uid": "test",
+        "request_from": "0",
+        "request_type": "20",
+        "sample_name": "bear_brain_wireless",
+        "latitude": 40.1181,
+        "longitude": 116.385,
+        "service_id": "5",
+        "CUID": "",
+        "channel_from": "",
+        "channel_ctag": "",
+        "bduss": ""
+    },
+    "log_id": "14939042531718",
+    "request_type": "dumi",
+    "params": {
+        "loc":
+"%7B%22crd%22%3A%2212957471.396932_4856449.091986_200%22%2C%22city%22%3A%22%5Cu5317%5Cu4eac%5Cu5e02%22%2C%22addr%22%3A%22%5Cu5317%5Cu4eac%5Cu5e02%5Cu660c%5Cu5e73%5Cu533a%5Cu4e1c%5Cu6c99%5Cu8def%22%2C%22city_code%22%3A131%7D",
+        "cip": "10.94.214.213",
+        "bear_params": {
+            "nlu_response": "{\"analysis\":{},\"parsed_text\":\"我 要
+打车\",\"raw_text\":\"我要打车\",\"results\":[{\"demand\":0,\"domain\":\"task_taxi\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":1.0,\"str_result_content\":{},\"str_result_type\":\"\"},{\"demand\":0,\"domain\":\"universal_search\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":0.6979536414146423,\"str_result_content\":{},\"str_result_type\":\"\"}],\"sugs\":\"我要打车\",\"sugs_types\":\"PAT_EC\"}\n"
+        },
+        "client_from": "sdk",
+        "voice_assistant": 2,
+        "assistant_name": "lenovo_speaker",
+        "appid": "dm0914D36EDEC94150",
+        "joke_type": 1,
+        "intervene_from": "lenovo_speaker",
+        "sc_response":
+"{\"form_confidence\":100,\"ordertype\":8,\"sugs\":\"打车\",\"sugs_service_info\":{\"car_type\":\"\",\"end_point\":\"\",\"phone\":\"\",\"service_time\":\"\",\"start_point\":\"\",\"user_name\":\"\",\"vender\":\"\"}}\n",
+        "session_tag": "dm0914D36EDEC94150"
+    },
+    "location": {
+        "la": 40.1181,
+        "lo": 116.385,
+        "bd_la": 40.1258,
+        "bd_lo": 116.398,
+        "mi_la": 4856450,
+        "mi_lo": 12957500,
+        "address": "北京市昌平区东沙路",
+        "city": "北京市",
+        "city_code": 131,
+        "country": "中国",
+        "country_code": 0,
+        "direction": "",
+        "distance": "",
+        "district": "昌平区",
+        "province": "北京市",
+        "street": "东沙路",
+        "street_number": "",
+        "cip": "10.94.214.213",
+        "cip_type": "user_db",
+        "location_type": "real",
+        "sematic_description": "北京市宏福跃汽车修理厂西北478米"
+    },
+    "page_cnt": 10,
+    "page_num": 1,
+    "sessions": [
+        {
+            "action": "get",
+            "type": "string",
+            "name": "rent_car",
+            "key": "test",
+            "list_sessions": [],
+            "list_sessions_str": [
+                ""
+            ],
+            "hash_sessions": []
+        }
+    ],
+    "user_info": {
+        "user_id": ""
+    },
+    "data": {
+        "status": 0,
+        "msg": "OK",
+        "da_query_info": [
+            {
+                "type": "rsse",
+                "result_list": [
+                    {
+                        "type": "rssequery",
+                        "score": 0,
+                        "result_list": [
+                            {
+                                "type": "querylist",
+                                "score": 0,
+                                "content":
+"[\"打车软件\",\"张震讲鬼故事我要打车\",\"我要打车鬼故事\",\"滴滴打车\",\"打车\",\"我要打车
+张震\",\"我要打车电影\",\"嘀嘀打车网页版\",\"张震讲故事我要打车\",\"我要打车 app\"]\n"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "control.hardware",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "timeline:sac",
+                "result_list": [
+                    {
+                        "type": "8",
+                        "score": 100,
+                        "result_list": [
+                            {
+                                "type": "8",
+                                "score": 0,
+                                "content": "",
+                                "result_list": [
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "car_type",
+                                                "source": "click_model.null"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "end_point",
+                                                "source": "click_model.null"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "phone",
+                                                "source": "click_model.uic.phone"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "2017-05-04",
+                                                "name": "service_time",
+                                                "source": "click_model.query"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "start_point",
+                                                "source": "click_model.null"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "user_name",
+                                                "source": "click_model.uic.user_name"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "vender",
+                                                "source": "click_model.null"
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "检索词",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "打车",
+                                                "name": "sugs",
+                                                "source": "query"
+                                            }
+                                        ],
+                                        "score": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "query": "我要打车",
+                "type": "o2o_satisfy",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "sac",
+                "result_list": [
+                    {
+                        "type": "8",
+                        "score": 100,
+                        "result_list": [
+                            {
+                                "type": "8",
+                                "score": 0,
+                                "content": "",
+                                "result_list": [
+                                    {
+                                        "key": "车型",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "car_type",
+                                                "source": "click_model.null",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "目的地",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "end_point",
+                                                "source": "click_model.null",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "电话",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "phone",
+                                                "source": "click_model.uic.phone",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "目标时间",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "2017-05-04",
+                                                "name": "service_time",
+                                                "source": "click_model.query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "出发地",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "start_point",
+                                                "source": "click_model.null",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "姓名",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "user_name",
+                                                "source": "click_model.uic.user_name",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "资源方",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "vender",
+                                                "source": "click_model.null",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    },
+                                    {
+                                        "key": "检索词",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "打车",
+                                                "name": "sugs",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "query": "我要打车",
+                "type": "life_common",
+                "result_list": [
+                    {
+                        "type": "8",
+                        "score": 100,
+                        "result_list": [
+                            {
+                                "type": "8",
+                                "score": 0,
+                                "content": "",
+                                "result_list": [
+                                    {
+                                        "key": "检索词",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "打车",
+                                                "name": "sugs",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "车型",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "car_type",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "目的地",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "end_point",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "电话",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "phone",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "目标时间",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "service_time",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "出发地",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "start_point",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "姓名",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "user_name",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "资源方",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "vender",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "online_shopping",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "rent_car",
+                "result_list": [
+                    {
+                        "type": "rent_car",
+                        "score": 100,
+                        "result_list": [
+                            {
+                                "type": "rent_car.book",
+                                "score": 0,
+                                "content": "{\"from_star_atlas\":1}",
+                                "result_list": [
+                                    {
+                                        "key": "车型",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "car_type",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "目的地",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "end_point",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "from_loc",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "from_loc",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "loc_fragment",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "loc_fragment",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "reserve_order",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "reserve_order",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "resubmit_order",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "resubmit_order",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "出行时间",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "service_time",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "出发地",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "start_point",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "to_loc",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "to_loc",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    },
+                                    {
+                                        "key": "资源方",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "",
+                                                "name": "vender",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 100
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "hotel",
+                "result_list": []
+            },
+            {
+                "type": "restaurant_bot",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "movie_satisfy",
+                "result_list": []
+            },
+            {
+                "type": "baojie",
+                "result_list": []
+            },
+            {
+                "type": "recharge",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "nba",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "phone",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "music",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "map",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "remind",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "user_profile",
+                "result_list": []
+            },
+            {
+                "type": "image_service",
+                "result_list": []
+            },
+            {
+                "query": "我要打车",
+                "type": "confirm",
+                "result_list": []
+            },
+            {
+                "type": "sys_profile",
+                "result_list": []
+            },
+            {
+                "type": "audio.unicast",
+                "result_list": []
+            },
+            {
+                "type": "audio.music",
+                "result_list": []
+            },
+            {
+                "type": "audio.live",
+                "result_list": []
+            },
+            {
+                "type": "audio.news",
+                "result_list": []
+            },
+            {
+                "type": "audio.comedy",
+                "result_list": []
+            },
+            {
+                "type": "audio.scene",
+                "result_list": []
+            },
+            {
+                "type": "time",
+                "result_list": []
+            },
+            {
+                "type": "cookbook",
+                "result_list": []
+            },
+            {
+                "type": "ucp_content",
+                "result_list": []
+            },
+            {
+                "type": "cooker",
+                "result_list": []
+            },
+            {
+                "type": "fridge",
+                "result_list": []
+            },
+            {
+                "type": "recommend_service_wireless",
+                "result_list": []
+            },
+            {
+                "type": "memory",
+                "result_list": []
+            },
+            {
+                "type": "fridge_play",
+                "result_list": [
+                    {
+                        "type": "fridge_play",
+                        "score": 100,
+                        "result_list": [
+                            {
+                                "type": "fridge_play",
+                                "score": 100,
+                                "content": "",
+                                "result_list": [
+                                    {
+                                        "key": "_da_tag",
+                                        "type": "text",
+                                        "value": [
+                                            {
+                                                "value": "mock",
+                                                "name": "_da_tag",
+                                                "source": "query",
+                                                "type": "string",
+                                                "tag_op": 1,
+                                                "session_num": 0
+                                            }
+                                        ],
+                                        "score": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "smart_tv",
+                "result_list": []
+            },
+            {
+                "type": "audio.joke",
+                "result_list": []
+            },
+            {
+                "type": "slot.decode",
+                "result_list": []
+            },
+            {
+                "type": "story.children",
+                "result_list": []
+            },
+            {
+                "query": "",
+                "type": "personal_income_tax",
+                "result_list": [
+                    {
+                        "type": "personal_income_tax",
+                        "score": 100,
+                        "result_list": [
+                            {
+                                "type": "personal_income_tax.inquiry",
+                                "score": 100,
+                                "content": "",
+                                "result_list": [
+                                    {
+                                        "key": "monthlysalary",
+                                        "type": "text",
+                                        "score": 100,
+                                        "value": [
+                                            {
+                                                "name": "monthlysalary",
+                                                "value": "20000"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "key": "location",
+                                        "type": "text",
+                                        "score": 100,
+                                        "value": [
+                                            {
+                                                "name": "location",
+                                                "value": "北京"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "key": "compute_type",
+                                        "type": "text",
+                                        "score": 100,
+                                        "value": [
+                                            {
+                                                "name": "compute_type",
+                                                "value": "全部缴纳项目"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "params": [
+            {
+                "key": "mmsda_response",
+                "value": "{\"voiceguidesidentify\":{\"is_fullreplace\":false,
+\"fullreplace_query\":\"\", \"last_query\":\"\", \"fullreplace_strategy\":0, \"strategy_type\":0},
+\"wise_rewrite\":{\"res\":[{\"srcidsort\":[{\"srcid\":17, \"sortflag\":1, \"sort\":1},
+{\"srcid\":8041, \"sortflag\":1, \"sort\":3}, {\"srcid\":28339, \"sortflag\":1, \"sort\":5}],
+\"rewrite_query\":\"我要打车\", \"confidence\":11, \"rw_type\":8, \"srcid\":[17, 8041, 28339]}],
+\"normalize\":[]}}"
+            },
+            {
+                "key": "burst_factor",
+                "value":
+"{\"dnn_ep\":0.1941780,\"rtquery\":\"{\\\"burst_qf\\\":\\\"{\\\\\\\"whf\\\\\\\":0,\\\\\\\"bdf\\\\\\\":18,\\\\\\\"dj\\\\\\\":27,\\\\\\\"bdv\\\\\\\":32,\\\\\\\"wdf\\\\\\\":18,\\\\\\\"df\\\\\\\":0,\\\\\\\"wdj\\\\\\\":32,\\\\\\\"hv\\\\\\\":0,\\\\\\\"ts\\\\\\\":1490561663,\\\\\\\"whj\\\\\\\":103,\\\\\\\"bdj\\\\\\\":32,\\\\\\\"hj\\\\\\\":0,\\\\\\\"whv\\\\\\\":103,\\\\\\\"bhj\\\\\\\":103,\\\\\\\"wdv\\\\\\\":32,\\\\\\\"dv\\\\\\\":24,\\\\\\\"bhf\\\\\\\":0,\\\\\\\"hf\\\\\\\":0,\\\\\\\"bhv\\\\\\\":103}\\\",\\\"burst_tl\\\":\\\"5,1493521300,3,1493294354\\\"}\"}\n"
+            },
+            {
+                "key": "dumi_timeline",
+                "value": "{\"result_count\":1, \"result_list\":[{\"rewrite_query\":\"我要打车\",
+\"srcid_num\":3, \"srcids\":[17, 8041, 28339], \"positions\":[1, 3, 5], \"position_flags\":[1, 1,
+1], \"rw_type\":8, \"confidence\":11}], \"disp_num\":8709, \"click_num\":6336}"
+            },
+            {
+                "key": "sc_response",
+                "value":
+"{\"form_confidence\":100,\"ordertype\":8,\"sugs\":\"打车\",\"sugs_service_info\":{\"car_type\":\"\",\"end_point\":\"\",\"phone\":\"\",\"service_time\":\"\",\"start_point\":\"\",\"user_name\":\"\",\"vender\":\"\"}}\n"
+            },
+            {
+                "key": "qu_service_single_response",
+                "value": "{\"status\":0, \"timestamp\":0, \"raw_query\":\"我要打车\",
+\"intent_candidates\":[{\"intent\":\"8\", \"intent_confidence\":100, \"func_slot\":\"\",
+\"slots\":[{\"offset\":-1, \"length\":-1, \"original_word\":\"\", \"normalized_word\":\"\",
+\"type\":\"car_type\", \"confidence\":100, \"word_type\":\"\"}, {\"offset\":-1, \"length\":-1,
+\"original_word\":\"\", \"normalized_word\":\"\", \"type\":\"end_point\", \"confidence\":100,
+\"word_type\":\"\"}, {\"offset\":-1, \"length\":-1, \"original_word\":\"\",
+\"normalized_word\":\"\", \"type\":\"phone\", \"confidence\":100, \"word_type\":\"\"},
+{\"offset\":-1, \"length\":-1, \"original_word\":\"\", \"normalized_word\":\"\",
+\"type\":\"service_time\", \"confidence\":100, \"word_type\":\"\"}, {\"offset\":-1, \"length\":-1,
+\"original_word\":\"\", \"normalized_word\":\"\", \"type\":\"start_point\", \"confidence\":100,
+\"word_type\":\"\"}, {\"offset\":-1, \"length\":-1, \"original_word\":\"\",
+\"normalized_word\":\"\", \"type\":\"user_name\", \"confidence\":100, \"word_type\":\"\"},
+{\"offset\":-1, \"length\":-1, \"original_word\":\"\", \"normalized_word\":\"\",
+\"type\":\"vender\", \"confidence\":100, \"word_type\":\"\"}],
+\"extra_info\":{\"parser_qu_da_sug\":\"打车\"}}]}"
+            },
+            {
+                "key": "gssda_response",
+                "value":
+"{\"result\":[{\"normal\":{\"danormalanalysis\":{\"gssrqt\":[{\"srcid\":8041, \"type\":4,
+\"degree\":-1, \"pos\":-100, \"rw_pos\":-100, \"subclass\":0, \"place\":-1,
+\"lexparse\":[{\"degree\":2, \"token_num\":1, \"rqt_token\":[{\"term\":\"我要打车\",
+\"attr\":\"weak_song\"}], \"ret\":0}], \"lexparse_group\":[{\"lexparser_res_array_num\":1,
+\"lexparser_res_array\":[{\"degree\":2, \"token_num\":1, \"rqt_token\":[{\"term\":\"我要打车\",
+\"attr\":\"weak_song\"}], \"extention\":null, \"ret\":0}]}], \"query_type\":4}],
+\"query_composition\":\"\", \"dummy\":0}, \"dummy\":0}}]}"
+            },
+            {
+                "key": "qu_responce",
+                "value": "{\"err_no\":0, \"result\":[{\"normal\":{},
+\"qu\":{\"query_voice\":{\"res\":[{\"domain\":\"lbs\", \"intent\":\"F->target\", \"score\":100,
+\"objects\":[{\"key\":\"TARGET\", \"value\":\"打车\", \"score\":1, \"offset\":4, \"length\":4},
+{\"key\":\"_TARGET\", \"value\":\"打车\", \"score\":1, \"offset\":4, \"length\":4}],
+\"reduce_tree_info\":\"(query(F->target(TARGET(BRAND 打车))))\"}]}}, \"queryId\":1}]}"
+            },
+            {
+                "key": "da_sug_query",
+                "value":
+"{\"log_id\":\"14939042531718\",\"query\":\"我要打车\",\"rewrite_query_type\":\"no_rewrite\"}\n"
+            },
+            {
+                "key": "personal_com_query",
+                "value":
+"{\"home\":\"\",\"office\":\"\",\"offset\":0,\"query\":\"\",\"type\":\"\"}\n"
+            },
+            {
+                "key": "apollo",
+                "value": "null\n"
+            },
+            {
+                "key": "apollo_debug_features",
+                "value":
+"[{\"features\":[\"SEG_我要打车:term,1,1\"],\"name\":\"basic_wordseg\",\"type\":\"term\"},{\"features\":[\"UP_CURRENT_BURST_LIMIT_YES:burst_level,1,1\",\"UP_RECENT_BURST_LIMIT_NO:burst_level,1,1\"],\"name\":\"burst_level_instance1\",\"type\":\"burst_level\"},{\"features\":[\"QUERY_IN_DICT_YES:query_in_dict,1,1\"],\"name\":\"music_query_in_dict\",\"type\":\"query_in_dict\"},{\"features\":[\"BF_TERM_我_要:bf,1,1\",\"FF_TERM_要_打车:bf,1,1\"],\"name\":\"term_level_bf\",\"type\":\"bf\"},{\"features\":[\"NGRAM_2_LEVEL_TERM_我_要:ngram,1,1\",\"NGRAM_2_LEVEL_TERM_要_打车:ngram,1,1\"],\"name\":\"term_level_bigram\",\"type\":\"ngram\"},{\"features\":[\"NGRAM_3_LEVEL_TERM_我_要_打车:ngram,1,1\"],\"name\":\"term_level_trigram\",\"type\":\"ngram\"},{\"features\":[\"NGRAM_3_LEVEL_TERM_我_要_打车_BF_TERM_我_要:conjunction,1,1\",\"NGRAM_3_LEVEL_TERM_我_要_打车_FF_TERM_要_打车:conjunction,1,1\"],\"name\":\"vector_conjunction\",\"type\":\"conjunction\"},{\"features\":[\"NGRAM_3_LEVEL_TERM_我_要_打车:ngram,1,1\",\"BF_TERM_我_要:bf,1,1\",\"FF_TERM_要_打车:bf,1,1\"],\"name\":\"vector_merge\",\"type\":\"merge\"},{\"features\":[\"SRCID_IN_TOPN_YES:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_17:wise_srcid_in_topn,1,1\",\"POS_3_SRCID_8041:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance1\",\"type\":\"wise_srcid_in_topn\"},{\"features\":[\"SRCID_IN_TOPN_NO:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_17:wise_srcid_in_topn,1,1\",\"POS_3_SRCID_8041:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance2\",\"type\":\"wise_srcid_in_topn\"},{\"features\":[\"SRCID_IN_TOPN_YES:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_17:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance3\",\"type\":\"wise_srcid_in_topn\"},{\"features\":[\"SRCID_IN_TOPN_NO:wise_srcid_in_topn,1,1\",\"POS_1_SRCID_17:wise_srcid_in_topn,1,1\"],\"name\":\"wise_srcid_in_topn_instance4\",\"type\":\"wise_srcid_in_topn\"}]\n"
+            },
+            {
+                "key": "nlu_responce",
+                "value": "{\"analysis\":{},\"parsed_text\":\"我 要
+打车\",\"raw_text\":\"我要打车\",\"results\":[{\"demand\":0,\"domain\":\"task_taxi\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":1.0,\"str_result_content\":{},\"str_result_type\":\"\"},{\"demand\":0,\"domain\":\"universal_search\",\"intent\":\"search\",\"object\":{},\"pushleft_switch\":\"0\",\"score\":0.6979536414146423,\"str_result_content\":{},\"str_result_type\":\"\"}],\"sugs\":\"我要打车\",\"sugs_types\":\"PAT_EC\"}\n"
+            },
+            {
+                "key": "lexical_analysis",
+                "value": "[{\"flag\":2,\"name\":\"basic\",\"ner\":\"\",\"postag\":\"我_r 要_v
+打车_v\",\"wordrank\":\"我_2_0.146368 要_1_0.0847167 打车_2_0.768916\",\"wordseg\":\"我 要
+打车\"},{\"flag\":4,\"name\":\"segment\",\"ner\":\"\",\"postag\":\"我要打车_n\",\"wordrank\":\"我要打车_2_1\",\"wordseg\":\"我要打车\"},{\"flag\":8,\"name\":\"sub_phrase\",\"ner\":\"\",\"postag\":\"我要打车_n\",\"wordrank\":\"\",\"wordseg\":\"我要打车\"},{\"flag\":16,\"name\":\"human_name\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"},{\"flag\":32,\"name\":\"book_name\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"},{\"flag\":64,\"name\":\"new_word\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"},{\"flag\":128,\"name\":\"crf_multi\",\"ner\":\"\",\"postag\":\"\",\"wordrank\":\"\",\"wordseg\":\"\"}]\n"
+            }
+        ]
+    },
+    "multi_cards": [
+        "multi_movie",
+        "multi_meishi",
+        "multi_normal",
+        "multi_news",
+        "multi_product",
+        "multi_trailer",
+        "multi_tour"
+    ],
+    "query_emoji": "我要打车",
+    "meta_data_flag": 1,
+    "bot_name": "rent_car",
+    "bot_sessions": [
+        {
+            "status": 0,
+            "msg": "ok",
+            "action": "set",
+            "type": "string",
+            "key": "",
+            "list_sessions_str": [
+                "{\"empty\":true}"
+            ]
+        }
+    ]
+}
