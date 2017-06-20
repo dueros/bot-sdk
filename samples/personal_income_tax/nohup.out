@@ -1,0 +1,6 @@
+[Mon Jun 19 16:41:06 2017] PHP Fatal error:  Class 'Bot' not found in /home/work/bot-sdk/samples/personal_income_tax/index.php on line 9
+[Mon Jun 19 16:41:48 2017] PHP Warning:  file_put_contents(ROOT_PATH/tax_log/log.2017061916): failed to open stream: No such file or directory in /home/work/bot-sdk/src/Log.php on line 122
+[Mon Jun 19 16:42:33 2017] PHP Warning:  file_put_contents(ROOT_PATHlog/log.2017061916): failed to open stream: No such file or directory in /home/work/bot-sdk/src/Log.php on line 122
+[Mon Jun 19 16:53:44 2017] 172.20.194.157:64757 Invalid request (Unexpected EOF)
+[Mon Jun 19 16:53:44 2017] 172.20.194.157:64758 Invalid request (Unexpected EOF)
+[Mon Jun 19 16:56:43 2017] 172.20.194.157:65470 Invalid request (Unexpected EOF)
