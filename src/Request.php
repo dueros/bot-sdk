@@ -6,6 +6,8 @@
 namespace Baidu\Duer\Botsdk;
 
 class Request {
+    private $requsetType;
+
     /**
      * Session
      **/
@@ -17,10 +19,9 @@ class Request {
     private $arrUserProfile;
 
     /**
-     * NLU原始结构
+     * NLU
      **/
-    private $daQueryInfo;
-    private $daQueryInfoResults;
+    private $nlu;
 
     /**
      * 原始数据
@@ -70,13 +71,8 @@ class Request {
      * @param string $domain
      * @return Nlu
      **/
-    public function getNlu($domain){
-        $info = $this->daQueryInfo[$domain];
-        if(!$info) {
-            return $info; 
-        }
-
-        return Nlu::parseQueryInfo($info);
+    public function getNlu(){
+        return $this->nlu;
     }
     /**
      * @param $null
@@ -200,7 +196,12 @@ class Request {
     }
     
 
+    public function getType() {
+        return $this->requsetType;
+    }
+
     /**
+     * @deprecated
      * @param null
      * @return string
      **/
@@ -238,7 +239,10 @@ class Request {
      * @return string
      **/
     public function getQuery() {
-        return $this->data['query'];
+        if($this->requsetType == 'IntentRequest') {
+            return $this->data['request']['query']['original'];
+        }
+        return '';
     }
 
     /**
@@ -346,7 +350,7 @@ class Request {
      * @return boolean
      **/
     public function isLaunchRequest(){
-        return !!$this->data['launch'];
+        return $this->data['request']['type'] == 'LaunchRequest';
     }
 
     /**
@@ -354,7 +358,7 @@ class Request {
      * @return boolean
      **/
     public function isEndRequest(){
-        return !!$this->data['end_session'];
+        return $this->data['request']['type'] == 'SessionEndRequest';
     }
 
     /**
@@ -371,7 +375,7 @@ class Request {
      * @return string
      **/
     public function getBotName() {
-        return $this->data['bot_name']; 
+        return $this->data['context']['system']['bot']['botId']; 
     }
 
     /**
@@ -379,23 +383,12 @@ class Request {
      * @return boolean
      **/
     public function getConfirm() {
-        if (!isset($this->data['confirm'])) {
-            return 0;
+        if($this->requsetType == 'IntentRequest') {
+            return !!$this->data['request']['determined'];
         }
-        return intval($this->data['confirm']);
+        return false;
     }
 
-    /**
-     * @deprecated
-     * @param null
-     * @return boolean
-     **/
-    public function getConfirmData() {
-        if (!isset($this->data['callback_data'])) {
-            return '';
-        }
-        return $this->data['callback_data'];
-    }
 
     /**
      * 获取baiduid
@@ -407,71 +400,16 @@ class Request {
     }
 
     /**
-     * @param array $data
-     * @return self
-     **/
-    public static function parse($data) {
-        if (isset($data['data']['params'])) {
-            foreach ($data['data']['params'] as $param) {
-                if ($param['key'] == 'user_profile') {
-                    $arrUserProfile = json_decode($param['value'], true);
-                }
-            }
-        }
-        $daQueryInfoResults = empty($data['data']['da_query_info']) ? [] : $data['data']['da_query_info'];
-
-        //da_query_info
-        $daQueryInfo = [];
-        if ($data['data']['da_query_info']) {
-            foreach ($data['data']['da_query_info'] as $info) {
-                $daQueryInfo[$info['type']] = $info['result_list'][0];
-            }
-        }
-        if ($data['params']['backend_service_info']) {
-            $backendServiceInfo = $data['params']['backend_service_info'];
-        }
-        if (!$backendServiceInfo) {
-            $backendServiceInfo = [];
-        }
-        
-        //session的数据结构参考us.idl里的BackendResponse
-        $session = [];
-        //for bot rename 2017-04-05 14:56:59
-        if ($data['bot_sessions'] && isset($data['bot_sessions'][0]['list_sessions_str'][0])){
-            $session = json_decode($data['bot_sessions'][0]['list_sessions_str'][0], true);
-        }
-
-        //\Logger::debug("us request parse time use:".(microtime(1) - $__time));
-
-        //device_data
-        $deviceData = [];
-        if($data['msg']['device_data']) {
-            $deviceData = json_decode($data['msg']['device_data'], true);
-        }
-
-        return new self([
-            'user_profile' => $arrUserProfile,
-            'session' => new Session($session),
-            'daQueryInfoResults' => $daQueryInfoResults,
-            'daQueryInfo' => $daQueryInfo,
-            'backendServiceInfo' => $backendServiceInfo,
-            'deviceData' => $deviceData,
-            'data' => $data,
-        ]);
-    }
-
-    /**
      * @param array
      * @return null
      **/
-    private function __construct($data) {
-        $this->arrUserProfile = $data['user_profile'];
-        $this->session = $data['session'];
-        $this->daQueryInfoResults = $data['daQueryInfoResults'];
-        $this->daQueryInfo = $data['daQueryInfo'];
-        $this->backendServiceInfo = $data['backendServiceInfo'];
-        $this->deviceData = $data['deviceData'];
-        $this->data = $data['data'];
+    public function __construct($data) {
+        $this->data = $data;
+        $this->requsetType = $data['request']['type'];
+        $this->session = new Session($data['session']);
+        if($this->requsetType == 'IntentRequest') {
+            $this->nlu = new Nlu($data['request']['intents']);
+        }
     }
 }
 

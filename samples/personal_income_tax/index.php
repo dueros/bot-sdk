@@ -1,11 +1,7 @@
 <?php
 
 	require "Bot.php";
-	ini_set("display_errors", "On");
-	ini_set('track_errors', true);
-	ini_set('error_reporting', E_ALL & ~E_NOTICE);
-
-	$tax = new Bot('sample_personal_income_tax');
+	$tax = new Bot();
 
 	//记录整体执行时间
 	$tax->log->markStart('all_t');

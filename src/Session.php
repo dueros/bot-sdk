@@ -13,10 +13,9 @@ class Session{
      * @return null
      **/
     public function __construct($data) {
-        if(!$data || $data['empty'] == true) {
-            $data = []; 
-        }
-        $this->data = $data; 
+        $this->data = $data['attributes']; 
+        $this->sessionId = $data['sessonId'];
+        $this->isNew = $data['new'];
     }
 
     /**
@@ -32,19 +31,9 @@ class Session{
      * @param Request $request
      * @return array
      **/
-    public function toResponse($request){
-        $data = $this->data;
-        if(!$data) {
-            $data = ['empty' => true]; 
-        }
-
+    public function toResponse(){
         return [
-            'status'=>0,
-            "msg"=>"ok",
-            'action'=>"set",
-            'type'=>"string",
-            'key'=>$request->getUserId(),
-            'list_sessions_str'=>[json_encode($data, JSON_UNESCAPED_UNICODE)],
+            'attributes' => $this->data,
         ];
     }
 }

@@ -1,8 +1,7 @@
 <?php
 return [
-    'nlu' => [
-        'domain' => 'personal_income_tax',
-        'intent' => 'personal_income_tax.inquiry',
+    'intent' => [
+        'name' => 'personal_income_tax.inquiry',
         'slots' => [
             [
                 'name' => 'monthlysalary',

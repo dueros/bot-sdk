@@ -52,21 +52,21 @@ class Nlu{
      * @desc 设置slot。如果不存在，新增一个slot
      * @param string $field
      * @param string $value
+     * @param string $index 第几组slot
      * @return null
      **/
-    public function setSlot($field, $value){
+    public function setSlot($field, $value, $index=0){
         if(empty($field)){
             return;
         }
     
-        foreach($this->data['slots'] as &$slot) {
-            if($slot['name'] == $field) {
-                $slot['value'] = $value;
-                return;
-            }
+        $slots = &$this->data[$index]['slots'];
+        if($slots[$field]) {
+            $slots[$field]['value'] = $value;
+            return;
         }
-
-        $this->data['slots'][] = [
+        
+        $slots[$field] = [
             'name' => $field,
             'value' => $value,
         ];
@@ -76,16 +76,26 @@ class Nlu{
      * @param string $field
      * @return string
      **/
-    public function getSlot($field) {
+    public function getSlot($field, $index=0) {
         if(empty($field)){
             return;
         }
 
-        foreach($this->data['slots'] as &$slot) {
-            if($slot['name'] == $field) {
-                return $slot['value'];
-            }
+        $slots = $this->data[$index]['slots'];
+        return $slots[$field]['value'];
+    }
+
+    /**
+     * @param string $field
+     * @return string
+     **/
+    public function getScore($field, $index=0) {
+        if(empty($field)){
+            return;
         }
+
+        $slots = $this->data[$index]['slots'];
+        return $slots[$field]['score'];
     }
 
     /**
@@ -94,54 +104,7 @@ class Nlu{
      * @return string
      **/
     public function getIntent(){
-        return $this->data['intent'];
-    }
-
-    /**
-     * @desc 转化为复杂结果
-     * @param null
-     * @return array
-     **/
-    public function toQueryInfo(){
-        $nlu = $this->data;
-        if(!$nlu) {
-            return; 
-        }
-
-        $service_query_info = [
-            "query"=> "",
-            "type"=> $nlu['domain'],
-            "result_list"=> [
-                [
-                    "type"=> $nlu['domain'],
-                    "score"=> 100,
-                    "result_list"=> [
-                        [
-                            "type"=> $nlu['intent'],
-                            "score"=> 100,
-                            "content"=> "",
-                            "result_list"=> array_map(function($slot){
-                                return [
-                                    "key"=>$slot['name'],
-                                    "type"=>"text",
-                                    "score"=>100,
-                                    "value"=>[
-                                        [
-                                            "name"=>$slot['name'],
-                                            "value"=>$slot['value'],
-                                            "type"=>"string",
-                                            "source"=>"query",
-                                            "session_num"=>0,
-                                        ],
-                                    ],
-                                ];
-                            },$nlu['slots']?$nlu['slots']:[])
-                        ]
-                    ]
-                ]
-            ]
-        ];
-        return $service_query_info;
+        return $this->data[0]['name'];
     }
 
     /**
@@ -165,19 +128,11 @@ class Nlu{
             return;
         }
 
-        if(is_string($slot)) {
-            $slot = [$slot]; 
-        }
-
-        if(!is_array($slot)) {
-            return; 
-        }
-        $intent = $this->ask ? $this->ask : [self::SLOT_NOT_UNDERSTAND];
-        array_splice($intent, -1, 0, $slot);
-        $this->ask = array_values(array_unique($intent));
+        $this->ask = $slot;
     }
 
     /**
+     * TODO rebuild
      * @desc 给出一些选项，让用户进行选择
      * @param array $list , ['query' => '', 'slot' => '', 'value' => '']
      * @return null
@@ -201,6 +156,7 @@ class Nlu{
     }
 
     /**
+     * TODO rebuild
      * @desc 询问用户希望得到YES or NO的回答
      * @param array $slotYes eg: ['slot'=>'name of slot', 'value'=>'如果是肯定回答，填充的值']
      * @param array $slotNo eg: ['slot'=>'name of slot', 'value'=>'如果是否定回答，填充的值']
@@ -225,66 +181,25 @@ class Nlu{
      * @param null
      * @return array
      **/
-    public function toQueryIntent(){
+    public function toDirective(){
         $intents=[];
 
-        //ask
-        $askSlots=$this->ask;
-        if(!empty($askSlots)){
-            $askIntent=['intent_name'=>'ask','params'=>['slot'=>[]]];
-            foreach ($askSlots as $askSlot){
-                $askIntent['params']['slot'][]=$askSlot;
-            }
-            $intents[]=$askIntent;
-        }
-
-        //select
-        $selectValues=$this->select;
-        if(!empty($selectValues)){
-            $selectIntent=['intent_name'=>'select','params'=>['select_set'=>[]]];
-            foreach ($selectValues as $selectValue){
-                $query=$selectValue['query'];
-                $actions=$selectValue['action'];
-                if(!is_array($actions)){
-                    $actions=[['name'=>$selectValue['action'],'intent'=>$selectValue['intent'],'slot'=>$selectValue['slot'],'value'=>$selectValue['value']]];
-                }
-                $selectIntent['params']['select_set'][]=[
-                    'query'=>$query,
-                    'action'=>$actions
-                ];
-            }
-            $intents[]=$selectIntent;
-        }
-
-        //check
-        $checkValues=$this->check;
-        if(!empty($checkValues['true_action']) && !empty($checkValues['false_action'])){
-            $trueAction=$checkValues['true_action'];
-            $falseAction=$checkValues['false_action'];
-
-            $checkIntent=['intent_name'=>'check','params'=>['true_action'=>[],'false_action'=>[]]];
-            $checkIntent['params']['true_action']=[
-                [
-                    'name'=>'slot_merge',
-                    'slot'=>$trueAction['slot'],
-                    'value'=>$trueAction['value']
+        if($this->ask) {
+            return [
+                'type' => 'Dialog.ElicitSlot',
+                'slotToElicit' => $this->ask,
+                'updatedIntent' => [
+                    'name' => $this->getIntent(),
+                    'slots' => $this->data[0]['slots'],
                 ]
-            ];
-            $checkIntent['params']['false_action']=[
-                [
-                    'name'=>'slot_merge',
-                    'slot'=>$falseAction['slot'],
-                    'value'=>$falseAction['value']
-                ]
-            ];
-            $intents[]=$checkIntent;
+            ];    
         }
-
-        $ret = [];
-        $ret['intent'] = $intents;
-        //$ret['session_timeout'] = $this->bot_conf['session_timeout'];
-        $ret['session_timeout'] = 300;
-		return $ret;
 	}
+
+    public function toUpdateIntent(){
+        return [
+            'intent' => $this->data 
+        ]; 
+    }
 }
  

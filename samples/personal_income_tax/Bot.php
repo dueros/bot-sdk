@@ -40,8 +40,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 	 * @param null
 	 * @return null
 	 * */
-	public function __construct($domain, $postData = []) {
-		parent::__construct($domain, $postData);
+	public function __construct($postData = []) {
+		parent::__construct($postData);
 		$this->log = new \Baidu\Duer\Botsdk\Log([
 				// 日志存储路径
 				'path' => 'log/',
@@ -51,13 +51,23 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 
 		// 记录这次请求的query
 		$this->log->setField('query', $this->request->getQuery());
-		$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
+		//$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
+        $this->addHandler('LaunchRequest', function(){
+            return [
+					'outputSpeech' => '<speak>欢迎光临</speak>' 
+				];
+
+        });
+
+        $this->addHandler('SessionEndRequest', function(){
+            return null; 
+        });
 
 		// 在匹配到domain以及intent的情况下，首先询问月薪
 		$this->addHandler('#personal_income_tax.inquiry && !slot.monthlysalary', function() {
 				$this->nlu->needAsk('monthlysalary');
 				return [
-					'views' => [$this->getTxtView('您的税前工资是多少呢？')]
+					'card' => $this->getTxtCard('您的税前工资是多少呢？')
 				];
 		});
 
@@ -69,7 +79,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				}
 				$this->nlu->needAsk('location');
 				return [
-					'views' => [$this->getTxtView('您所在城市是哪里呢？')]
+					'card' => $this->getTxtCard('您所在城市是哪里呢？')
 				];
 		});
 
@@ -81,7 +91,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				}
 				$this->nlu->needAsk('compute_type');
 				return [
-					'views' => [$this->getTxtView('请选择您要查询的个税种类')]
+					'card' => $this->getTxtCard('请选择您要查询的个税种类')
 				];
 		});
 
@@ -99,7 +109,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if ($value <= 0) {
 			$this->nlu->needAsk('monthlysalary');
 			return [
-				'views' => [$this->getTxtView('输入的工资不正确，请重新输入：')]
+				'card' => $this->getTxtCard('输入的工资不正确，请重新输入：')
 			];
 		}
 	}
@@ -115,7 +125,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if (!in_array($location, self::$city)) {
 			$this->nlu->needAsk('location');
 			return [
-				'views' => [$this->getTxtView("该城市不存在，请重新选择城市：")]	
+				'card' => $this->getTxtCard("该城市不存在，请重新选择城市：")
 			];
 		}
 	}
@@ -141,7 +151,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if (!isset(self::$inquiry_type[$compute_type])) {
 			$this->nlu->needAsk('compute_type');
 			return [
-				'views' => [$this->getTxtView("请重新选择查询的个税种类：")]
+				'card' => $this->getTxtCard("请重新选择查询的个税种类：")
 			];
 		}
 		$monthlysalary = intval($this->getSlot('monthlysalary'));
@@ -181,7 +191,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 			$views .= $obj[col1] . ": " . $obj[col2_value];
 		}
 		return [
-			'views' => [$this->getTxtView($views)]
+			'card' => $this->getTxtCard($views)
 		];
 	}
 }

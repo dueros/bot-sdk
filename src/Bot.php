@@ -42,21 +42,18 @@ abstract class Bot{
      * @param array $postData us对bot的数据
      * @return null
      **/
-    public function __construct($domain, $postData=[] ) {
+    public function __construct($postData=[] ) {
         if(!$postData){
             $rawInput = file_get_contents("php://input");
             $rawInput = str_replace("", "", $rawInput);
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
-        $this->request = Request::parse($postData);
+        $this->request = new Request($postData);
 
         $this->session = $this->request->getSession();
-        if($domain === false) {
-            $this->nluSelf = true; 
-        }
 
-        $this->nlu = $this->request->getNlu($domain);
+        $this->nlu = $this->request->getNlu();
         $this->response = new Response($this->request, $this->session, $this->nlu);
     }
 
@@ -122,7 +119,9 @@ abstract class Bot{
      * @return string
      **/
     public function getIntent(){
-        return $this->nlu->getIntent();
+        if($this->nlu){
+            return $this->nlu->getIntent();
+        }
     }
 
     /**
@@ -156,7 +155,9 @@ abstract class Bot{
      * @return string
      **/
     public function getSlot($field){
-        return $this->nlu->getSlot($field);
+        if($this->nlu){
+            return $this->nlu->getSlot($field);
+        }
     }
 
     /**
@@ -184,6 +185,23 @@ abstract class Bot{
 
         return $view;
     }
+
+    public function getTxtCard($text, $anchor=[], $cueWords=[]){
+        $card = [
+            'type' => 'txt',
+            'content' => $text,
+        ]; 
+
+        if($anchor) {
+            $card['url']  = $anchor['url'];
+            $card['anchorText']  = $anchor['anchorText'];
+        }
+
+        if($cueWords) {
+            $card['cueWords']  = $cueWords;
+        }
+        return $card;
+    } 
 
     /**
      * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
@@ -229,7 +247,7 @@ abstract class Bot{
         $eventHandler = $this->getRegisterEventHandler();
 
         //check domain
-        if(!$this->nlu && !$eventHandler && !$this->nluSelf) {
+        if($this->request->getType() == 'IntentRequset' && !$this->nlu && !$eventHandler && !$this->nluSelf) {
             return $this->response->defaultResult(); 
         }
 
@@ -418,6 +436,7 @@ abstract class Bot{
             'intent' => '/#([\w\.\d_]+)/',
             'session' => '/session\.([\w\.\d_]+)/',
             'slot' => '/slot\.([\w\d_]+)/',
+            'requestType' => '/^(LaunchRequest|sessionEndRequest)$/',
         ];
 
         $self = $this;
@@ -429,6 +448,8 @@ abstract class Bot{
                     return json_encode($self->getSession($m[1]));
                 }else if($k == 'slot') {
                     return json_encode($self->getSlot($m[1]));
+                }else if($k == 'requestType') {
+                    return json_encode($self->request->getType() == $m[1]);
                 }
             }, $str); 
         }
