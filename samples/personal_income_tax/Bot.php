@@ -67,7 +67,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		$this->addHandler('#personal_income_tax.inquiry && !slot.monthlysalary', function() {
 				$this->nlu->needAsk('monthlysalary');
 				return [
-					'card' => $this->getTxtCard('您的税前工资是多少呢？')
+					'card' => $this->getTxtCard('您的税前工资是多少呢？'),
+                    'reprompt' => '您的税前工资是多少呢？',
 				];
 		});
 
@@ -79,7 +80,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				}
 				$this->nlu->needAsk('location');
 				return [
-					'card' => $this->getTxtCard('您所在城市是哪里呢？')
+                    'card' => $this->getTxtCard('您所在城市是哪里呢？'),
+                    'outputSpeech' => '您所在城市是哪里呢？',
 				];
 		});
 
