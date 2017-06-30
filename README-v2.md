@@ -70,7 +70,7 @@ public function create(){
 $this->getTxtCard('text');
 ```
 
-`directives`也是一个数组，[directives格式说明](https://github.com/dueros/dumi_doc/blob/master/doc/api/response.md#directives)，这里返回的指令'SetAlerts'，告诉客户端需要设置一个闹钟。
+`directives`也是一个数组，[directives 7月5号发布]，这里返回的指令'SetAlerts'，告诉客户端需要设置一个闹钟。
 
 设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受中控来的请求。比如，新建一个文件index.php，拷贝如下代码：
 ```php
