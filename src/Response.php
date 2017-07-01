@@ -126,7 +126,7 @@ class Response{
      * card: 可选
      * directives: 可选
      * resource: 可选
-     * outputSpeech: 必选
+     * outputSpeech: 可选
      *
      * @return string
      */
@@ -142,8 +142,8 @@ class Response{
             $directives[] = $this->nlu->toDirective();
         }
 
-        if(!$data['outputSpeech'] && $data['card'] && $data['card']['type'] == 'txt') {
-            $data['outputSpeech'] = $data['card']['content'];
+        if(!$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\Txt) {
+            $data['outputSpeech'] = $data['card']->getData('content');
         }
 
         $ret = [
@@ -156,7 +156,7 @@ class Response{
                 'needDetermine' => $this->confirm ? true : false,
                 'directives' => $directives,
                 'shouldEndSession' => $this->shouldEndSession,
-                'card' => $data['card'],
+                'card' => $data['card']->getData(),
                 'resource' => $data['resource'],
                 'outputSpeech' => $data['outputSpeech']?$this->formatSpeech($data['outputSpeech']):null,
                 'reprompt' => $data['reprompt']?[

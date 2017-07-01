@@ -186,23 +186,6 @@ abstract class Bot{
         return $view;
     }
 
-    public function getTxtCard($text, $anchor=[], $cueWords=[]){
-        $card = [
-            'type' => 'txt',
-            'content' => $text,
-        ]; 
-
-        if($anchor) {
-            $card['url']  = $anchor['url'];
-            $card['anchorText']  = $anchor['anchorText'];
-        }
-
-        if($cueWords) {
-            $card['cueWords']  = $cueWords;
-        }
-        return $card;
-    } 
-
     /**
      * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
      * @param null
@@ -212,9 +195,7 @@ abstract class Bot{
         //TODO return a confirm message
         $this->response->setConfirm();
         return [
-            'views' => [
-                $this->getTxtView('confirm us') 
-            ]
+            'card' => new Card\Txt('confirm us'),
         ]; 
     }
 

@@ -6,6 +6,9 @@
 require '../../vendor/autoload.php';
 use \Logger; 
 use \Utils; 
+use \Baidu\Duer\Botsdk\Card\Txt;
+use \Baidu\Duer\Botsdk\Card\Standard;
+use \Baidu\Duer\Botsdk\Card\ListCard;
 
 class Bot extends \Baidu\Duer\Botsdk\Bot {
 	// 计算个税的URL
@@ -53,7 +56,10 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		$this->log->setField('query', $this->request->getQuery());
 		//$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
         $this->addHandler('LaunchRequest', function(){
+            $card = new ListCard();
+            $card->addItem(['title'=>'title', 'content'=>'content', 'url'=>'http://www.baidu.com']);
             return [
+                    'card' => $card,
 					'outputSpeech' => '<speak>欢迎光临</speak>' 
 				];
 
@@ -66,8 +72,10 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		// 在匹配到domain以及intent的情况下，首先询问月薪
 		$this->addHandler('#personal_income_tax.inquiry && !slot.monthlysalary', function() {
 				$this->nlu->needAsk('monthlysalary');
+                $card = new Txt('您的税前工资是多少呢？');
+                $card->cueWords(['20000','10000']);
 				return [
-					'card' => $this->getTxtCard('您的税前工资是多少呢？'),
+					'card' => $card,
                     'reprompt' => '您的税前工资是多少呢？',
 				];
 		});
@@ -79,8 +87,11 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 					return $ret;
 				}
 				$this->nlu->needAsk('location');
+                $card = new Standard(['title'=>'title', 'content'=>'content', 'image'=>'http://www..']);
+                $card->anchor('http://www.baidu.com');
 				return [
-                    'card' => $this->getTxtCard('您所在城市是哪里呢？'),
+                    //'card' => new Txt('您所在城市是哪里呢？'),
+                    'card' => $card,
                     'outputSpeech' => '您所在城市是哪里呢？',
 				];
 		});
@@ -93,7 +104,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				}
 				$this->nlu->needAsk('compute_type');
 				return [
-					'card' => $this->getTxtCard('请选择您要查询的个税种类')
+					'card' => new Txt('请选择您要查询的个税种类')
 				];
 		});
 
@@ -111,7 +122,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if ($value <= 0) {
 			$this->nlu->needAsk('monthlysalary');
 			return [
-				'card' => $this->getTxtCard('输入的工资不正确，请重新输入：')
+				'card' => new Txt('输入的工资不正确，请重新输入：')
 			];
 		}
 	}
@@ -127,7 +138,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if (!in_array($location, self::$city)) {
 			$this->nlu->needAsk('location');
 			return [
-				'card' => $this->getTxtCard("该城市不存在，请重新选择城市：")
+				'card' => new Txt("该城市不存在，请重新选择城市：")
 			];
 		}
 	}
@@ -153,7 +164,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if (!isset(self::$inquiry_type[$compute_type])) {
 			$this->nlu->needAsk('compute_type');
 			return [
-				'card' => $this->getTxtCard("请重新选择查询的个税种类：")
+				'card' => new Txt("请重新选择查询的个税种类：")
 			];
 		}
 		$monthlysalary = intval($this->getSlot('monthlysalary'));
@@ -193,7 +204,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 			$views .= $obj[col1] . ": " . $obj[col2_value];
 		}
 		return [
-			'card' => $this->getTxtCard($views)
+			'card' => new Txt($views)
 		];
 	}
 }
