@@ -6,37 +6,21 @@ class ListCard extends \Baidu\Duer\Botsdk\Card\Base{
 
     public function __construct($data=[]) {
         $this->data['type'] = 'list';
-        if($data['list'] && is_array($data['list'])) {
-            foreach($data['list'] as $item) {
-                $this->addItem($item); 
-            }
-        }
-
-        parent::__construct($data);
+        parent::__construct();
     }
 
-    public function addItem($arr){
-        if(!$arr) {
-            return $this; 
+    /**
+     * @listCardItem ListCardItem 列表项
+     **/
+    public function addItem($listCardItem){
+        if($listCardItem instanceof ListCardItem) {
+
+            if(!$this->data['list']) {
+                $this->data['list'] = [];
+            }
+
+            $this->data['list'][] = $listCardItem->getData();
         }
-
-        if(!$this->data['list']) {
-            $this->data['list'] = [];
-        }
-
-        $item = [];
-        $item['title'] = $arr['title'];
-        $item['content'] = $arr['content'];
-
-        if($arr['image']) {
-            $item['image'] = $arr['image'];
-        }
-
-        if($arr['url']) {
-            $item['url'] = $arr['url'];
-        }
-
-        $this->data['list'][] = $item;
         return $this;
     }
 }

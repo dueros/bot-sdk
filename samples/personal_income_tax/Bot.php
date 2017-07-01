@@ -6,9 +6,10 @@
 require '../../vendor/autoload.php';
 use \Logger; 
 use \Utils; 
-use \Baidu\Duer\Botsdk\Card\Txt;
-use \Baidu\Duer\Botsdk\Card\Standard;
+use \Baidu\Duer\Botsdk\Card\TxtCard;
+use \Baidu\Duer\Botsdk\Card\StandardCard;
 use \Baidu\Duer\Botsdk\Card\ListCard;
+use \Baidu\Duer\Botsdk\Card\ListCardItem;
 
 class Bot extends \Baidu\Duer\Botsdk\Bot {
 	// 计算个税的URL
@@ -57,7 +58,13 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		//$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
         $this->addHandler('LaunchRequest', function(){
             $card = new ListCard();
-            $card->addItem(['title'=>'title', 'content'=>'content', 'url'=>'http://www.baidu.com']);
+            $item = new ListCardItem();
+            $item->setTitle('title')
+                ->setContent('content')
+                ->setUrl('http://www')
+                ->setImage('http://www.png');
+
+            $card->addItem($item);
             return [
                     'card' => $card,
 					'outputSpeech' => '<speak>欢迎光临</speak>' 
@@ -72,8 +79,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		// 在匹配到domain以及intent的情况下，首先询问月薪
 		$this->addHandler('#personal_income_tax.inquiry && !slot.monthlysalary', function() {
 				$this->nlu->needAsk('monthlysalary');
-                $card = new Txt('您的税前工资是多少呢？');
-                $card->cueWords(['20000','10000']);
+                $card = new TxtCard('您的税前工资是多少呢？');
+                $card->addCueWords(['20000','10000']);
 				return [
 					'card' => $card,
                     'reprompt' => '您的税前工资是多少呢？',
@@ -87,8 +94,11 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 					return $ret;
 				}
 				$this->nlu->needAsk('location');
-                $card = new Standard(['title'=>'title', 'content'=>'content', 'image'=>'http://www..']);
-                $card->anchor('http://www.baidu.com');
+                $card = new StandardCard();
+                $card->setTitle('title');
+                $card->setContent('content');
+                $card->setImage('http://www...');
+                $card->setAnchor('http://www.baidu.com');
 				return [
                     //'card' => new Txt('您所在城市是哪里呢？'),
                     'card' => $card,

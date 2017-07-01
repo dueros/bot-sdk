@@ -2,18 +2,11 @@
 
 namespace Baidu\Duer\Botsdk\Card;
 
-class Image extends \Baidu\Duer\Botsdk\Card\Base{
+class ImageCard extends \Baidu\Duer\Botsdk\Card\Base{
 
     public function __construct($data=[]) {
         $this->data['type'] = 'image';
-
-        if($data['list'] && is_array($data['list'])) {
-            foreach($data['list'] as $item) {
-                $this->addItem($item['src'], $item['thumb']); 
-            }
-        }
-
-        parent::__construct($data);
+        parent::__construct();
     }
 
     public function addItem($src, $thumb=''){
