@@ -116,5 +116,10 @@ function genUsDataV2($usData, $sendData){
         $usData['request']['intents'] = $arr;
     }
 
+    $session = $sendData['session'];
+    if($session) {
+        $usData['session']['attributes'] = $session;
+    }
+
     return $usData;
 }

@@ -74,14 +74,7 @@ class Request {
     public function getNlu(){
         return $this->nlu;
     }
-    /**
-     * @param $null
-     * @return raw_msg_body
-     */
-    public function getRawMsg()
-    {
-        return $this->data['msg'];
-    }
+    
     
     /**
      * @desc 返回设备信息
@@ -93,128 +86,24 @@ class Request {
     }
 
     /**
-     * @desc 返回app版本
-     * @param null
-     * @return Nlu
-     **/
-    public function getAppVer() {
-        return $this->data['msg']['app_ver'];
-    }
-
-    /**
-     * @param null
-     * @return string
-     **/
-    public function getBduss(){
-        return $this->data['msg']['bduss'];
-    }
-
-    /**
-     * @param null
-     * @return string
-     **/
-    public function getSessionTag(){
-        return $this->data['params']['session_tag'];
-    }
-
-    /**
-     * @deprecated
-     * @param null
-     * @return string
-     **/
-    public function getSearchBoxVer() {
-        if (empty($this->data['msg']['searchbox_ver'])) {
-            return '';
-        }
-        return $this->data['msg']['searchbox_ver'];
-    }
-
-    /**
-     * @deprecated
-     * @param null
-     * @return string
-     **/
-    public function getOperationSystem() {
-        if (empty($this->data['msg']['operation_system'])) {
-            return '';
-        }
-        return $this->data['msg']['operation_system'];
-    }
-    
-    /**
      * @param null
      * @return array
      **/
     public function getUserInfo() {
         return $this->data['user_info'];
     }
-
-    /**
-     * @param null
-     * @return array
-     **/
-    public function getDaQueryInfo() {
-        return $this->daQueryInfo;
-    }
     
-    /**
-     * @deprecated
-     * @param string
-     * @return array
-     **/
-    public function getBackendServiceInfo($type = "all") {
-        if (empty($type) || $type == "all") {
-            return $this->backendServiceInfo;
-        }
-        if (!is_array($this->backendServiceInfo)) {
-            return [];
-        }
-        if (!isset($this->backendServiceInfo[$type])) {
-            return [];
-        }
-        return $this->backendServiceInfo[$type];
-    }
-
-    /**
-     * 获取daqueryinfo指定服务的结果
-     * @param $type da service name
-     * @return array
-     */
-    public function getDaQueryInfoResults($type = "all") {
-        if (empty($type) || $type == "all") {
-            return $this->daQueryInfoResults;
-        }
-        if (!is_array($this->daQueryInfoResults)) {
-            return [];
-        }
-        foreach ($this->daQueryInfoResults as $each_da_service) {
-            if ($each_da_service['type'] == $type) {
-                return $each_da_service;
-            }
-        }
-        return [];
-    }
-    
-
     public function getType() {
         return $this->requsetType;
     }
 
-    /**
-     * @deprecated
-     * @param null
-     * @return string
-     **/
-    public function getRequestType() {
-        return $this->data['request_type'];
-    }
 
     /**
      * @param null
      * @return string
      **/
     public function getUserId() {
-        return $this->data['user_id'];
+        return $this->data['context']['system']['user']['userId']; 
     }
 
     /**
@@ -226,13 +115,6 @@ class Request {
         return $this->data['cuid'];
     }
 
-    /**
-     * @param null
-     * @return string
-     **/
-    public function getDumiId() {
-        return $this->data['dumi_id'];
-    }
 
     /**
      * @param null
@@ -245,28 +127,6 @@ class Request {
         return '';
     }
 
-    /**
-     * @param null
-     * @return string
-     **/
-    public function getQueryType() {
-        if (empty($this->data['msg']['query_type'])) {
-            return '';
-        }
-        return $this->data['msg']['query_type'];
-    }
-
-    /**
-     * @param null
-     * @return string
-     **/
-    public function getChannelFrom()
-    {
-        if (empty($this->data['msg']['channel_from'])) {
-            return '';
-        }
-        return $this->data['msg']['channel_from'];
-    }
 
     /**
      * @param null
@@ -275,75 +135,9 @@ class Request {
     public function getLocation() {
         return $this->data['location'];
     }
+    
 
-    /**
-     * @deprecated
-     * @param null
-     * @return array
-     **/
-    public function getLastLocation() {
-        return $this->data['last_location'];
-    }
 
-    /**
-     * @param null
-     * @return string
-     **/
-    public function getClientFrom() {
-        return $this->data['params']['client_from'];
-    }
-
-    /**
-     * @param null
-     * @return array
-     **/
-    public function getParam($key) {
-        if (!isset($this->data['params'])) {
-            return null;
-        }
-        if (!$key) {
-            $this->data['params'];
-        }
-        if (!isset($this->data['params'][$key])) {
-            return null;
-        }
-        return $this->data['params'][$key];
-    }
-
-    /**
-     * 获取assistant_name
-     * @param null
-     * @return string
-     */
-    public function getAssistantName() {
-        return $this->data['params']['assistant_name'];
-    }
-
-    /**
-     * @desc 获取voice_asistant
-     * @param null
-     * @return string
-     */
-    public function getVoiceAssistant() {
-        return $this->data['params']['voice_assistant'];
-    }
-
-    /**
-     * @desc 获取appid
-     * @param null
-     * @return string
-     */
-    public function getAppid() {
-        return $this->data['params']['appid'];
-    }
-
-    /**
-     * @param null
-     * @return boolean
-     **/
-    public function hasLogin() {
-        return !empty($this->data['baiduid']);
-    }
 
     /**
      * @param null

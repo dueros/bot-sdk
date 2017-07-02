@@ -67,49 +67,6 @@ class Response{
         }
     }
 
-    /**
-     * @deprecated
-     * @param array $views
-     * @return array
-     **/
-    private function convertViews2ResultList($views){
-        $sourceType = $this->sourceType;
-        $resultList=array_map(function($view) use($sourceType){
-            if($view['type']=="txt"){
-                return [
-                    'result_confidence' => 100,
-                    'source_type' => $sourceType,
-                    'voice' => $view['content'],
-                    'result_type'=>"txt",
-                    "result_content"=>[
-                        'answer'=>$view['content'],
-                    ],
-                ];
-            }
-            if($view['type']=="list"){
-                return [
-                    "result_type"=>"multi_news",
-                    'source_type' => $sourceType,
-                    'voice' => $view['content'],
-                    'result_confidence' => 100,
-                    "result_content"=>[
-                        "objects"=>array_map(function($item){
-                            return array_filter([
-                                "title"=>$item['title'],
-                                "desc"=>$item['summary'],
-                                "url"=>$item['url'],
-                                "img_url"=>$item['image'],
-                            ]);
-                        }, $view['list']),
-                    ],
-                ];
-            }
-            return null;
-        },$views);
-        $resultList=array_values(array_filter($resultList));
-        return $resultList;
-    }
-        
 
     /**
      * @desc 当没有结果时，返回默认值
@@ -139,10 +96,13 @@ class Response{
 
         $directives = $data['directives'] ? $data['directives'] : [];
         if($this->nlu){
-            $directives[] = $this->nlu->toDirective();
+            $arr = $this->nlu->toDirective();
+            if($arr) {
+                $directives[] = $arr;
+            }
         }
 
-        if(!$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\Txt) {
+        if(!$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\Text) {
             $data['outputSpeech'] = $data['card']->getData('content');
         }
 
@@ -156,7 +116,7 @@ class Response{
                 'needDetermine' => $this->confirm ? true : false,
                 'directives' => $directives,
                 'shouldEndSession' => $this->shouldEndSession,
-                'card' => $data['card']->getData(),
+                'card' => $data['card']?$data['card']->getData():null,
                 'resource' => $data['resource'],
                 'outputSpeech' => $data['outputSpeech']?$this->formatSpeech($data['outputSpeech']):null,
                 'reprompt' => $data['reprompt']?[

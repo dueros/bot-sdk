@@ -2,6 +2,8 @@
 
 require '../../vendor/autoload.php';
 
+use \Baidu\Duer\Botsdk\Card\TextCard;
+
 class Bot extends Baidu\Duer\Botsdk\Bot{
     /**
      * @param null
@@ -9,7 +11,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
      **/
     public function __construct($postData = []) {
         //domain = false 不使用度秘提供的解析，自己完成query分析
-        parent::__construct(false, $postData);
+        parent::__construct($postData);
 
         $this->log = new Baidu\Duer\Botsdk\Log([
             //日志存储路径
@@ -31,8 +33,9 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
         $this->addHandler('session.status == 1', function(){
             $this->setSession('status', 2);
 
+            $card = new TextCard('这是第二轮对话的回复');
             return [
-                'views' => [$this->getTxtView('这是第二轮对话的回复')]
+                'card' => $card 
             ];
         });
 
@@ -44,8 +47,9 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
             }
 
             $this->setSession('status', 1);
+            $card = new TextCard('hello');
             return [
-                'views' => [$this->getTxtView('hello')]
+                'card' => $card 
             ];
         });
 
@@ -59,8 +63,9 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
     public function dialogThree(){
         $this->setSession('status', 0); 
 
+        $card = new TextCard('对话要结束啦，继续说"hello"开始');
         return [
-            'views' => [$this->getTxtView('对话要结束啦，继续说"hello"开始')]
+            'card' => $card 
         ];
     }
 }

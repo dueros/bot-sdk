@@ -170,23 +170,6 @@ abstract class Bot{
     }
 
     /**
-     * @param string $text
-     * @param string $url
-     * @return array
-     **/
-    public function getTxtView($text, $url=''){
-        $view = [
-            'type' => 'txt',
-            'content' => $text,
-        ]; 
-        if($url) {
-            $view['url']  = $url;
-        }
-
-        return $view;
-    }
-
-    /**
      * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
      * @param null
      * @return array
@@ -195,7 +178,7 @@ abstract class Bot{
         //TODO return a confirm message
         $this->response->setConfirm();
         return [
-            'card' => new Card\Txt('confirm us'),
+            'card' => new Card\Text('confirm us'),
         ]; 
     }
 
@@ -205,7 +188,7 @@ abstract class Bot{
      * @return boolean
      **/
     public function effectConfirmed(){
-        return $this->request->getConfirm() == 1; 
+        return $this->request->getConfirm(); 
     }
 
     /**

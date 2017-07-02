@@ -9,7 +9,7 @@ class ImageCard extends \Baidu\Duer\Botsdk\Card\Base{
         parent::__construct();
     }
 
-    public function addItem($src, $thumb=''){
+    public function addItem($src, $thumbnail=''){
         if(!$src) {
             return $this; 
         }
@@ -20,8 +20,8 @@ class ImageCard extends \Baidu\Duer\Botsdk\Card\Base{
 
         $item = [];
         $item['src'] = $src;
-        if($thumb) {
-            $item['thumb'] = $thumb;
+        if($thumbnail) {
+            $item['thumbnail'] = $thumbnail;
         }
 
         $this->data['list'][] = $item;

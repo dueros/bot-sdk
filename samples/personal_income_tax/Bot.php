@@ -6,7 +6,7 @@
 require '../../vendor/autoload.php';
 use \Logger; 
 use \Utils; 
-use \Baidu\Duer\Botsdk\Card\TxtCard;
+use \Baidu\Duer\Botsdk\Card\TextCard;
 use \Baidu\Duer\Botsdk\Card\StandardCard;
 use \Baidu\Duer\Botsdk\Card\ListCard;
 use \Baidu\Duer\Botsdk\Card\ListCardItem;
@@ -79,7 +79,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		// 在匹配到domain以及intent的情况下，首先询问月薪
 		$this->addHandler('#personal_income_tax.inquiry && !slot.monthlysalary', function() {
 				$this->nlu->needAsk('monthlysalary');
-                $card = new TxtCard('您的税前工资是多少呢？');
+                $card = new TextCard('您的税前工资是多少呢？');
                 $card->addCueWords(['20000','10000']);
 				return [
 					'card' => $card,
@@ -100,7 +100,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
                 $card->setImage('http://www...');
                 $card->setAnchor('http://www.baidu.com');
 				return [
-                    //'card' => new Txt('您所在城市是哪里呢？'),
+                    //'card' => new TextCard('您所在城市是哪里呢？'),
                     'card' => $card,
                     'outputSpeech' => '您所在城市是哪里呢？',
 				];
@@ -114,7 +114,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				}
 				$this->nlu->needAsk('compute_type');
 				return [
-					'card' => new Txt('请选择您要查询的个税种类')
+					'card' => new TextCard('请选择您要查询的个税种类')
 				];
 		});
 
@@ -132,7 +132,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if ($value <= 0) {
 			$this->nlu->needAsk('monthlysalary');
 			return [
-				'card' => new Txt('输入的工资不正确，请重新输入：')
+				'card' => new TextCard('输入的工资不正确，请重新输入：')
 			];
 		}
 	}
@@ -148,7 +148,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if (!in_array($location, self::$city)) {
 			$this->nlu->needAsk('location');
 			return [
-				'card' => new Txt("该城市不存在，请重新选择城市：")
+				'card' => new TextCard("该城市不存在，请重新选择城市：")
 			];
 		}
 	}
@@ -174,7 +174,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		if (!isset(self::$inquiry_type[$compute_type])) {
 			$this->nlu->needAsk('compute_type');
 			return [
-				'card' => new Txt("请重新选择查询的个税种类：")
+				'card' => new TextCard("请重新选择查询的个税种类：")
 			];
 		}
 		$monthlysalary = intval($this->getSlot('monthlysalary'));
@@ -214,7 +214,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 			$views .= $obj[col1] . ": " . $obj[col2_value];
 		}
 		return [
-			'card' => new Txt($views)
+			'card' => new TextCard($views)
 		];
 	}
 }

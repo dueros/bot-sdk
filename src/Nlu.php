@@ -28,27 +28,6 @@ class Nlu{
     }
 
     /**
-     * @desc 将复杂的NLU结构化简
-     * @param array $data
-     * @return array
-     **/
-    public static function parseQueryInfo($data){
-        $slot = $data['result_list'][0]['result_list'];
-        $ret = [
-            'domain' => $data['type'],
-            'intent' => $data['result_list'][0]['type'],
-            'slots' => array_map(function($item){
-                return [
-                    'name' => $item['value'][0]['name'],
-                    'value' => $item['value'][0]['value'],
-                ];
-            },$slot?$slot:[]),
-        ]; 
-
-        return new self($ret);
-    }
-
-    /**
      * @desc 设置slot。如果不存在，新增一个slot
      * @param string $field
      * @param string $value
@@ -129,51 +108,6 @@ class Nlu{
         }
 
         $this->ask = $slot;
-    }
-
-    /**
-     * TODO rebuild
-     * @desc 给出一些选项，让用户进行选择
-     * @param array $list , ['query' => '', 'slot' => '', 'value' => '']
-     * @return null
-     **/
-    public function needSelect($list, $addAsk=true){
-        if(array_keys($list) != range(0, count($list) - 1)){
-            $list = [$list];
-        }
-
-        $this->select = array_map(function($s){
-            $s['action'] = 'slot_merge';
-            return $s;
-        }, $list);
-
-        //set ask
-        if($addAsk){
-            $this->needAsk(array_map(function($item){
-                return $item['slot'];
-            }, $list));
-        }
-    }
-
-    /**
-     * TODO rebuild
-     * @desc 询问用户希望得到YES or NO的回答
-     * @param array $slotYes eg: ['slot'=>'name of slot', 'value'=>'如果是肯定回答，填充的值']
-     * @param array $slotNo eg: ['slot'=>'name of slot', 'value'=>'如果是否定回答，填充的值']
-     * @return null
-     **/
-    public function needCheck($slotYes, $slotNo, $addAsk=true){
-        $this->check = [
-            'true_action'  => ['slot' => $slotYes['slot'], 'value' => $slotYes['value'].''],
-            'false_action' => ['slot' => $slotNo['slot'], 'value' => $slotNo['value'].''],
-        ];
-
-        //set ask
-        if($addAsk){
-            $this->needAsk(array_map(function($item){
-                return $item['slot'];
-            }, [$slotYes, $slotNo]));
-        }
     }
 
     /**

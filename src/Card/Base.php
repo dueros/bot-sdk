@@ -16,7 +16,7 @@ abstract class Base{
      * @param array|string $data 比如：['###', '###',...,'###'], 或者'###'
      * @return self
      **/
-    public function addCueWords($arr=[]){
+    public function addCueWords($arr){
         if($arr) {
             if(is_string($arr)) {
                 $arr = [$arr]; 
@@ -68,6 +68,8 @@ abstract class Base{
             $this->data[$field] = $arguments[0];
             return $this;
         }
+
+        throw new \Exception('function not found');
     }
 }
  

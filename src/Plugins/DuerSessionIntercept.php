@@ -5,6 +5,8 @@
 **/
 namespace Baidu\Duer\Botsdk\Plugins;
 
+use \Baidu\Duer\Botsdk\Card\TextCard;
+
 class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
 
     /**
@@ -34,13 +36,10 @@ class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
 
         if($count >= $this->threshold) {
             $bot->clearSession();
+            $card = new TextCard($this->tip);
+
             return [ 
-                'bot_global_state' => [
-                    "bot_state" => "abnormal_finish"
-                ],
-                'views' => [
-                    $bot->getTxtView($this->tip)
-                ],
+                'card' => $card,
             ];
         }
     }

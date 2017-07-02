@@ -2,7 +2,7 @@
 
 namespace Baidu\Duer\Botsdk\Card;
 
-class TxtCard extends \Baidu\Duer\Botsdk\Card\Base{
+class TextCard extends \Baidu\Duer\Botsdk\Card\Base{
 
     public function __construct($str='') {
         $this->data['type'] = 'txt';
