@@ -12,17 +12,17 @@ abstract class Bot{
     private $event = [];
 
     /**
-     * 中控对Bot的请求
+     * DuerOS对Bot的请求
      **/
     public $request;
 
     /**
-     * Bot返回给中控的结果
+     * Bot返回给DuerOS的结果
      **/
     public $response;
 
     /**
-     * 中控提供的session。
+     * DuerOS提供的session。
      * 短时记忆能力
      **/
     public $session;
@@ -114,9 +114,9 @@ abstract class Bot{
      * @param null
      * @return string
      **/
-    public function getIntent(){
+    public function getIntentName(){
         if($this->nlu){
-            return $this->nlu->getIntent();
+            return $this->nlu->getIntentName();
         }
     }
 
@@ -172,8 +172,8 @@ abstract class Bot{
     }
 
     /**
-     * @desc 告诉中控，在多轮对话中，等待用户的回答
-     *       注意：如果有设置Nlu的ask，自动告诉中控，不用调用
+     * @desc 告诉DuerOS，在多轮对话中，等待用户的回答
+     *       注意：如果有设置Nlu的ask，自动告诉DuerOS，不用调用
      * @param null
      * @return null
      **/
@@ -183,7 +183,7 @@ abstract class Bot{
     }
 
     /**
-     * @desc 告诉中控，需要结束对话
+     * @desc 告诉DuerOS，需要结束对话
      *
      * @param null
      * @return null
@@ -400,7 +400,7 @@ abstract class Bot{
         foreach($rg as $k=>$r) {
             $str = preg_replace_callback($r, function($m) use($self, $k){
                 if($k == 'intent'){
-                    return json_encode($self->getIntent() == $m[1]);
+                    return json_encode($self->getIntentName() == $m[1]);
                 }else if($k == 'session') {
                     return json_encode($self->getSession($m[1]));
                 }else if($k == 'slot') {

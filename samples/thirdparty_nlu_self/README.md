@@ -5,11 +5,10 @@ require 'vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
     /**
-     * $postData可以不传，由于中控对bot是post请求，sdk默认自动获取
+     * $postData可以不传，由于DuerOS对bot是post请求，sdk默认自动获取
      */
     public function __construct($postData = []) {
-        // 将第一个参数domain 设置为false
-        parent::__construct(false, $postData);
+        parent::__construct($postData);
 
 
         // other handler
@@ -29,9 +28,10 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 $this->addHandler('session.status == 1', function(){
     //修改sesion 状态
     $this->setSession('status', 2);
+    $card = new TextCard('这是第二轮对话的回复');
 
     return [
-        'views' => [$this->getTxtView('这是第二轮对话的回复')]
+        'card' => $card
     ];
 });
 ```

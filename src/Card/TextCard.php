@@ -2,7 +2,7 @@
 
 namespace Baidu\Duer\Botsdk\Card;
 
-class TextCard extends \Baidu\Duer\Botsdk\Card\Base{
+class TextCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
 
     /**
      * @param string $content  文本卡片显示的content

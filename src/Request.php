@@ -1,6 +1,6 @@
 <?php
 /**
- * 中控对Bot的请求封装
+ * DuerOS对Bot的请求封装
  * @author yuanpeng01@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
@@ -173,27 +173,6 @@ class Request {
      **/
     public function getBotName() {
         return $this->data['context']['system']['bot']['botId']; 
-    }
-
-    /**
-     * @param null
-     * @return boolean
-     **/
-    public function getConfirm() {
-        if($this->requsetType == 'IntentRequest') {
-            return !!$this->data['request']['determined'];
-        }
-        return false;
-    }
-
-
-    /**
-     * 获取baiduid
-     * @param null
-     * @return string
-     */
-    public function getBaiduId() {
-        return $this->data['baiduid'];
     }
 
     /**

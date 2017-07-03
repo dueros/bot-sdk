@@ -1,10 +1,10 @@
 # 度秘BOT SDK for PHP
-这是一个帮助开发Bot的SDK，我们强烈建议您使用这个SDK开发度秘的Bot。当然，您可以完全自己来处理中控的协议，自己完成session、nlu、result的处理，但是度秘的中控对BOT的协议会经常进行升级，这样会给您带来一些麻烦。这个SDK会与中控的协议一起升级，会最大限度减少对您开发bot的影响。
+这是一个帮助开发Bot的SDK，我们强烈建议您使用这个SDK开发度秘的Bot。当然，您可以完全自己来处理DuerOS的协议，自己完成session、nlu、result的处理，但是度秘的DuerOS对BOT的协议会经常进行升级，这样会给您带来一些麻烦。这个SDK会与DuerOS的协议一起升级，会最大限度减少对您开发bot的影响。
 
 ## 通过bot-sdk可以快速的开发bot
-我们的目标是通过使用bot-sdk，可以迅速的开发一个bot，而不必过多去关注中控对Bot的复杂协议。我们提供如下功能：
+我们的目标是通过使用bot-sdk，可以迅速的开发一个bot，而不必过多去关注DuerOS对Bot的复杂协议。我们提供如下功能：
 
-* 封装了中控的request和response
+* 封装了DuerOS的request和response
 * 提供了session简化接口
 * 提供了nlu简化接口
     * slot 操作
@@ -25,7 +25,7 @@ require 'vendor/autoload.php';
 
 class Bot extends Baidu\Duer\Botsdk\Bot{
     /**
-     * $postData可以不传，由于中控对bot是post请求，sdk默认自动获取
+     * $postData可以不传，由于DuerOS对bot是post请求，sdk默认自动获取
      */
     public function __construct($postData = []) {
        parent::__construct($postData); 
@@ -114,7 +114,7 @@ $card->addItem('http://src.image', 'http://thumbnail.image');
 ```
 
 
-设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受中控来的请求。比如，新建一个文件index.php，拷贝如下代码：
+设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。比如，新建一个文件index.php，拷贝如下代码：
 ```php
 $bot = new Bot();
 
@@ -151,7 +151,7 @@ return [
 
 ## Lanuch & SessionEnd
 ### bot开始服务
-当bot被@（通过bot唤醒名打开时），中控会发送`LanuchRequest`给bot，此时，bot可以返回欢迎语或者操作提示：
+当bot被@（通过bot唤醒名打开时），DuerOS会发送`LanuchRequest`给bot，此时，bot可以返回欢迎语或者操作提示：
 ```php
 $this->addHandler('LaunchRequest', function(){
     return [
@@ -163,7 +163,7 @@ $this->addHandler('LaunchRequest', function(){
 ```
 
 ### bot 结束服务
-当用户表达退出bot时，中控会发送`SessionEndRequest`：
+当用户表达退出bot时，DuerOS会发送`SessionEndRequest`：
 ```php
 $this->addHandler('SessionEndRequest', function(){
     //todo sth
@@ -217,7 +217,7 @@ slot.remind_time  //取nlu中 remind_time 槽位
 slot.car_type     //取nlu中 car_type 槽位
 ```
 条件表达式`session`, `slot`是保留字，不能作为字段名使用。表达式只支持关系运算，不支持函数，自定义变量引用。
-NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，中控每次请求Bot时会将merge的slot都下发。`session`内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用`slot`和`session`：
+NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。`session`内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用`slot`和`session`：
 ```php
 //slot
 getSlot('slot name');
@@ -276,7 +276,7 @@ class YourIntercept extends \Baidu\Duer\Botsdk\Intercept{
 
 ## 如何调试
 ### 本地测试
-bot-sdk提供了一个简单的工具，方便用户在没有接入中控时调试自己的bot。
+bot-sdk提供了一个简单的工具，方便用户在没有接入DuerOS时调试自己的bot。
 首先你需要通过PHP内置的webserver，将你的bot运行起来，这里假设是监听的`8000`端口。然后，构造你的`NLU`、`session`等数据，如打车bot构造的数据结构，具体可以参考`samples/personal_income_tax`中part目录的例子，比如：`./post-part.sh part/create.php`
 ```php
 <?php
@@ -345,7 +345,7 @@ $bot->log->notice('remind');
 $this->log->fatal("this is a fatal log");
 ```
 
-### 连接中控调试（TODO）
+### 连接DuerOS调试（TODO）
 
 
-## 如何部署，接入度秘中控条件
+## 如何部署，接入度秘DuerOS条件

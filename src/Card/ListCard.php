@@ -2,7 +2,7 @@
 
 namespace Baidu\Duer\Botsdk\Card;
 
-class ListCard extends \Baidu\Duer\Botsdk\Card\Base{
+class ListCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
 
     /**
      * @apram null

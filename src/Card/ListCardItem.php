@@ -1,7 +1,7 @@
 <?php
 namespace Baidu\Duer\Botsdk\Card;
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\Base{
+class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
 
     /**
      * @param null 

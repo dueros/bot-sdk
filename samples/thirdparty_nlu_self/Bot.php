@@ -1,4 +1,11 @@
 <?php
+/**
+ * @desc 这是一个自己完成NLU解析，开发的bot例子
+ * 将多轮对话的状态存储到session中
+ * 第一轮，如果用户query是hello，进入服务；回复hello
+ * 第二轮，进入了这个bot的多轮，处理返回，记录当前的状态到session
+ * 第三轮，结束对话，提示用户可以say hello 开始对话
+ **/
 
 require '../../vendor/autoload.php';
 
@@ -19,16 +26,16 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
             'level' => Baidu\Duer\Botsdk\Log::NOTICE,
         ]);
 
-        //test fatal log
+        //test fatal log，你可以这样来输出一个fatal日志
         //$this->log->fatal("this is a fatal log");
 
         //log 一个字段
         $this->log->setField('query', $this->request->getQuery());
         $this->log->setField('session.status', $this->getSession('status'));
-        //$this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
-        //$this->addIntercept(new BindCardIntercept());
+        //你可以这样来添加一个插件
         //$this->addIntercept(new Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
 
+        //回调函数可以使用匿名函数
         $this->addHandler('session.status == 1', function(){
             $this->setSession('status', 2);
 
@@ -38,6 +45,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
             ];
         });
 
+        //回调函数还可以使用类的成员函数，比如：dialogThree
         $this->addHandler('session.status == 2', 'dialogThree');
 
         $this->addHandler('true', function(){

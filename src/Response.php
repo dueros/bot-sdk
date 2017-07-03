@@ -1,13 +1,13 @@
 <?php
 /**
- * 封装Bot对中控的返回结果
+ * 封装Bot对DuerOS的返回结果
  * @author yuanpeng01@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 
 class Response{
     /**
-     * Requset 实例。中控的请求
+     * Requset 实例。DuerOS的请求
      **/
     private $request;
 
@@ -27,14 +27,14 @@ class Response{
     private $sourceType;
 
     /**
-     * 对中控的confirm标识。标识是否需要对中控confirm
+     * 对DuerOS的confirm标识。标识是否需要对DuerOSconfirm
      **/
     private $confirm;
 
     /**
      * 多轮情况下，是否需要client停止对用户的等待输入
      **/
-    private $shouldEndSession;
+    private $shouldEndSession = true;
 
     /**
      * @param Request $request
@@ -64,6 +64,8 @@ class Response{
     public function setShouldEndSession($val){
         if($val === false) {
             $this->shouldEndSession = false; 
+        }else if($val === true){
+            $this->shouldEndSession = true; 
         }
     }
 
@@ -89,9 +91,7 @@ class Response{
      * @return string
      */
     public function build($data){
-        if($this->shouldEndSession === false 
-            || ($this->shouldEndSession !== true && $this->nlu && $this->nlu->hasAsk())){
-
+        if($this->nlu && $this->nlu->hasAsk()){
             $this->shouldEndSession = false;
         }
 

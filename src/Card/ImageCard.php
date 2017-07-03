@@ -2,7 +2,7 @@
 
 namespace Baidu\Duer\Botsdk\Card;
 
-class ImageCard extends \Baidu\Duer\Botsdk\Card\Base{
+class ImageCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
 
     /**
      * @param null

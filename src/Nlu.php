@@ -9,7 +9,7 @@ class Nlu{
     /**
      * @desc 一般处于多轮的服务，会对一个slot进行询问。
      * 但是，会出现答非所问的情况，或者解析覆盖不到的地方
-     * 如果出现上述情况，解析会填这个字段, value为int，计数出现了多少次
+     * 如果出现上述情况，解析会填这个字段, value为int，计数出现了多少次没理解用户说的query
      **/
     const SLOT_NOT_UNDERSTAND = "da_system_not_understand";
 
@@ -65,26 +65,13 @@ class Nlu{
         return $slots[$field]['value'];
     }
 
-    /**
-     * @desc 获取slot对应的分数
-     * @param string $field
-     * @return string
-     **/
-    public function getScore($field, $index=0) {
-        if(empty($field)){
-            return;
-        }
-
-        $slots = $this->data[$index]['slots'];
-        return $slots[$field]['score'];
-    }
 
     /**
      * @desc 获取当前的intent 名
      * @param null
      * @return string
      **/
-    public function getIntent(){
+    public function getIntentName(){
         return $this->data[0]['name'];
     }
 
@@ -113,7 +100,7 @@ class Nlu{
     }
 
     /**
-     * @desc 打包NLU交互协议，返回中控，为第二轮用户回答提供上下文
+     * @desc 打包NLU交互协议，返回DuerOS，为第二轮用户回答提供上下文
      *       在Response 中被调用
      * @param null
      * @return array
@@ -126,7 +113,7 @@ class Nlu{
                 'type' => 'Dialog.ElicitSlot',
                 'slotToElicit' => $this->ask,
                 'updatedIntent' => [
-                    'name' => $this->getIntent(),
+                    'name' => $this->getIntentName(),
                     'slots' => $this->data[0]['slots'],
                 ]
             ];    
@@ -134,7 +121,7 @@ class Nlu{
 	}
 
     /**
-     * @desc bot可以修改intent中slot对应的值，返回给中控更新
+     * @desc bot可以修改intent中slot对应的值，返回给DuerOS更新
      *       在Response 中被调用
      * @param null
      * @return array

@@ -1,6 +1,6 @@
 <?php
 /**
- * 短期记忆。中控来维护，如果回复了bot的结果，session才会生效
+ * 短期记忆。DuerOS来维护，如果回复了bot的结果，session才会生效
  * @author yuanpeng01@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
@@ -27,7 +27,7 @@ class Session{
     }
 
     /**
-     * @desc 打包sesson
+     * @desc 打包sesson，将session对象输出，返回Response中需要的session格式
      * @param Request $request
      * @return array
      **/

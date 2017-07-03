@@ -1,7 +1,7 @@
 <?php
 namespace Baidu\Duer\Botsdk\Card;
 
-abstract class Base{
+abstract class BaseCard{
     protected $data=[];
     protected $supportSetField = [];
     /**
@@ -33,15 +33,15 @@ abstract class Base{
     /**
      * @desc 设置卡片链接
      * @param string $url 比如:http(s)://....
-     * @param boolean $text 链接显示的文字
+     * @param boolean $anchorText链接显示的文字
      * @return self
      **/
-    public function setAnchor($url, $text=''){
+    public function setAnchor($url, $anchorText=''){
         if($url) {
             $this->data['url'] = $url; 
 
             if($text) {
-                $this->data['anchorText'] = $text; 
+                $this->data['anchorText'] = $anchorText; 
             }
         }
 
@@ -77,7 +77,7 @@ abstract class Base{
             return $this;
         }
 
-        throw new \Exception('function not found');
+        throw new \Exception("$name function not found");
     }
 }
  
