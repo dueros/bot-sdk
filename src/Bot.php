@@ -31,15 +31,9 @@ abstract class Bot{
      * 度秘NLU对query解析的结果
      **/
     public $nlu;
-
-    /**
-     * 是否第三方自有解析
-     **/
-    private $nluSelf = false;
     
     /**
-     * @param string $domain 关注的domain
-     * @param array $postData us对bot的数据
+     * @param array $postData us对bot的数据。默认可以为空，sdk自行获取
      * @return null
      **/
     public function __construct($postData=[] ) {
@@ -103,7 +97,7 @@ abstract class Bot{
     }
 
     /**
-     * @desc 有event，不执行handler
+     * @desc 绑定一个端上事件的处理回调。有event，不执行handler
      * @param string  $event。namespace.name
      * @param function $func
      * @return null
@@ -115,6 +109,8 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。获取当前intent的名字
+     *
      * @param null
      * @return string
      **/
@@ -125,6 +121,7 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。获取session某个字段，call session的getData
      * @param string $field
      * @param string $default
      * @return string
@@ -134,6 +131,8 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。设置session某个字段，call session的setData
+     *       key: a.b.c 表示设置session['a']['b']['c'] 的值
      * @param string $field
      * @param string $value
      * @param string $default
@@ -143,6 +142,7 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。清空session，call session的clear
      * @param null
      * @return null
      **/
@@ -151,6 +151,7 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。获取一个槽位的值，call nlu中的getSlot
      * @param string $field
      * @return string
      **/
@@ -161,34 +162,13 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。设置一个槽位的值，call nlu中的setSlot
      * @param string $field
      * @param string $value
      * @return string
      **/
     public function setSlot($field, $value){
         return $this->nlu->setSlot($field, $value); 
-    }
-
-    /**
-     * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
-     * @param null
-     * @return array
-     * */
-    public function declareEffect(){
-        //TODO return a confirm message
-        $this->response->setConfirm();
-        return [
-            'card' => new Card\Text('confirm us'),
-        ]; 
-    }
-
-    /**
-     * @desc 中控是否同意进行副作用的操作
-     * @param null
-     * @return boolean
-     **/
-    public function effectConfirmed(){
-        return $this->request->getConfirm(); 
     }
 
     /**
@@ -203,6 +183,19 @@ abstract class Bot{
     }
 
     /**
+     * @desc 告诉中控，需要结束对话
+     *
+     * @param null
+     * @return null
+     **/
+    public function endDialog(){
+        $this->response->setShouldEndSession(true);
+    }
+
+    /**
+     * @desc 事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
+     *       将第一个return 非null的结果作为此次的response
+     *
      * @param boolean $build  false：不进行封装，直接返回handler的result
      * @return array|string  封装后的结果为json string
      **/
@@ -211,7 +204,7 @@ abstract class Bot{
         $eventHandler = $this->getRegisterEventHandler();
 
         //check domain
-        if($this->request->getType() == 'IntentRequset' && !$this->nlu && !$eventHandler && !$this->nluSelf) {
+        if($this->request->getType() == 'IntentRequset' && !$this->nlu && !$eventHandler) {
             return $this->response->defaultResult(); 
         }
 

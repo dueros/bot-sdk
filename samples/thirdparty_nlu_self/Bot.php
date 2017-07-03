@@ -10,7 +10,6 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
      * @return null
      **/
     public function __construct($postData = []) {
-        //domain = false 不使用度秘提供的解析，自己完成query分析
         parent::__construct($postData);
 
         $this->log = new Baidu\Duer\Botsdk\Log([

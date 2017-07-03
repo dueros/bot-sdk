@@ -1,4 +1,8 @@
 <?php
+/**
+ * @desc 根据template.json + （slot, session, query...）等部分数据，构造出中控对bot的请求体
+ * 在samples 中被使用
+ **/
 require_once dirname(__FILE__) . '/genUsData.php';
 
 if(php_sapi_name()=='cli'){

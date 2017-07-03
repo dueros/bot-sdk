@@ -6,6 +6,9 @@
 namespace Baidu\Duer\Botsdk;
 
 class Request {
+    /**
+     * 当前请求的类型，对应request.type
+     **/
     private $requsetType;
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * DA解析query，分析的结果
+ * NLU解析query，分析的结果
  * @author yuanpeng01@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
@@ -52,6 +52,7 @@ class Nlu{
     }
 
     /**
+     * @ 获取一个slot对应的值
      * @param string $field
      * @return string
      **/
@@ -65,6 +66,7 @@ class Nlu{
     }
 
     /**
+     * @desc 获取slot对应的分数
      * @param string $field
      * @return string
      **/
@@ -78,7 +80,7 @@ class Nlu{
     }
 
     /**
-     * @desc 获取当前domain的intent
+     * @desc 获取当前的intent 名
      * @param null
      * @return string
      **/
@@ -111,7 +113,8 @@ class Nlu{
     }
 
     /**
-     * @desc 打包NLU交互协议
+     * @desc 打包NLU交互协议，返回中控，为第二轮用户回答提供上下文
+     *       在Response 中被调用
      * @param null
      * @return array
      **/
@@ -130,6 +133,12 @@ class Nlu{
         }
 	}
 
+    /**
+     * @desc bot可以修改intent中slot对应的值，返回给中控更新
+     *       在Response 中被调用
+     * @param null
+     * @return array
+     **/
     public function toUpdateIntent(){
         return [
             'intent' => $this->data 

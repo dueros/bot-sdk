@@ -20,6 +20,9 @@ class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
     }
 
     /**
+     * @desc 在处理回调之前，bot-sdk会先调用before，
+     *       如果before返回不为null，终止事件路由，将before的输出作为最终输出
+     *
      * @param Bot $bot
      * @return mixed
      **/
@@ -36,6 +39,7 @@ class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
 
         if($count >= $this->threshold) {
             $bot->clearSession();
+            $bot->endDialog();
             $card = new TextCard($this->tip);
 
             return [ 

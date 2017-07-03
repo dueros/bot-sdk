@@ -79,11 +79,12 @@ class Response{
 
     /** 
      * @param array $data
-     * $data =
-     * card: 可选
-     * directives: 可选
-     * resource: 可选
-     * outputSpeech: 可选
+     * $data = [
+     *    "card"=> $card // instanceof Card\Base
+     *    "directives"=> $directive  TODO
+     *    "outputSpeech"=> "string"
+     *    "reprompt" => "string"
+     *  ]
      *
      * @return string
      */
@@ -91,7 +92,7 @@ class Response{
         if($this->shouldEndSession === false 
             || ($this->shouldEndSession !== true && $this->nlu && $this->nlu->hasAsk())){
 
-            $this->should_end_session = false;
+            $this->shouldEndSession = false;
         }
 
         $directives = $data['directives'] ? $data['directives'] : [];
@@ -117,7 +118,7 @@ class Response{
                 'directives' => $directives,
                 'shouldEndSession' => $this->shouldEndSession,
                 'card' => $data['card']?$data['card']->getData():null,
-                'resource' => $data['resource'],
+                //'resource' => $data['resource'],
                 'outputSpeech' => $data['outputSpeech']?$this->formatSpeech($data['outputSpeech']):null,
                 'reprompt' => $data['reprompt']?[
                     'outputSpeech' => $this->formatSpeech($data['reprompt']),

@@ -59,7 +59,7 @@ public function create(){
 }
 ```
 这里`addHandler`可以用来建立(intent, slot, session) => handler的映射，第一个参数是条件，如果满足则执行对应的回调函数(第二个参数)。
-其中，$this指向当前的Bot，`getSlot`继承自父类Bot，通过slot名字来获取对应的值。返回值是一个数组，包含两个字段`card`和`directives`。
+其中，$this指向当前的Bot，`getSlot`继承自父类Bot，通过slot名字来获取对应的值。回调函数返回值是一个数组，可以包含多个字段，比如：`card`，`directives`，`outputSpeech`，`reprompt`。
 
 `card`展现卡片
 ### 文本卡片
@@ -128,7 +128,28 @@ print $bot->run();
 php -S 0.0.0.0:8000 index.php
 ```
 
-##Lanuch & SessionEnd
+## 返回speech
+### outputSpeech
+上面例子，除了返回`card`之外，还可以返回outputSpeech，让客户端播报tts：
+```php
+return [
+    'outputSpeech' => '请问你要干啥呢',
+    //或者ssml
+    'outputSpeech' => '<speak>请问你要干啥呢</speak>',
+];
+```
+### reprompt
+当客户端响应用户后，用户可能会一段时间不说话，如果你返回了reprompt，客户端会提示用户输入
+```php
+return [
+    'reprompt' => 'hello，请问你要干啥呢',
+    //或者ssml
+    'reprompt' => '<speak>hello，请问你要干啥呢</speak>',
+];
+```
+
+
+## Lanuch & SessionEnd
 ### bot开始服务
 当bot被@（通过bot唤醒名打开时），中控会发送`LanuchRequest`给bot，此时，bot可以返回欢迎语或者操作提示：
 ```php
@@ -229,17 +250,6 @@ $this->addHandler('#rent_car.book && !slot.end_point', function(){
     ];
 });
 
-## 声明副作用操作
-暂存信息推荐使用session，中控会在确定用你的bot返回的结果之后，才会更新session。不建议将状态数据存储到私有的永久存储上，如果中控没有使用你的结果，会导致你的bot状态不一致。
-如果一定要使用永久存储，比如存储打车订单、闹钟记录。需要先声明要进行一个副作用的操作，等待中控确认，调用bot-sdk 提供的接口`declareEffect`。如果中控确认，会再一次请求你的bot，请求与上一次一致。你可以通过接口`effectConfirmed`获得确认状态
-```javascript
-if(!$this->effectConfirmed()){
-    return $this->declareEffect();
-}else{
-    //do some permanent store
-}
-```
-
 ## 插件
 你还可以写插件(拦截器`Intercept`)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应intent，可以使用`LoginIntercept`：
 ```javascript
@@ -289,13 +299,17 @@ return [
 ```
 ### 如何打印日志
 bot-sdk提供了日志打印的工具，开发者可以直接使用，当然也可以用自己习惯的日志工具。一次请求只打印一条`NOTICE`日志；`FATAL`，`WARN`日志可以打印多条。
-日志按小时切分，fatal，warn日志存储到一个文件，notice日志存储到一个文件。可以参考`samples/personal_income_tax`的例子
+
+日志按小时切分，fatal，warn日志存储到一个文件，notice日志存储到一个文件。日志输出路径可以在构造函数中通过`path`参数指定。比如`log/`表示是Bot.php同级的log目录。
+
+可以参考`samples/personal_income_tax`的例子
+
 #### 定义日志
 ```php
 //可以在构造函数中执行
 $this->log = new Baidu\Duer\Botsdk\Log([
     //日志存储路径
-    'path' => 'log/',
+    'path' => 'log/', 
     //日志打印最低输出级别
     'level' => Baidu\Duer\Botsdk\Log::NOTICE,
 ]);

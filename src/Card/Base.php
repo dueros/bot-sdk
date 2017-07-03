@@ -5,7 +5,7 @@ abstract class Base{
     protected $data=[];
     protected $supportSetField = [];
     /**
-     * @param array $fields
+     * @param array $fields 允许通过魔术方法设置的字段
      * @return null
      **/
     public function __construct($fields=[]) {
@@ -13,6 +13,7 @@ abstract class Base{
     }
 
     /**
+     * @desc 为卡片添加cue words 提示用户输入
      * @param array|string $data 比如：['###', '###',...,'###'], 或者'###'
      * @return self
      **/
@@ -30,6 +31,7 @@ abstract class Base{
     }
 
     /**
+     * @desc 设置卡片链接
      * @param string $url 比如:http(s)://....
      * @param boolean $text 链接显示的文字
      * @return self
@@ -47,7 +49,7 @@ abstract class Base{
     }
 
     /**
-     * @param string $key 字段名
+     * @param string $key 字段名。如果没有返回整个数据
      * @return array|null
      **/
     public function getData($key=''){
@@ -58,6 +60,12 @@ abstract class Base{
         return $this->data; 
     }
 
+    /**
+     * @desc 魔术方法
+     * @param string $name
+     * @param array $arguments
+     * @return null | $this;
+     **/
     public function __call($name, $arguments){
         /**
          * 将规定的field 通过setFieldName('content')来设置

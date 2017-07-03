@@ -4,13 +4,18 @@ namespace Baidu\Duer\Botsdk\Card;
 
 class ListCard extends \Baidu\Duer\Botsdk\Card\Base{
 
-    public function __construct($data=[]) {
+    /**
+     * @apram null
+     * @return null
+     **/
+    public function __construct() {
         $this->data['type'] = 'list';
         parent::__construct();
     }
 
     /**
-     * @listCardItem ListCardItem 列表项
+     * @param listCardItem ListCardItem 列表项
+     * @return self
      **/
     public function addItem($listCardItem){
         if($listCardItem instanceof ListCardItem) {
