@@ -86,8 +86,8 @@ abstract class Bot{
 
     /**
      * @desc  拦截器
-     *        1、在event处理、条件处理之前执行Intercept.before，返回非null，终止后续执行。将返回值返回
-     *        1、在event处理、条件处理之之后执行Intercept.after
+     *        1、在event处理、条件处理之前执行Intercept.preprocess，返回非null，终止后续执行。将返回值返回
+     *        1、在event处理、条件处理之之后执行Intercept.postprocess
      *
      * @param Intercept $intercept
      * @return null;
@@ -126,7 +126,7 @@ abstract class Bot{
      * @param string $default
      * @return string
      **/
-    public function getSession($field=null, $default=null){
+    public function getSessionAttribute($field=null, $default=null){
         return $this->session->getData($field, $default);
     }
 
@@ -137,7 +137,7 @@ abstract class Bot{
      * @param string $value
      * @param string $default
      **/
-    public function setSession($field, $value, $default=null){
+    public function setSessionAttribute($field, $value, $default=null){
         return $this->session->setData($field, $value, $default); 
     }
 
@@ -146,7 +146,7 @@ abstract class Bot{
      * @param null
      * @return null
      **/
-    public function clearSession(){
+    public function clearSessionAttribute(){
         return $this->session->clear(); 
     }
 
@@ -211,7 +211,7 @@ abstract class Bot{
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
-            $ret = $intercept->before($this);
+            $ret = $intercept->preprocess($this);
             if($ret) {
                 break; 
             }
@@ -229,7 +229,7 @@ abstract class Bot{
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
-            $ret = $intercept->after($this, $ret);
+            $ret = $intercept->postprocess($this, $ret);
         }
 
         if(!$build) {

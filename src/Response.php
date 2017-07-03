@@ -46,7 +46,7 @@ class Response{
         $this->request = $request;
         $this->session = $session;
         $this->nlu = $nlu;
-        $this->sourceType = $this->request->getBotName();
+        $this->sourceType = $this->request->getBotId();
     }
 
     /**
@@ -82,7 +82,7 @@ class Response{
     /** 
      * @param array $data
      * $data = [
-     *    "card"=> $card // instanceof Card\Base
+     *    "card"=> $card // instanceof Card\BaseCard
      *    "directives"=> $directive  TODO
      *    "outputSpeech"=> "string"
      *    "reprompt" => "string"
@@ -91,7 +91,7 @@ class Response{
      * @return string
      */
     public function build($data){
-        if($this->nlu && $this->nlu->hasAsk()){
+        if($this->nlu && $this->nlu->hasAsked()){
             $this->shouldEndSession = false;
         }
 
@@ -103,7 +103,7 @@ class Response{
             }
         }
 
-        if(!$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\Text) {
+        if(!$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\TextCard) {
             $data['outputSpeech'] = $data['card']->getData('content');
         }
 
@@ -114,7 +114,7 @@ class Response{
             ],
             'session' => $this->session->toResponse(),
             'response' => [
-                'needDetermine' => $this->confirm ? true : false,
+                //'needDetermine' => $this->confirm ? true : false,
                 'directives' => $directives,
                 'shouldEndSession' => $this->shouldEndSession,
                 'card' => $data['card']?$data['card']->getData():null,

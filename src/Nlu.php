@@ -77,13 +77,13 @@ class Nlu{
 
     /**
      * @desc 是否有询问用户
-     * 通过ask判断
+     * 通过askSlot判断
      *
      * @param null
      * @return boolean
      **/
-    public function hasAsk(){
-        return !!$this->ask; 
+    public function hasAsked(){
+        return !!$this->askSlot; 
     }
 
     /**
@@ -91,12 +91,12 @@ class Nlu{
      * @param string|array $slot
      * @return null
      **/
-    public function needAsk($slot){
+    public function ask($slot){
         if(!$slot) {
             return;
         }
 
-        $this->ask = $slot;
+        $this->askSlot = $slot;
     }
 
     /**
@@ -108,10 +108,10 @@ class Nlu{
     public function toDirective(){
         $intents=[];
 
-        if($this->ask) {
+        if($this->askSlot) {
             return [
                 'type' => 'Dialog.ElicitSlot',
-                'slotToElicit' => $this->ask,
+                'slotToElicit' => $this->askSlot,
                 'updatedIntent' => [
                     'name' => $this->getIntentName(),
                     'slots' => $this->data[0]['slots'],

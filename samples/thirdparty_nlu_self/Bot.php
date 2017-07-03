@@ -31,48 +31,42 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 
         //log 一个字段
         $this->log->setField('query', $this->request->getQuery());
-        $this->log->setField('session.status', $this->getSession('status'));
+        $this->log->setField('session.status', $this->getSessionAttribute('status'));
         //你可以这样来添加一个插件
         //$this->addIntercept(new Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
 
-        //回调函数可以使用匿名函数
-        $this->addHandler('session.status == 1', function(){
-            $this->setSession('status', 2);
-
-            $card = new TextCard('这是第二轮对话的回复');
-            return [
-                'card' => $card 
-            ];
-        });
-
-        //回调函数还可以使用类的成员函数，比如：dialogThree
-        $this->addHandler('session.status == 2', 'dialogThree');
-
         $this->addHandler('true', function(){
+            if($this->getSessionAttribute('status') == 1) {
+                $this->setSessionAttribute('status', 2);
+
+                $card = new TextCard('这是第二轮对话的回复');
+                $this->waitAnswer();
+                return [
+                    'card' => $card 
+                ];
+            }
+
+            if($this->getSessionAttribute('status') == 2) {
+                $this->setSessionAttribute('status', 0); 
+
+                $card = new TextCard('对话要结束啦，继续说"hello"开始');
+                return [
+                    'card' => $card 
+                ];     
+            }
+
             if($this->request->getQuery() !== 'hello') {
                 return; 
             }
 
-            $this->setSession('status', 1);
+            $this->setSessionAttribute('status', 1);
             $card = new TextCard('hello');
+            $this->waitAnswer();
             return [
                 'card' => $card 
             ];
         });
 
 
-    }
-
-    /**
-     * @param null
-     * @return null
-     **/
-    public function dialogThree(){
-        $this->setSession('status', 0); 
-
-        $card = new TextCard('对话要结束啦，继续说"hello"开始');
-        return [
-            'card' => $card 
-        ];
     }
 }

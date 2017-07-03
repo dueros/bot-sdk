@@ -8,7 +8,7 @@
 * 提供了session简化接口
 * 提供了nlu简化接口
     * slot 操作
-    * nlu理解交互接口（ask、select、check）
+    * nlu理解交互接口（ask）
 * 提供了多轮对话开发接口
 * 提供了事件监听接口
 
@@ -37,20 +37,22 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 ```php
 use \Baidu\Duer\Botsdk\Card\TextCard;
 
-$this->addHandler('#remind && slot.remind_time', function(){
+$this->addHandler('#remind', function(){
     $remindTime = $this->getSlot('remind_time');
    
-    $card = new TextCard('创建中');
-    return [
-        'card' => $card,
-    ];
+    if($remindTime) {
+        $card = new TextCard('创建中');
+        return [
+            'card' => $card,
+        ];
+    }
 });
 
 /**
  * 或者，可以不通过匿名函数，还支持传入成员函数名
  */
 
-$this->addHandler('#remind && slot.remind_time', 'create');
+$this->addHandler('#remind', 'create');
 
 //定义一个成员函数
 public function create(){
@@ -58,7 +60,7 @@ public function create(){
     return [...];
 }
 ```
-这里`addHandler`可以用来建立(intent, slot, session) => handler的映射，第一个参数是条件，如果满足则执行对应的回调函数(第二个参数)。
+这里`addHandler`可以用来建立(intent) => handler的映射，第一个参数是条件，如果满足则执行对应的回调函数(第二个参数)。
 其中，$this指向当前的Bot，`getSlot`继承自父类Bot，通过slot名字来获取对应的值。回调函数返回值是一个数组，可以包含多个字段，比如：`card`，`directives`，`outputSpeech`，`reprompt`。
 
 `card`展现卡片
@@ -177,14 +179,14 @@ $this->addHandler('SessionEndRequest', function(){
 
 ```php
 //提醒意图而且有提醒时间slot
-$this->addHandler('#remind && slot.remind_time', function(){
-    $remindTime = $this->getSlot('remind_time');
-    return [/*设置闹钟指令*/];
-});
-
-//当前面条件不满足（没有提醒时间），会执行这个handler
 $this->addHandler('#remind', function(){
-    $this->nlu->needAsk('remind_time');
+    $remindTime = $this->getSlot('remind_time');
+    if($remindTime) {
+        return [/*设置闹钟指令*/];
+    }
+
+    //当前面条件不满足（没有提醒时间），会执行这个handler
+    $this->nlu->ask('remind_time');
     $card = new TextCard('要几点的闹钟呢?');
     return [
         'card' => $card,
@@ -207,16 +209,7 @@ Bot-sdk会根据通过`addHandler`添加handler的顺序来遍历所有的检查
 //intent，以#开头，后接具体的intent名
 #remind 
 #rent_car.book
-
-//session,  'session'是条件表达式的保留字。session是key-value结构，你可以完全自由的使用。
-session.key   //取session['key']
-session.key.key1 //取session['key']['key1']
-
-//slot, 'slot'是条件表达式的保留字。slot来自NLU的解析结果
-slot.remind_time  //取nlu中 remind_time 槽位
-slot.car_type     //取nlu中 car_type 槽位
 ```
-条件表达式`session`, `slot`是保留字，不能作为字段名使用。表达式只支持关系运算，不支持函数，自定义变量引用。
 NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。`session`内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用`slot`和`session`：
 ```php
 //slot
@@ -224,11 +217,11 @@ getSlot('slot name');
 setSlot('slot name', 'slot value');// 如果没有找到对应的slot，会自动新增一个slot
 
 //session
-getSession('key');
-setSession('key', 'value');
+getSessionAttribute('key');
+setSessionAttribute('key', 'value');
 //or
-setSession('key.key1', 'value');
-getSession('key.key1');
+setSessionAttribute('key.key1', 'value');
+getSessionAttribute('key.key1');
 
 //清空session
 clearSession();
@@ -237,36 +230,39 @@ clearSession();
 你的Bot可以订阅端上触发的事件，通过接口`addEventListener`实现，比如端上设置闹钟成功后，会下发`SetAlertSucceeded`的事件，Bot通过注册事件处理函数，进行相关的操作。
 
 ## NLU交互协议ask
-多轮对话的bot，会通过询问用户来收集完成任务所需要的信息（slot），询问用户的特点总结为3点，`ask`：问啥啥。如果你的bot在询问用户的时候，也能告诉NLU你的bot在问什么，能在用户回答你的问题时，NLU可以很针对性的去解析用户的query，大大提高理解用户的准确率，你bot的多轮对话在用户看来就是非常流畅的。bot-sdk提供了接口`needAsk`，帮助你完成这些工作：
+多轮对话的bot，会通过询问用户来收集完成任务所需要的信息（slot），询问用户的特点总结为3点，`ask`：问啥啥。如果你的bot在询问用户的时候，也能告诉NLU你的bot在问什么，能在用户回答你的问题时，NLU可以很针对性的去解析用户的query，大大提高理解用户的准确率，你bot的多轮对话在用户看来就是非常流畅的。bot-sdk提供了接口`ask`，帮助你完成这些工作：
 ```javascript
 //打车intent，但是没有提供目的地
-$this->addHandler('#rent_car.book && !slot.end_point', function(){
-    //询问slot: end_point
-    $this->nlu->needAsk('end_point');
-
-    $card = new TextCard('打车去哪呢');
-    return [
-        'card' => $card
-    ];
+$this->addHandler('#rent_car.book', function(){
+    $endPoint = $this->getSlot('end_point');
+    if(!$this->endPoint) {
+        //询问slot: end_point
+        $this->nlu->ask('end_point');
+    
+        $card = new TextCard('打车去哪呢');
+        return [
+            'card' => $card
+        ];
+    }
 });
 
 ## 插件
 你还可以写插件(拦截器`Intercept`)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应intent，可以使用`LoginIntercept`：
 ```javascript
 public function __construct($domain, $postData = []) {
-    parent::__construct($domain, $postData);
+    parent::__construct($postData);
     $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
     //...
 }
 ```
-开发自己的拦截器，继承`\Baidu\Duer\Botsdk\Intercept`，通过重载`before`，能够在处理通过`addHandler`，`addEventListener`添加的回调之前，定义一些逻辑。通过重载`after`能够对回调函数的返回值，进行统一的处理：
+开发自己的拦截器，继承`\Baidu\Duer\Botsdk\Intercept`，通过重载`preprocess`，能够在处理通过`addHandler`，`addEventListener`添加的回调之前，定义一些逻辑。通过重载`postprocess`能够对回调函数的返回值，进行统一的处理：
 ```php
 class YourIntercept extends \Baidu\Duer\Botsdk\Intercept{
-    public function before($bot) {
+    public function preprocess($bot) {
         //$bot: 你的bot实例化对象
     }
 
-    public function after($bot, $result) {
+    public function postprocess($bot, $result) {
         //maybe format $result
         return $result;
     }
@@ -277,7 +273,7 @@ class YourIntercept extends \Baidu\Duer\Botsdk\Intercept{
 ## 如何调试
 ### 本地测试
 bot-sdk提供了一个简单的工具，方便用户在没有接入DuerOS时调试自己的bot。
-首先你需要通过PHP内置的webserver，将你的bot运行起来，这里假设是监听的`8000`端口。然后，构造你的`NLU`、`session`等数据，如打车bot构造的数据结构，具体可以参考`samples/personal_income_tax`中part目录的例子，比如：`./post-part.sh part/create.php`
+首先你需要通过PHP内置的webserver，将你的bot运行起来，这里假设是监听的`8000`端口。然后，构造你的`NLU`、`session`等数据，如个人所得税计算器bot构造的数据结构，具体可以参考`samples/personal_income_tax`中part目录的例子，比如：`./post-part.sh part/create.php`
 ```php
 <?php
 return [

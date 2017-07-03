@@ -13,7 +13,7 @@ abstract class Intercept{
      * @return mixed
      * 如果返回非null，跳过后面addHandler，addEventListener添加的回调
      **/
-    public function before($bot) {
+    public function preprocess($bot) {
     
     }
 
@@ -23,7 +23,7 @@ abstract class Intercept{
      * @param array
      * @return array
      **/
-    public function after($bot, $result){
+    public function postprocess($bot, $result){
         return $result;
     }
 }

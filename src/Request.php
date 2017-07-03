@@ -154,7 +154,7 @@ class Request {
      * @param null
      * @return boolean
      **/
-    public function isEndRequest(){
+    public function isSessionEndRequest(){
         return $this->data['request']['type'] == 'SessionEndRequest';
     }
 
@@ -171,7 +171,7 @@ class Request {
      * @param null
      * @return string
      **/
-    public function getBotName() {
+    public function getBotId() {
         return $this->data['context']['system']['bot']['botId']; 
     }
 
