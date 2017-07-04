@@ -27,11 +27,6 @@ class Response{
     private $sourceType;
 
     /**
-     * 对DuerOS的confirm标识。标识是否需要对DuerOSconfirm
-     **/
-    private $confirm;
-
-    /**
      * 多轮情况下，是否需要client停止对用户的等待输入
      **/
     private $shouldEndSession = true;
@@ -54,7 +49,6 @@ class Response{
      * @return null
      **/
     public function setConfirm(){
-        $this->confirm = 1; 
     }
 
     /**

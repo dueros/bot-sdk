@@ -32,7 +32,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
     }
 }
 ```
-需要继承Baidu\Duer\Botsdk\Bot，并在构造函数中指出关注的`domain`，比如：remind。 下一步，我们处理这个domain下的intent。Bot-sdk提供了一个函数来handle这些intent。比如，为新建闹钟，创建一个handler，在构造函数中添加：
+需要继承Baidu\Duer\Botsdk\Bot。 下一步，我们处理intent。Bot-sdk提供了一个函数来handle这些intent。比如，为新建闹钟，创建一个handler，在构造函数中添加：
 
 ```php
 use \Baidu\Duer\Botsdk\Card\TextCard;
@@ -249,7 +249,7 @@ $this->addHandler('#rent_car.book', function(){
 ## 插件
 你还可以写插件(拦截器`Intercept`)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应intent，可以使用`LoginIntercept`：
 ```javascript
-public function __construct($domain, $postData = []) {
+public function __construct($postData = []) {
     parent::__construct($postData);
     $this->addIntercept(new Baidu\Duer\Botsdk\Plugins\LoginIntercept());
     //...
