@@ -48,13 +48,6 @@ class Response{
      * @param null
      * @return null
      **/
-    public function setConfirm(){
-    }
-
-    /**
-     * @param null
-     * @return null
-     **/
     public function setShouldEndSession($val){
         if($val === false) {
             $this->shouldEndSession = false; 
