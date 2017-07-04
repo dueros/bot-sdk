@@ -6,6 +6,10 @@
 require '../../vendor/autoload.php';
 use \Logger; 
 use \Utils; 
+use \Baidu\Duer\Botsdk\Card\TextCard;
+use \Baidu\Duer\Botsdk\Card\StandardCard;
+use \Baidu\Duer\Botsdk\Card\ListCard;
+use \Baidu\Duer\Botsdk\Card\ListCardItem;
 
 class Bot extends \Baidu\Duer\Botsdk\Bot {
 	// 计算个税的URL
@@ -40,8 +44,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 	 * @param null
 	 * @return null
 	 * */
-	public function __construct($domain, $postData = []) {
-		parent::__construct($domain, $postData);
+	public function __construct($postData = []) {
+		parent::__construct($postData);
 		$this->log = new \Baidu\Duer\Botsdk\Log([
 				// 日志存储路径
 				'path' => 'log/',
@@ -51,41 +55,69 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 
 		// 记录这次请求的query
 		$this->log->setField('query', $this->request->getQuery());
-		$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
+		//$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
+        $this->addHandler('LaunchRequest', function(){
+            $card = new ListCard();
+            $item = new ListCardItem();
+            $item->setTitle('title')
+                ->setContent('content')
+                ->setUrl('http://www')
+                ->setImage('http://www.png');
 
-		// 在匹配到domain以及intent的情况下，首先询问月薪
-		$this->addHandler('#personal_income_tax.inquiry && !slot.monthlysalary', function() {
-				$this->nlu->needAsk('monthlysalary');
-				return [
-					'views' => [$this->getTxtView('您的税前工资是多少呢？')]
+            $card->addItem($item);
+            $this->waitAnswer();
+            return [
+                    'card' => $card,
+					'outputSpeech' => '<speak>欢迎光临</speak>' 
 				];
-		});
 
-		// 在存在monthlysalary槽位的情况下，首先验证monthlysalary槽位值是否合法，然后询问location槽位
-		$this->addHandler('#personal_income_tax.inquiry && !slot.location', function() {
+        });
+
+        $this->addHandler('SessionEndRequest', function(){
+            return null; 
+        });
+
+		// 在匹配到intent的情况下，首先询问月薪
+		$this->addHandler('#personal_income_tax.inquiry', function() {
+            if(!$this->getSlot('monthlysalary')) {
+				$this->nlu->ask('monthlysalary');
+                $card = new TextCard('您的税前工资是多少呢？');
+                $card->addCueWords(['20000','10000']);
+				return [
+					'card' => $card,
+                    'reprompt' => '您的税前工资是多少呢？',
+				];
+            }else if(!$this->getSlot('location')) {
+		        // 在存在monthlysalary槽位的情况下，首先验证monthlysalary槽位值是否合法，然后询问location槽位
 				$ret = $this->checkMonthlysalary();
 				if ($ret != null) {
 					return $ret;
 				}
-				$this->nlu->needAsk('location');
+				$this->nlu->ask('location');
+                $card = new StandardCard();
+                $card->setTitle('title');
+                $card->setContent('content');
+                $card->setImage('http://www...');
+                $card->setAnchor('http://www.baidu.com');
 				return [
-					'views' => [$this->getTxtView('您所在城市是哪里呢？')]
+                    //'card' => new TextCard('您所在城市是哪里呢？'),
+                    'card' => $card,
+                    'outputSpeech' => '您所在城市是哪里呢？',
 				];
-		});
-
-		// 在存在location槽位的情况下，首先验证location槽位是否在支持的城市列表中，然后询问compute_type槽位
-		$this->addHandler('#personal_income_tax.inquiry && !slot.compute_type', function() {
+            }else if(!$this->getSlot('compute_type')) {
+		        // 在存在location槽位的情况下，首先验证location槽位是否在支持的城市列表中，然后询问compute_type槽位
 				$ret = $this->checkLocation();
 				if ($ret != null) {
 					return $ret;
 				}
-				$this->nlu->needAsk('compute_type');
+				$this->nlu->ask('compute_type');
 				return [
-					'views' => [$this->getTxtView('请选择您要查询的个税种类')]
+					'card' => new TextCard('请选择您要查询的个税种类')
 				];
+            }else {
+                return $this->compute(); 
+            }
 		});
-
-		$this->addHandler('#personal_income_tax.inquiry', 'compute');
 	}
 
 	/**
@@ -97,9 +129,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		$monthlysalary = $this->getSlot('monthlysalary');
 		$value = intval($monthlysalary);
 		if ($value <= 0) {
-			$this->nlu->needAsk('monthlysalary');
+			$this->nlu->ask('monthlysalary');
 			return [
-				'views' => [$this->getTxtView('输入的工资不正确，请重新输入：')]
+				'card' => new TextCard('输入的工资不正确，请重新输入：')
 			];
 		}
 	}
@@ -113,9 +145,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		// 判断是否在支持的城市列表中
 		$location = $this->getSlot('location');
 		if (!in_array($location, self::$city)) {
-			$this->nlu->needAsk('location');
+			$this->nlu->ask('location');
 			return [
-				'views' => [$this->getTxtView("该城市不存在，请重新选择城市：")]	
+				'card' => new TextCard("该城市不存在，请重新选择城市：")
 			];
 		}
 	}
@@ -139,9 +171,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		// compute_type槽位存在的情况下，判断计算类型是否存在
 		$compute_type = $this->getSlot('compute_type');
 		if (!isset(self::$inquiry_type[$compute_type])) {
-			$this->nlu->needAsk('compute_type');
+			$this->nlu->ask('compute_type');
 			return [
-				'views' => [$this->getTxtView("请重新选择查询的个税种类：")]
+				'card' => new TextCard("请重新选择查询的个税种类：")
 			];
 		}
 		$monthlysalary = intval($this->getSlot('monthlysalary'));
@@ -181,7 +213,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 			$views .= $obj[col1] . ": " . $obj[col2_value];
 		}
 		return [
-			'views' => [$this->getTxtView($views)]
+			'card' => new TextCard($views)
 		];
 	}
 }

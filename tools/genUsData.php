@@ -76,3 +76,50 @@ function genUsData($usData, $sendData){
     $usData['bot_sessions'] = [$session];
     return $usData;
 }
+
+
+function genUsDataV2($usData, $sendData){
+    $usData['request']['type'] = 'IntentRequest';
+    if($sendData['type']) {
+        $usData['request']['type'] = $sendData['type'];
+    }
+
+    if($sendData['query']) {
+        $usData['request']['query']['original'] = $sendData['query'];
+    }
+
+    if($sendData['bot_name']) {
+        $usData['context']['system']['bot']['botId'] = $sendData['bot_name'];
+    }
+
+    $intent = $sendData['intent'];
+    if($intent) {
+        //trick
+        if($intent[0] === null) {
+            $intent = [$intent]; 
+        }
+
+        $arr = [];
+        foreach($intent as $item) {
+            $i = [
+                'name' => $item['name'],
+                'slots' => [],
+            ]; 
+
+            foreach($item['slots'] as $slot) {
+                $i['slots'][$slot['name']] = $slot;
+            }
+
+            $arr[] = $i;
+        }
+
+        $usData['request']['intents'] = $arr;
+    }
+
+    $session = $sendData['session'];
+    if($session) {
+        $usData['session']['attributes'] = $session;
+    }
+
+    return $usData;
+}

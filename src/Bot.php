@@ -12,17 +12,17 @@ abstract class Bot{
     private $event = [];
 
     /**
-     * 中控对Bot的请求
+     * DuerOS对Bot的请求
      **/
     public $request;
 
     /**
-     * Bot返回给中控的结果
+     * Bot返回给DuerOS的结果
      **/
     public $response;
 
     /**
-     * 中控提供的session。
+     * DuerOS提供的session。
      * 短时记忆能力
      **/
     public $session;
@@ -31,32 +31,23 @@ abstract class Bot{
      * 度秘NLU对query解析的结果
      **/
     public $nlu;
-
-    /**
-     * 是否第三方自有解析
-     **/
-    private $nluSelf = false;
     
     /**
-     * @param string $domain 关注的domain
-     * @param array $postData us对bot的数据
+     * @param array $postData us对bot的数据。默认可以为空，sdk自行获取
      * @return null
      **/
-    public function __construct($domain, $postData=[] ) {
+    public function __construct($postData=[] ) {
         if(!$postData){
             $rawInput = file_get_contents("php://input");
             $rawInput = str_replace("", "", $rawInput);
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
-        $this->request = Request::parse($postData);
+        $this->request = new Request($postData);
 
         $this->session = $this->request->getSession();
-        if($domain === false) {
-            $this->nluSelf = true; 
-        }
 
-        $this->nlu = $this->request->getNlu($domain);
+        $this->nlu = $this->request->getNlu();
         $this->response = new Response($this->request, $this->session, $this->nlu);
     }
 
@@ -95,8 +86,8 @@ abstract class Bot{
 
     /**
      * @desc  拦截器
-     *        1、在event处理、条件处理之前执行Intercept.before，返回非null，终止后续执行。将返回值返回
-     *        1、在event处理、条件处理之之后执行Intercept.after
+     *        1、在event处理、条件处理之前执行Intercept.preprocess，返回非null，终止后续执行。将返回值返回
+     *        1、在event处理、条件处理之之后执行Intercept.postprocess
      *
      * @param Intercept $intercept
      * @return null;
@@ -106,7 +97,7 @@ abstract class Bot{
     }
 
     /**
-     * @desc 有event，不执行handler
+     * @desc 绑定一个端上事件的处理回调。有event，不执行handler
      * @param string  $event。namespace.name
      * @param function $func
      * @return null
@@ -118,48 +109,60 @@ abstract class Bot{
     }
 
     /**
+     * @desc 快捷方法。获取当前intent的名字
+     *
      * @param null
      * @return string
      **/
-    public function getIntent(){
-        return $this->nlu->getIntent();
+    public function getIntentName(){
+        if($this->nlu){
+            return $this->nlu->getIntentName();
+        }
     }
 
     /**
+     * @desc 快捷方法。获取session某个字段，call session的getData
      * @param string $field
      * @param string $default
      * @return string
      **/
-    public function getSession($field=null, $default=null){
+    public function getSessionAttribute($field=null, $default=null){
         return $this->session->getData($field, $default);
     }
 
     /**
+     * @desc 快捷方法。设置session某个字段，call session的setData
+     *       key: a.b.c 表示设置session['a']['b']['c'] 的值
      * @param string $field
      * @param string $value
      * @param string $default
      **/
-    public function setSession($field, $value, $default=null){
+    public function setSessionAttribute($field, $value, $default=null){
         return $this->session->setData($field, $value, $default); 
     }
 
     /**
+     * @desc 快捷方法。清空session，call session的clear
      * @param null
      * @return null
      **/
-    public function clearSession(){
+    public function clearSessionAttribute(){
         return $this->session->clear(); 
     }
 
     /**
+     * @desc 快捷方法。获取一个槽位的值，call nlu中的getSlot
      * @param string $field
      * @return string
      **/
     public function getSlot($field){
-        return $this->nlu->getSlot($field);
+        if($this->nlu){
+            return $this->nlu->getSlot($field);
+        }
     }
 
     /**
+     * @desc 快捷方法。设置一个槽位的值，call nlu中的setSlot
      * @param string $field
      * @param string $value
      * @return string
@@ -169,49 +172,8 @@ abstract class Bot{
     }
 
     /**
-     * @param string $text
-     * @param string $url
-     * @return array
-     **/
-    public function getTxtView($text, $url=''){
-        $view = [
-            'type' => 'txt',
-            'content' => $text,
-        ]; 
-        if($url) {
-            $view['url']  = $url;
-        }
-
-        return $view;
-    }
-
-    /**
-     * @desc 副作用操作，向中控声明，接下来的操作是有副作用的
-     * @param null
-     * @return array
-     * */
-    public function declareEffect(){
-        //TODO return a confirm message
-        $this->response->setConfirm();
-        return [
-            'views' => [
-                $this->getTxtView('confirm us') 
-            ]
-        ]; 
-    }
-
-    /**
-     * @desc 中控是否同意进行副作用的操作
-     * @param null
-     * @return boolean
-     **/
-    public function effectConfirmed(){
-        return $this->request->getConfirm() == 1; 
-    }
-
-    /**
-     * @desc 告诉中控，在多轮对话中，等待用户的回答
-     *       注意：如果有设置Nlu的ask，自动告诉中控，不用调用
+     * @desc 告诉DuerOS，在多轮对话中，等待用户的回答
+     *       注意：如果有设置Nlu的ask，自动告诉DuerOS，不用调用
      * @param null
      * @return null
      **/
@@ -221,6 +183,19 @@ abstract class Bot{
     }
 
     /**
+     * @desc 告诉DuerOS，需要结束对话
+     *
+     * @param null
+     * @return null
+     **/
+    public function endDialog(){
+        $this->response->setShouldEndSession(true);
+    }
+
+    /**
+     * @desc 事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
+     *       将第一个return 非null的结果作为此次的response
+     *
      * @param boolean $build  false：不进行封装，直接返回handler的result
      * @return array|string  封装后的结果为json string
      **/
@@ -229,14 +204,14 @@ abstract class Bot{
         $eventHandler = $this->getRegisterEventHandler();
 
         //check domain
-        if(!$this->nlu && !$eventHandler && !$this->nluSelf) {
+        if($this->request->getType() == 'IntentRequset' && !$this->nlu && !$eventHandler) {
             return $this->response->defaultResult(); 
         }
 
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
-            $ret = $intercept->before($this);
+            $ret = $intercept->preprocess($this);
             if($ret) {
                 break; 
             }
@@ -254,7 +229,7 @@ abstract class Bot{
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
-            $ret = $intercept->after($this, $ret);
+            $ret = $intercept->postprocess($this, $ret);
         }
 
         if(!$build) {
@@ -418,17 +393,20 @@ abstract class Bot{
             'intent' => '/#([\w\.\d_]+)/',
             'session' => '/session\.([\w\.\d_]+)/',
             'slot' => '/slot\.([\w\d_]+)/',
+            'requestType' => '/^(LaunchRequest|sessionEndRequest)$/',
         ];
 
         $self = $this;
         foreach($rg as $k=>$r) {
             $str = preg_replace_callback($r, function($m) use($self, $k){
                 if($k == 'intent'){
-                    return json_encode($self->getIntent() == $m[1]);
+                    return json_encode($self->getIntentName() == $m[1]);
                 }else if($k == 'session') {
                     return json_encode($self->getSession($m[1]));
                 }else if($k == 'slot') {
                     return json_encode($self->getSlot($m[1]));
+                }else if($k == 'requestType') {
+                    return json_encode($self->request->getType() == $m[1]);
                 }
             }, $str); 
         }

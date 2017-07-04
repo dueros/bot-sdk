@@ -5,6 +5,8 @@
 **/
 namespace Baidu\Duer\Botsdk\Plugins;
 
+use \Baidu\Duer\Botsdk\Card\TextCard;
+
 class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
 
     /**
@@ -18,10 +20,13 @@ class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
     }
 
     /**
+     * @desc 在处理回调之前，bot-sdk会先调用preprocess，
+     *       如果preprocess返回不为null，终止事件路由，将preprocess的输出作为最终输出
+     *
      * @param Bot $bot
      * @return mixed
      **/
-    public function before($bot){
+    public function preprocess($bot){
         if(!$this->threshold) {
             return; 
         }
@@ -34,13 +39,11 @@ class DuerSessionIntercept extends \Baidu\Duer\Botsdk\Intercept{
 
         if($count >= $this->threshold) {
             $bot->clearSession();
+            $bot->endDialog();
+            $card = new TextCard($this->tip);
+
             return [ 
-                'bot_global_state' => [
-                    "bot_state" => "abnormal_finish"
-                ],
-                'views' => [
-                    $bot->getTxtView($this->tip)
-                ],
+                'card' => $card,
             ];
         }
     }

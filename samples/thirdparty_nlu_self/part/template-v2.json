@@ -1,0 +1,18 @@
+{
+    "version":"2.0",
+    "session": {
+        "new": true,
+        "sessionId": "sessionId",
+        "attributes":{}
+    },
+    "context":{
+        "system": {
+            "bot": {
+                "botId": "sample_personal_tax"
+            }
+        }
+    },
+    "request": {
+    
+    }
+}

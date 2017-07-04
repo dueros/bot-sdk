@@ -1,6 +1,6 @@
 <?php
 /**
- * 短期记忆。中控来维护，如果回复了bot的结果，session才会生效
+ * 短期记忆。DuerOS来维护，如果回复了bot的结果，session才会生效
  * @author yuanpeng01@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
@@ -13,10 +13,9 @@ class Session{
      * @return null
      **/
     public function __construct($data) {
-        if(!$data || $data['empty'] == true) {
-            $data = []; 
-        }
-        $this->data = $data; 
+        $this->data = $data['attributes']; 
+        $this->sessionId = $data['sessonId'];
+        $this->isNew = $data['new'];
     }
 
     /**
@@ -28,23 +27,13 @@ class Session{
     }
 
     /**
-     * @desc 打包sesson
+     * @desc 打包sesson，将session对象输出，返回Response中需要的session格式
      * @param Request $request
      * @return array
      **/
-    public function toResponse($request){
-        $data = $this->data;
-        if(!$data) {
-            $data = ['empty' => true]; 
-        }
-
+    public function toResponse(){
         return [
-            'status'=>0,
-            "msg"=>"ok",
-            'action'=>"set",
-            'type'=>"string",
-            'key'=>$request->getUserId(),
-            'list_sessions_str'=>[json_encode($data, JSON_UNESCAPED_UNICODE)],
+            'attributes' => $this->data,
         ];
     }
 }
