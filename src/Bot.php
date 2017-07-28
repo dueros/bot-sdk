@@ -402,7 +402,7 @@ abstract class Bot{
                 if($k == 'intent'){
                     return json_encode($self->getIntentName() == $m[1]);
                 }else if($k == 'session') {
-                    return json_encode($self->getSession($m[1]));
+                    return json_encode($self->getSessionAttribute($m[1]));
                 }else if($k == 'slot') {
                     return json_encode($self->getSlot($m[1]));
                 }else if($k == 'requestType') {
