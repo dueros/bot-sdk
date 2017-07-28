@@ -68,7 +68,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
             $this->waitAnswer();
             return [
                     'card' => $card,
-					'outputSpeech' => '<speak>欢迎光临</speak>' 
+					//'outputSpeech' => '<speak>欢迎光临</speak>' 
+					'outputSpeech' => '所得税为您服务',
 				];
 
         });
@@ -78,11 +79,12 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
         });
 
 		// 在匹配到intent的情况下，首先询问月薪
-		$this->addHandler('#personal_income_tax.inquiry', function() {
+		$this->addHandler('#sample_personal_income_tax.inquiry', function() {
             if(!$this->getSlot('monthlysalary')) {
 				$this->nlu->ask('monthlysalary');
                 $card = new TextCard('您的税前工资是多少呢？');
                 $card->addCueWords(['20000','10000']);
+                var_dump($card);
 				return [
 					'card' => $card,
                     'reprompt' => '您的税前工资是多少呢？',

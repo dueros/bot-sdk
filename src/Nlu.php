@@ -128,7 +128,7 @@ class Nlu{
      **/
     public function toUpdateIntent(){
         return [
-            'intent' => $this->data 
+            'intent' => $this->data[0]
         ]; 
     }
 }
