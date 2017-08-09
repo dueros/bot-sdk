@@ -74,12 +74,12 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 
         });
 
-        $this->addHandler('SessionEndRequest', function(){
+        $this->addHandler('SessionEndedRequest', function(){
             return null; 
         });
 
 		// 在匹配到intent的情况下，首先询问月薪
-		$this->addHandler('#sample_personal_income_tax.inquiry', function() {
+		$this->addHandler('#personal_income_tax.inquiry', function() {
             if(!$this->getSlot('monthlysalary')) {
 				$this->nlu->ask('monthlysalary');
                 $card = new TextCard('您的税前工资是多少呢？');

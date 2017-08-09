@@ -393,7 +393,7 @@ abstract class Bot{
             'intent' => '/#([\w\.\d_]+)/',
             'session' => '/session\.([\w\.\d_]+)/',
             'slot' => '/slot\.([\w\d_]+)/',
-            'requestType' => '/^(LaunchRequest|sessionEndRequest)$/',
+            'requestType' => '/^(LaunchRequest|SessionEndedRequest)$/',
         ];
 
         $self = $this;
@@ -413,4 +413,5 @@ abstract class Bot{
 
         return $str;
     }
+
 }

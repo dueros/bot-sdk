@@ -1,4 +1,4 @@
 <?php
 return [
-    'type' => 'SessionEndRequest',
+    'type' => 'SessionEndedRequest',
 ];
