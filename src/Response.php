@@ -130,14 +130,14 @@ class Response{
 
         if(preg_match('/<speak>/', $mix)) {
             return [
-                'type' => 'ssml',
+                'type' => 'SSML',
                 'ssml' => $mix,
             ]; 
+        }else{
+            return [
+                'type' => 'PlainText',
+                'text' => $mix,
+            ];
         }
-
-        return [
-            'type' => 'text',
-            'text' => $mix,
-        ];
     }
 }

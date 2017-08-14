@@ -151,11 +151,21 @@ class Request {
     }
 
     /**
+     * @deprecated
      * @param null
      * @return boolean
      **/
     public function isSessionEndRequest(){
-        return $this->data['request']['type'] == 'SessionEndRequest';
+        return $this->data['request']['type'] == 'SessionEndedRequest';
+    }
+
+    /**
+     * @desc call isSessionEndRequest
+     * @param null
+     * @return boolean
+     **/
+    public function isSessionEndedRequest(){
+        return $this->isSessionEndRequest();
     }
 
     /**
@@ -173,6 +183,17 @@ class Request {
      **/
     public function getBotId() {
         return $this->data['context']['system']['bot']['botId']; 
+    }
+
+    /**
+     * @desc 填槽型多轮，当槽位补充完整后
+     *       如果设置了slot confirm或者intent confirm，这些都执行完成后 
+     *       对话状态设置为完成，这个函数判断是否为这个状态。
+     * @param null
+     * @return boolean
+     **/
+    public function isDialogStateCompleted(){
+        return $this->data['request']['dialogState'] == 'COMPLETED';
     }
 
     /**
