@@ -84,7 +84,6 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				$this->nlu->ask('monthlysalary');
                 $card = new TextCard('您的税前工资是多少呢？');
                 $card->addCueWords(['20000','10000']);
-                var_dump($card);
 				return [
 					'card' => $card,
                     'reprompt' => '您的税前工资是多少呢？',
