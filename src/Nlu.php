@@ -18,6 +18,11 @@ class Nlu{
      **/
     private $data = [];
 
+    /**
+     * 记录返回的指令
+     **/
+    private $directive = [];
+
 
     /**
      * @param array $data
@@ -83,7 +88,7 @@ class Nlu{
      * @return boolean
      **/
     public function hasAsked(){
-        return !!$this->askSlot; 
+        return !!$this->directive; 
     }
 
     /**
@@ -97,6 +102,11 @@ class Nlu{
         }
 
         $this->askSlot = $slot;
+        $this->directive = [
+            'type' => 'Dialog.ElicitSlot',
+            'slotToElicit' => $slot,
+            'updatedIntent' => $this->getUpdateIntent(),
+        ];
     }
 
     /**
@@ -108,17 +118,20 @@ class Nlu{
     public function toDirective(){
         $intents=[];
 
-        if($this->askSlot) {
-            return [
-                'type' => 'Dialog.ElicitSlot',
-                'slotToElicit' => $this->askSlot,
-                'updatedIntent' => [
-                    'name' => $this->getIntentName(),
-                    'slots' => $this->data[0]['slots'],
-                ]
-            ];    
-        }
+        return $this->directive;
 	}
+
+    /**
+     * @desc 私有。构造返回的update intent 数据结构
+     * @param null
+     * @return array
+     **/
+    private function getUpdateIntent(){
+        return [
+                'name' => $this->getIntentName(),
+                'slots' => $this->data[0]['slots'],
+            ];
+    }
 
     /**
      * @desc bot可以修改intent中slot对应的值，返回给DuerOS更新
@@ -129,6 +142,47 @@ class Nlu{
     public function toUpdateIntent(){
         return [
             'intent' => $this->data[0]
+        ]; 
+    }
+
+    /**
+     * 设置delegate某个槽位或确认意图。
+     * @param null
+     * @return null
+     **/
+    public function setDelegate(){
+        $this->directive = [
+            'type' => 'Dialog.Delegate',
+            'updatedIntent' => $this->getUpdateIntent(),
+        ];
+    }
+
+    /**
+     * 设置对一个槽位的确认
+     * @param string $field
+     * @return null
+     **/
+    public function setConfirmSlot($field){
+        $slots = $this->data[0]['slots'];
+
+        if(array_key_exists($field, $slots)) {
+            $this->directive = [
+                'type' => 'Dialog.ConfirmSlot',
+                'slotToConfirm' => $field,
+                'updatedIntent' => $this->getUpdateIntent(),
+            ];
+        }
+    }
+
+    /**
+     * 设置confirm 意图。询问用户是否对意图确认，设置后需要自行返回outputSpeech
+     * @param null
+     * @return
+     **/
+    public function setConfirmIntent() {
+        $this->directive = [
+            'type' => 'Dialog.ConfirmIntent',
+            'updatedIntent' => $this->getUpdateIntent(),
         ]; 
     }
 }

@@ -32,7 +32,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
     }
 }
 ```
-需要继承Baidu\Duer\Botsdk\Bot。 下一步，我们处理intent。Bot-sdk提供了一个函数来handle这些intent。比如，为新建闹钟，创建一个handler，在构造函数中添加：
+需要继承Baidu\Duer\Botsdk\Bot。 下一步，我们处理意图。Bot-sdk提供了一个函数来handle这些意图。比如，为新建闹钟，创建一个handler，在构造函数中添加：
 
 ```php
 use \Baidu\Duer\Botsdk\Card\TextCard;
@@ -115,6 +115,35 @@ $card = new ImageCard();
 $card->addItem('http://src.image', 'http://thumbnail.image');
 ```
 
+`directive`返回指令
+
+### 音乐播放指令
+`AudioPlayer.Play`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
+
+$directive = new Play('REPLACE_ALL'); 
+$directive->setUrl('http://wwww');
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '正在为你播放歌曲',
+];
+```
+
+### 停止端上的播放音频
+
+`AudioPlayer.Stop`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Stop;
+
+$directive = new Stop(); 
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '已经停止播放',
+];
+```
 
 设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。比如，新建一个文件index.php，拷贝如下代码：
 ```php
@@ -165,10 +194,11 @@ $this->addHandler('LaunchRequest', function(){
 ```
 
 ### bot 结束服务
-当用户表达退出bot时，DuerOS会发送`SessionEndRequest`：
+当用户表达退出bot时，DuerOS会发送`SessionEndedRequest`：
 ```php
-$this->addHandler('SessionEndRequest', function(){
-    //todo sth
+$this->addHandler('SessionEndedRequest', function(){
+    // clear status
+    // 清空状态，结束会话。 
     return null; 
 });
 
@@ -202,11 +232,22 @@ $this->addEventListener('Alerts.SetAlertSucceeded', function($event){
         'card' => $card
     ];
 });
+
+$this->addEventListener('AudioPlayer.PlaybackNearlyFinished', function($event){
+    $offset = $event['offsetInMilliSeconds'];
+    //todo sth，比如：返回一个播放enqueue
+    //
+    $directive = new Play('ENQUEUE'); 
+    $directive->setUrl('http://wwww');
+    return [
+        'directives' => [$directive],
+	];
+});
 ```
 Bot-sdk会根据通过`addHandler`添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是`null`时结束遍历，将这个不为`null`的值返回。
 条件是关系运算表达式，可以使用：`intent`, `slot`, `session`参与条件运算：
 ```javascript
-//intent，以#开头，后接具体的intent名
+//intent，以#开头，后接具体的意图名
 #remind 
 #rent_car.book
 ```
@@ -229,15 +270,26 @@ clearSession();
 
 你的Bot可以订阅端上触发的事件，通过接口`addEventListener`实现，比如端上设置闹钟成功后，会下发`SetAlertSucceeded`的事件，Bot通过注册事件处理函数，进行相关的操作。
 
-## NLU交互协议ask
-多轮对话的bot，会通过询问用户来收集完成任务所需要的信息（slot），询问用户的特点总结为3点，`ask`：问啥啥。如果你的bot在询问用户的时候，也能告诉NLU你的bot在问什么，能在用户回答你的问题时，NLU可以很针对性的去解析用户的query，大大提高理解用户的准确率，你bot的多轮对话在用户看来就是非常流畅的。bot-sdk提供了接口`ask`，帮助你完成这些工作：
+## NLU交互协议
+在DuerOS Bot Platform平台，可以通过nlu工具，添加了针对槽位询问的配置，包括：
+
+* 是否必选，对应询问的默认话术
+* 是否需要用户确认槽位内容，以及对应的话术
+* 是否需要用户在执行动作前，对所有的槽位确认一遍，以及对应的话术
+
+针对填槽多轮，Bot发起对用户收集、确认槽位（如果针对特定槽位有设置确认选项，就进行确认）、确认意图（如果有设置确认选项）的询问，bot-sdk提供了方便的快捷函数支持：
+
+*注意：一次返回的对话directive，只有一个，如果多次设置，只有最后一次的生效*
+
+### ask
+多轮对话的bot，会通过询问用户来收集完成任务所需要的槽位信息，询问用户的特点总结为3点，`ask`：问一个特定的槽位。比如，打车服务收到用户的打车意图的时候，发现没有提供目的地，就可以ask `destination`(目的地的槽位名)：
 ```javascript
-//打车intent，但是没有提供目的地
+//打车意图，但是没有提供目的地
 $this->addHandler('#rent_car.book', function(){
-    $endPoint = $this->getSlot('end_point');
+    $endPoint = $this->getSlot('destination');
     if(!$this->endPoint) {
-        //询问slot: end_point
-        $this->nlu->ask('end_point');
+        //询问slot: destination
+        $this->nlu->ask('destination');
     
         $card = new TextCard('打车去哪呢');
         return [
@@ -245,9 +297,63 @@ $this->addHandler('#rent_car.book', function(){
         ];
     }
 });
+```
+
+### delegate
+
+将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
+
+```javascript
+$this->addHandler('#your intent name', function(){
+    if(!$this->request->isDialogStateCompleted()) {
+        // 如果使用了delegate 就不再需要使用setConfirmSlot/setConfirmIntent，否则返回的directive会被后set的覆盖。
+        return $this->setDelegate();
+    }
+
+    //do sth else
+});
+```
+
+### confirm slot 
+
+主动发起对一个槽位的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。
+
+```javascript
+$this->addHandler('#your intent name', function(){
+    if($this->getSlot('money') > 10000000000) {
+        $this->setConfirmSlot('money');
+        return [
+            'outputSpeech' => '你确认充话费：10000000000',
+        ];
+    }
+
+    //do sth else
+});
+```
+
+### confirm intent
+
+主动发起对一个意图的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。
+
+一般当槽位填槽完毕，在进行下一步操作之前，一次性的询问各个槽位，是否符合用户预期。
+
+```javascript
+$this->addHandler('#your intent name', function(){
+    $money = $this->getSlot('money');
+    $phone = $this->getSlot('phone');
+    if($money && $phone) {
+        $this->setConfirmIntent();
+        return [
+            'outputSpeech' => "你确认充话费：$money，充值手机：$phone",
+        ];
+    }
+
+    //do sth else
+});
+```
 
 ## 插件
-你还可以写插件(拦截器`Intercept`)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应intent，可以使用`LoginIntercept`：
+你还可以写插件(拦截器`Intercept`)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用`LoginIntercept`：
 ```javascript
 public function __construct($postData = []) {
     parent::__construct($postData);
@@ -345,3 +451,4 @@ $this->log->fatal("this is a fatal log");
 
 
 ## 如何部署，接入度秘DuerOS条件
+

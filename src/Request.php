@@ -9,7 +9,7 @@ class Request {
     /**
      * 当前请求的类型，对应request.type
      **/
-    private $requsetType;
+    private $requestType;
 
     /**
      * Session
@@ -80,12 +80,46 @@ class Request {
     
     
     /**
+     * @deprecated
      * @desc 返回设备信息
      * @param null
      * @return Nlu
      **/
     public function getDeviceData(){
         return $this->deviceData;
+    }
+
+    /**
+     * @desc 获取设备id
+     * @param null
+     * @return string
+     **/
+    public function getDeviceId() {
+        return $this->data['context']['system']['device']['deviceId']; 
+    }
+
+    /**
+     * @desc 获取设备音频播放的状态
+     * @param null
+     * @return array
+     **/
+    public function getAudioPlayerContext() {
+        return $this->data['context']['AudioPlayer']; 
+    }
+
+    /**
+     * @desc 返回event request数据
+     * @param null
+     * @return array
+     **/
+    public function getEventData() {
+        if($this->requestType == 'IntentRequest'
+           || $this->isSessionEndedRequest()
+           || $this->isLaunchRequest()) {
+              return; 
+           }
+
+        return $this->data['request'];
     }
 
     /**
@@ -97,7 +131,7 @@ class Request {
     }
     
     public function getType() {
-        return $this->requsetType;
+        return $this->requestType;
     }
 
 
@@ -124,7 +158,7 @@ class Request {
      * @return string
      **/
     public function getQuery() {
-        if($this->requsetType == 'IntentRequest') {
+        if($this->requestType == 'IntentRequest') {
             return $this->data['request']['query']['original'];
         }
         return '';
@@ -151,11 +185,21 @@ class Request {
     }
 
     /**
+     * @deprecated
      * @param null
      * @return boolean
      **/
     public function isSessionEndRequest(){
-        return $this->data['request']['type'] == 'SessionEndRequest';
+        return $this->data['request']['type'] == 'SessionEndedRequest';
+    }
+
+    /**
+     * @desc call isSessionEndRequest
+     * @param null
+     * @return boolean
+     **/
+    public function isSessionEndedRequest(){
+        return $this->isSessionEndRequest();
     }
 
     /**
@@ -172,7 +216,18 @@ class Request {
      * @return string
      **/
     public function getBotId() {
-        return $this->data['context']['system']['bot']['botId']; 
+        return $this->data['context']['system']['bot']['applicationId']; 
+    }
+
+    /**
+     * @desc 填槽型多轮，当槽位补充完整后
+     *       如果设置了slot confirm或者intent confirm，这些都执行完成后 
+     *       对话状态设置为完成，这个函数判断是否为这个状态。
+     * @param null
+     * @return boolean
+     **/
+    public function isDialogStateCompleted(){
+        return $this->data['request']['dialogState'] == 'COMPLETED';
     }
 
     /**
@@ -181,9 +236,9 @@ class Request {
      **/
     public function __construct($data) {
         $this->data = $data;
-        $this->requsetType = $data['request']['type'];
+        $this->requestType = $data['request']['type'];
         $this->session = new Session($data['session']);
-        if($this->requsetType == 'IntentRequest') {
+        if($this->requestType == 'IntentRequest') {
             $this->nlu = new Nlu($data['request']['intents']);
         }
     }
