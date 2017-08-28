@@ -6,9 +6,9 @@
         "attributes":{}
     },
     "context":{
-        "system": {
-            "bot": {
-                "botId": "sample_personal_tax"
+        "System": {
+            "application": {
+                "applicationId": "sample_personal_tax"
             }
         }
     },
