@@ -2,7 +2,7 @@
 namespace Baidu\Duer\Botsdk\Directive;
 
 abstract class BaseDirective{
-    protected $data=[];
+    protected $data = [];
     /**
      * @param string $type 指令类型
      * @return null
@@ -12,11 +12,16 @@ abstract class BaseDirective{
     }
 
     /**
-     * @desc 生成token.  通过时间+随机+md5来生成一个伪唯一的token
+     * @desc 生成token.  生成一个伪唯一的token
      **/
     protected function genToken(){
-        $str = microtime(1) . '' . rand(10000, 99999); 
-        return md5($str);
+        $str = md5(uniqid(mt_rand(), true));  
+        $uuid  = substr($str,0,8) . '-';  
+        $uuid .= substr($str,8,4) . '-';  
+        $uuid .= substr($str,12,4) . '-';  
+        $uuid .= substr($str,16,4) . '-';  
+        $uuid .= substr($str,20,12);  
+        return $uuid;
     }
 
     /**

@@ -4,6 +4,10 @@ namespace Baidu\Duer\Botsdk\Directive\AudioPlayer;
 
 class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
+    const REPLACE_ALL = 'REPLACE_ALL';
+    const REPLACE_ENQUEUED = 'REPLACE_ENQUEUED';
+    const ENQUEUE = 'ENQUEUE';
+
     /**
      * @param string $playBehavior ，默认替换所有
      *               REPLACE_ALL: 立即停止当前播放并清除播放队列，立即播放指令中的audio item。
@@ -12,7 +16,7 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
      *
      * @return null
      **/
-    public function __construct($playBehavior='REPLACE_ALL') {
+    public function __construct($playBehavior = self::REPLACE_ALL) {
         parent::__construct('AudioPlayer.Play');
         $this->data['playBehavior'] = $playBehavior;
 
@@ -59,13 +63,13 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
     /**
      * @desc 设置directive的属性。从指定的offset开始进行播放
-     * @param integer $seconds
+     * @param integer $milliSeconds  毫秒数。比如5分钟的歌曲，播放的长度是5*60*1000毫秒，选择起始的播放位置
      * @return null
      **/
-    public function setOffsetInMilliSeconds($seconds){
-        if(is_numeric($seconds)) {
-            $seconds = (int)$seconds;
-            $this->data['audioItem']['stream']['offsetInMilliSeconds'] = $seconds;
+    public function setOffsetInMilliSeconds($milliSeconds){
+        if(is_numeric($milliSeconds)) {
+            $milliSeconds = (int)$milliSeconds;
+            $this->data['audioItem']['stream']['offsetInMilliSeconds'] = $milliSeconds;
         }
     }
 }

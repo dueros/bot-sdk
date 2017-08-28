@@ -95,7 +95,7 @@ class Request {
      * @return string
      **/
     public function getDeviceId() {
-        return $this->data['context']['system']['device']['deviceId']; 
+        return $this->data['context']['System']['device']['deviceId']; 
     }
 
     /**
@@ -140,7 +140,7 @@ class Request {
      * @return string
      **/
     public function getUserId() {
-        return $this->data['context']['system']['user']['userId']; 
+        return $this->data['context']['System']['user']['userId']; 
     }
 
     /**
@@ -216,7 +216,7 @@ class Request {
      * @return string
      **/
     public function getBotId() {
-        return $this->data['context']['system']['bot']['applicationId']; 
+        return $this->data['context']['System']['bot']['applicationId']; 
     }
 
     /**
