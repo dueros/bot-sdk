@@ -216,7 +216,7 @@ class Request {
      * @return string
      **/
     public function getBotId() {
-        return $this->data['context']['System']['bot']['applicationId']; 
+        return $this->data['context']['System']['application']['applicationId']; 
     }
 
     /**

@@ -123,8 +123,7 @@ $card->addItem('http://src.image', 'http://thumbnail.image');
 ```php
 use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
 
-$directive = new Play(Play::REPLACE_ALL); 
-$directive->setUrl('http://wwww');
+$directive = new Play('http://www.music', Play::REPLACE_ALL); 
 return [
     'directives' => [$directive],
     'outputSpeech' => '正在为你播放歌曲',

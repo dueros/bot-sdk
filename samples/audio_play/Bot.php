@@ -25,8 +25,8 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 
 
         $this->addHandler('#audio_play_intent', function(){
-            $directive = new Play(Play::REPLACE_ALL); 
-            $directive->setUrl('http://wwww');
+            $directive = new Play('http://wwww'); 
+            //$directive->setUrl('http://wwww');
             return [
                     'directives' => [$directive],
 					'outputSpeech' => '正在为你播放歌曲',
@@ -54,8 +54,8 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
             $offset = $event['offsetInMilliSeconds'];
             //todo sth，比如：返回一个播放enqueue
             //
-            $directive = new Play(Play::ENQUEUE); 
-            $directive->setUrl('http://wwww');
+            $directive = new Play('http://www', Play::ENQUEUE); 
+            //$directive->setUrl('http://wwww');
             return [
                     'directives' => [$directive],
 				];

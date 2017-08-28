@@ -8,7 +8,7 @@ abstract class BaseDirective{
      * @return null
      **/
     public function __construct($type) {
-        $this->data['type']= $type;
+        $this->data['type'] = $type;
     }
 
     /**

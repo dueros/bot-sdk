@@ -16,14 +16,14 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
      *
      * @return null
      **/
-    public function __construct($playBehavior = self::REPLACE_ALL) {
+    public function __construct($url, $playBehavior = self::REPLACE_ALL) {
         parent::__construct('AudioPlayer.Play');
         $this->data['playBehavior'] = $playBehavior;
 
         $this->data['audioItem'] = [
             'stream' => [
                 //'streamFormat' => '',  
-                'url' => '',
+                'url' => $url,
                 'offsetInMilliSeconds' => 0,
                 'token' => $this->genToken(),
             ]
