@@ -83,6 +83,13 @@ class Response{
         }
 
         $directives = $data['directives'] ? $data['directives'] : [];
+        //directive to data
+        $directives = array_values(array_filter(array_map(function($directive){
+            if($directive instanceof Directive\BaseDirective) {
+                return $directive->getData();    
+            } 
+        }, $directives))); 
+
         if($this->nlu){
             $arr = $this->nlu->toDirective();
             if($arr) {

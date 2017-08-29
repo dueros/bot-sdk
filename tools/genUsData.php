@@ -84,6 +84,10 @@ function genUsDataV2($usData, $sendData){
         $usData['request']['type'] = $sendData['type'];
     }
 
+    if($sendData['request']) {
+        $usData['request'] = array_merge($usData['request'], $sendData['request']);
+    }
+
     if($sendData['query']) {
         $usData['request']['query']['original'] = $sendData['query'];
     }

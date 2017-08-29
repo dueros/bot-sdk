@@ -168,7 +168,9 @@ abstract class Bot{
      * @return string
      **/
     public function setSlot($field, $value){
-        return $this->nlu->setSlot($field, $value); 
+        if($this->nlu){
+            return $this->nlu->setSlot($field, $value); 
+        }
     }
 
     /**
@@ -220,7 +222,7 @@ abstract class Bot{
         if(!$ret) {
             //event process
             if($eventHandler) {
-                $event = $this->request->getDeviceData()['device_event'];
+                $event = $this->request->getEventData();
                 $ret = $this->callFunc($eventHandler, $event); 
             }else{
                 $ret = $this->dispatch();
@@ -263,10 +265,9 @@ abstract class Bot{
      * @return function
      **/
     private function getRegisterEventHandler() {
-        $deviceData = $this->request->getDeviceData();
-        if($deviceData['device_event']) {
-            $deviceEvent = $deviceData['device_event'];
-            $key = implode('.', [$deviceEvent['header']['namespace'], $deviceEvent['header']['name']]);
+        $eventData = $this->request->getEventData();
+        if($eventData['type']) {
+            $key = $eventData['type'];
             if($this->event[$key]) {
                 return $this->event[$key];
             }

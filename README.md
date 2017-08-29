@@ -115,6 +115,34 @@ $card = new ImageCard();
 $card->addItem('http://src.image', 'http://thumbnail.image');
 ```
 
+`directive`返回指令
+
+### 音乐播放指令
+`AudioPlayer.Play`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
+
+$directive = new Play('http://www.music', Play::REPLACE_ALL); 
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '正在为你播放歌曲',
+];
+```
+
+### 停止端上的播放音频
+
+`AudioPlayer.Stop`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Stop;
+
+$directive = new Stop(); 
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '已经停止播放',
+];
+```
 
 设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。比如，新建一个文件index.php，拷贝如下代码：
 ```php
@@ -202,6 +230,17 @@ $this->addEventListener('Alerts.SetAlertSucceeded', function($event){
     return [
         'card' => $card
     ];
+});
+
+$this->addEventListener('AudioPlayer.PlaybackNearlyFinished', function($event){
+    $offset = $event['offsetInMilliSeconds'];
+    //todo sth，比如：返回一个播放enqueue
+    //
+    $directive = new Play('ENQUEUE'); 
+    $directive->setUrl('http://wwww');
+    return [
+        'directives' => [$directive],
+	];
 });
 ```
 Bot-sdk会根据通过`addHandler`添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是`null`时结束遍历，将这个不为`null`的值返回。
@@ -411,3 +450,4 @@ $this->log->fatal("this is a fatal log");
 
 
 ## 如何部署，接入度秘DuerOS条件
+
