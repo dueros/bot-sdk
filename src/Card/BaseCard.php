@@ -40,7 +40,7 @@ abstract class BaseCard{
         if($url) {
             $this->data['url'] = $url; 
 
-            if($text) {
+            if($anchorText) {
                 $this->data['anchorText'] = $anchorText; 
             }
         }

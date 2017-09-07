@@ -14,7 +14,7 @@ class Session{
      **/
     public function __construct($data) {
         $this->data = $data['attributes']; 
-        $this->sessionId = $data['sessonId'];
+        $this->sessionId = $data['sessionId'];
         $this->isNew = $data['new'];
     }
 
