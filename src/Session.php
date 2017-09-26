@@ -33,7 +33,7 @@ class Session{
      **/
     public function toResponse(){
         return [
-            'attributes' => $this->data,
+            'attributes' => $this->data?$this->data:(object)[],
         ];
     }
 }
