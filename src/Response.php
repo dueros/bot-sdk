@@ -112,7 +112,7 @@ class Response{
                 'directives' => $directives,
                 'shouldEndSession' => $this->shouldEndSession,
                 'card' => $data['card']?$data['card']->getData():null,
-                //'resource' => $data['resource'],
+                'resource' => $data['resource'],
                 'outputSpeech' => $data['outputSpeech']?$this->formatSpeech($data['outputSpeech']):null,
                 'reprompt' => $data['reprompt']?[
                     'outputSpeech' => $this->formatSpeech($data['reprompt']),
