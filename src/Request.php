@@ -170,12 +170,11 @@ class Request {
      * @return array
      **/
     public function getLocation() {
-        return $this->data['location'];
+        if(isset($this->data['context']['System']['user']['userInfo'])) {
+            return $this->data['context']['System']['user']['userInfo']['location']; 
+        }
     }
     
-
-
-
     /**
      * @param null
      * @return boolean
