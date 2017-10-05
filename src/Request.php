@@ -43,7 +43,7 @@ class Request {
     private $deviceData;
 
     /**
-     * @desc 返回request data
+     * @desc 返回request 请求体
      * @param null
      * @return array
      **/
@@ -52,16 +52,7 @@ class Request {
     }
 
     /**
-     * @desc 返回用户信息
-     * @param null
-     * @return array
-     **/
-    public function getUserProfile() {
-        return $this->arrUserProfile;
-    }
-
-    /**
-     * @desc 返回session
+     * @desc 返回session实例
      * @param null
      * @return Session
      **/
@@ -70,8 +61,8 @@ class Request {
     }
 
     /**
-     * @desc 返回nlu
-     * @param string $domain
+     * @desc 返回nlu实例
+     * @param null
      * @return Nlu
      **/
     public function getNlu(){
@@ -90,6 +81,7 @@ class Request {
     }
 
     /**
+     * 获取设备id
      * @desc 获取设备id
      * @param null
      * @return string
@@ -99,6 +91,8 @@ class Request {
     }
 
     /**
+     * 获取设备音频播放的状态
+     *
      * @desc 获取设备音频播放的状态
      * @param null
      * @return array
@@ -108,6 +102,8 @@ class Request {
     }
 
     /**
+     * 获取event请求
+     *
      * @desc 返回event request数据
      * @param null
      * @return array
@@ -123,6 +119,7 @@ class Request {
     }
 
     /**
+     * @deprecated
      * @param null
      * @return array
      **/
@@ -130,12 +127,20 @@ class Request {
         return $this->data['user_info'];
     }
     
+    /**
+     * 获取request类型
+     *
+     * @param null
+     * @return string 
+     */
     public function getType() {
         return $this->requestType;
     }
 
 
     /**
+     * 获取用户id
+     *
      * @param null
      * @return string
      **/
@@ -144,6 +149,7 @@ class Request {
     }
 
     /**
+     * @deprecated
      * @desc 获cuid
      * @param null
      * @return string
@@ -154,6 +160,9 @@ class Request {
 
 
     /**
+     * 获取query
+     * @desc 获取当前请求的query
+     *
      * @param null
      * @return string
      **/
@@ -166,6 +175,9 @@ class Request {
 
 
     /**
+     * 获取地址
+     * @desc 获取当前用户设备的位置信息。具体协议参考连接TODO
+     *
      * @param null
      * @return array
      **/
@@ -176,6 +188,9 @@ class Request {
     }
     
     /**
+     * 是否为调起bot
+     *
+     * @desc 是否为调起bot请求
      * @param null
      * @return boolean
      **/
@@ -193,7 +208,8 @@ class Request {
     }
 
     /**
-     * @desc call isSessionEndRequest
+     * 是否为关闭bot请求
+     *
      * @param null
      * @return boolean
      **/
@@ -203,6 +219,8 @@ class Request {
 
     /**
      * 获取log_id
+     *
+     * @deprecated
      * @param null
      * @return string
      */
@@ -211,6 +229,8 @@ class Request {
     }
     
     /**
+     * 获取botid
+     *
      * @param null
      * @return string
      **/
@@ -219,6 +239,8 @@ class Request {
     }
 
     /**
+     * 槽位是否填完
+     *
      * @desc 填槽型多轮，当槽位补充完整后
      *       如果设置了slot confirm或者intent confirm，这些都执行完成后 
      *       对话状态设置为完成，这个函数判断是否为这个状态。
@@ -230,6 +252,8 @@ class Request {
     }
 
     /**
+     * 构造函数
+     *
      * @param array
      * @return null
      **/

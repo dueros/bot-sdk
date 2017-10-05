@@ -33,9 +33,10 @@ class Nlu{
     }
 
     /**
+     * 设置槽位
      * @desc 设置slot。如果不存在，新增一个slot
-     * @param string $field
-     * @param string $value
+     * @param string $field 槽位名
+     * @param string $value 槽位值
      * @param string $index 第几组slot
      * @return null
      **/
@@ -57,9 +58,10 @@ class Nlu{
     }
 
     /**
-     * @ 获取一个slot对应的值
-     * @param string $field
-     * @return string
+     * 获取槽位
+     * @desc 获取一个slot对应的值
+     * @param string $field 槽位名
+     * @return string 槽位值
      **/
     public function getSlot($field, $index=0) {
         if(empty($field)){
@@ -81,8 +83,8 @@ class Nlu{
     }
 
     /**
+     * 是否询问过用户
      * @desc 是否有询问用户
-     * 通过askSlot判断
      *
      * @param null
      * @return boolean
@@ -92,8 +94,9 @@ class Nlu{
     }
 
     /**
+     * 询问一个特定的槽位
      * @desc 询问某些槽位。如果有询问一些槽位，表明多轮进行中
-     * @param string|array $slot
+     * @param string|array $slot 槽位名
      * @return null
      **/
     public function ask($slot){
@@ -146,7 +149,7 @@ class Nlu{
     }
 
     /**
-     * 设置delegate某个槽位或确认意图。
+     * @desc 设置delegate某个槽位或确认意图。
      * @param null
      * @return null
      **/
@@ -158,8 +161,8 @@ class Nlu{
     }
 
     /**
-     * 设置对一个槽位的确认
-     * @param string $field
+     * @desc 设置对一个槽位的确认
+     * @param string $field 槽位名
      * @return null
      **/
     public function setConfirmSlot($field){
@@ -175,7 +178,7 @@ class Nlu{
     }
 
     /**
-     * 设置confirm 意图。询问用户是否对意图确认，设置后需要自行返回outputSpeech
+     * @desc 设置confirm 意图。询问用户是否对意图确认，设置后需要自行返回outputSpeech
      * @param null
      * @return
      **/

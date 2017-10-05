@@ -14,7 +14,7 @@ abstract class BaseCard{
 
     /**
      * @desc 为卡片添加cue words 提示用户输入
-     * @param array|string $data 比如：['###', '###',...,'###'], 或者'###'
+     * @param array|string $arr 比如：['###', '###',...,'###'], 或者'###'
      * @return self
      **/
     public function addCueWords($arr){
@@ -33,7 +33,7 @@ abstract class BaseCard{
     /**
      * @desc 设置卡片链接
      * @param string $url 比如:http(s)://....
-     * @param boolean $anchorText链接显示的文字
+     * @param boolean $anchorText 链接显示的文字
      * @return self
      **/
     public function setAnchor($url, $anchorText=''){

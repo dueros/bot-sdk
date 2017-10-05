@@ -12,6 +12,7 @@ abstract class BaseDirective{
     }
 
     /**
+     * 生成token
      * @desc 生成token.  生成一个伪唯一的token
      **/
     protected function genToken(){
@@ -25,6 +26,7 @@ abstract class BaseDirective{
     }
 
     /**
+     * 获取命令的数据
      * @param null
      * @return array
      **/
