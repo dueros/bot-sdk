@@ -1,0 +1,112 @@
+<?php
+
+ini_set("display_errors", "On");
+ini_set('track_errors', true);
+ini_set('error_reporting', E_ALL & ~E_NOTICE);
+ 
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @desc Nlu类的测试类
+ */
+class NluTest extends PHPUnit_Framework_TestCase{
+	
+	/**
+     * @before
+     */
+    public function setupSomeFixtures()
+    {
+        $data = json_decode(file_get_contents(dirname(__FILE__).'/intent_request.json'), true);
+        $this->nlu = new Baidu\Duer\Botsdk\Nlu($data['request']['intents']);
+		$this->data = $data['request']['intents'];
+		$this->updateIntent = [
+            'name' => $this->nlu->getIntentName(),
+            'slots' => $this->data[0]['slots'],
+        ];
+    }	
+
+	/**
+     * @desc 测试getSlot方法
+     */
+	function testGetSlot(){
+		$this->assertEquals($this->nlu->getSlot('city'), '北京');
+	}
+
+	/**
+     * @desc 测试getIntentName方法
+     */
+	function testGetIntentName(){
+		$this->assertEquals($this->nlu->getIntentName(), 'intentName');
+	}
+
+	/**
+     * @desc 测试getUpdateIntent方法
+     */
+	function testGetUpdateIntent(){
+		$updateIntent = [
+			'name' => $this->nlu->getIntentName(),
+			'slots' => $this->data[0]['slots'],
+		];
+		$this->assertEquals($this->updateIntent, $updateIntent);
+	}
+
+	/**
+     * @desc 测试ask方法
+     */
+	function testAsk(){
+		$this->nlu->ask('location');
+		$directive = [
+            'type' => 'Dialog.ElicitSlot',
+            'slotToElicit' => 'location',
+            'updatedIntent' => $this->updateIntent,
+        ];
+		$this->assertEquals($this->nlu->toDirective(), $directive);
+	}
+
+	/**
+     * @desc 测试setSlot方法
+     */
+	function testSetSlot(){
+		$this->nlu->setSlot('monthsalary', 1212);
+		$this->assertEquals($this->nlu->getSlot('monthsalary'), 1212);
+	}
+
+	/**
+     * @desc 测试setDelegate方法
+     */
+	function testSetDelegate(){
+		$this->nlu->setDelegate();
+		$directive = [
+            'type' => 'Dialog.Delegate',
+            'updatedIntent' => $this->updateIntent,
+        ];
+		$this->assertEquals($this->nlu->toDirective(), $directive);
+	}
+
+	/**
+     * @desc 测试setConfirmSlot方法
+     */
+	function testSetConfirmSlot(){
+		$this->nlu->setConfirmSlot('city');
+		$directive = [
+			'type' => 'Dialog.ConfirmSlot',
+			'slotToConfirm' => 'city',
+			'updatedIntent' => $this->updateIntent,
+		];
+		$this->assertEquals($this->nlu->toDirective(), $directive);
+	}
+
+	/**
+     * @desc 测试setConfirmIntent方法
+     */
+	function testSetConfirmIntent(){
+		$this->nlu->setConfirmIntent();
+		$directive = [
+            'type' => 'Dialog.ConfirmIntent',
+            'updatedIntent' => $this->updateIntent,
+        ];
+		$this->assertEquals($this->nlu->toDirective(), $directive);
+	}
+
+}

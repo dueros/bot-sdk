@@ -1,0 +1,25 @@
+{
+  "version": "v2.0",
+  "session": {
+    "new": false,
+    "sessionId": "4c627098-5663-4c28-96e4-ece15c2b43c0",
+    "attributes": []
+  },
+  "context": {
+    "System": {
+      "user": {
+        "userId": "userId"
+      },
+      "application": {
+        "applicationId": "botId"
+      }
+    }
+  },
+  "request": {
+	  "type": "AudioPlayer.PlaybackNearlyFinished",
+	  "requestId" : "requestId",
+	  "timestamp" : 759275,
+	  "token": "token",
+	  "offsetInMilliSeconds": 0
+  }
+}
