@@ -37,7 +37,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
 ```php
 use \Baidu\Duer\Botsdk\Card\TextCard;
 
-$this->addHandler('#remind', function(){
+$this->addIntentHandler('remind', function(){
     $remindTime = $this->getSlot('remind_time');
    
     if($remindTime) {
@@ -52,7 +52,7 @@ $this->addHandler('#remind', function(){
  * 或者，可以不通过匿名函数，还支持传入成员函数名
  */
 
-$this->addHandler('#remind', 'create');
+$this->addIntentHandler('remind', 'create');
 
 //定义一个成员函数
 public function create(){
@@ -183,7 +183,7 @@ return [
 ### bot开始服务
 当bot被@（通过bot唤醒名打开时），DuerOS会发送`LanuchRequest`给bot，此时，bot可以返回欢迎语或者操作提示：
 ```php
-$this->addHandler('LaunchRequest', function(){
+$this->addLaunchHandler(function(){
     return [
         'outputSpeech' => '<speak>欢迎光临</speak>' 
     ];
@@ -195,7 +195,7 @@ $this->addHandler('LaunchRequest', function(){
 ### bot 结束服务
 当用户表达退出bot时，DuerOS会发送`SessionEndedRequest`：
 ```php
-$this->addHandler('SessionEndedRequest', function(){
+$this->addSessionEndedHandler(function(){
     // clear status
     // 清空状态，结束会话。 
     return null; 
@@ -208,7 +208,7 @@ $this->addHandler('SessionEndedRequest', function(){
 
 ```php
 //提醒意图而且有提醒时间slot
-$this->addHandler('#remind', function(){
+$this->addIntentHandler('remind', function(){
     $remindTime = $this->getSlot('remind_time');
     if($remindTime) {
         return [/*设置闹钟指令*/];
@@ -243,13 +243,8 @@ $this->addEventListener('AudioPlayer.PlaybackNearlyFinished', function($event){
 	];
 });
 ```
-Bot-sdk会根据通过`addHandler`添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是`null`时结束遍历，将这个不为`null`的值返回。
-条件是关系运算表达式，可以使用：`intent`, `slot`, `session`参与条件运算：
-```javascript
-//intent，以#开头，后接具体的意图名
-#remind 
-#rent_car.book
-```
+Bot-sdk会根据通过`addIntentHandler`添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是`null`时结束遍历，将这个不为`null`的值返回。
+
 NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。`session`内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用`slot`和`session`：
 ```php
 //slot
@@ -284,7 +279,7 @@ clearSession();
 多轮对话的bot，会通过询问用户来收集完成任务所需要的槽位信息，询问用户的特点总结为3点，`ask`：问一个特定的槽位。比如，打车服务收到用户的打车意图的时候，发现没有提供目的地，就可以ask `destination`(目的地的槽位名)：
 ```javascript
 //打车意图，但是没有提供目的地
-$this->addHandler('#rent_car.book', function(){
+$this->addIntentHandler('rent_car.book', function(){
     $endPoint = $this->getSlot('destination');
     if(!$this->endPoint) {
         //询问slot: destination
@@ -303,7 +298,7 @@ $this->addHandler('#rent_car.book', function(){
 将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
 
 ```javascript
-$this->addHandler('#your intent name', function(){
+$this->addIntentHandler('your intent name', function(){
     if(!$this->request->isDialogStateCompleted()) {
         // 如果使用了delegate 就不再需要使用setConfirmSlot/setConfirmIntent，否则返回的directive会被后set的覆盖。
         return $this->setDelegate();
@@ -318,7 +313,7 @@ $this->addHandler('#your intent name', function(){
 主动发起对一个槽位的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。
 
 ```javascript
-$this->addHandler('#your intent name', function(){
+$this->addIntentHandler('your intent name', function(){
     if($this->getSlot('money') > 10000000000) {
         $this->setConfirmSlot('money');
         return [
@@ -337,7 +332,7 @@ $this->addHandler('#your intent name', function(){
 一般当槽位填槽完毕，在进行下一步操作之前，一次性的询问各个槽位，是否符合用户预期。
 
 ```javascript
-$this->addHandler('#your intent name', function(){
+$this->addIntentHandler('your intent name', function(){
     $money = $this->getSlot('money');
     $phone = $this->getSlot('phone');
     if($money && $phone) {
