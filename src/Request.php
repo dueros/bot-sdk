@@ -102,6 +102,18 @@ class Request {
     }
 
     /**
+     * 获取设备app安装列表
+     *
+     * @desc 获取设备app安装列表
+     * @param null
+     * @return array
+     **/
+
+    public function getAppLauncherContext() {
+        return $this->data['context']['AppLauncher']; 
+    }
+
+    /**
      * 获取event请求
      *
      * @desc 返回event request数据
@@ -215,6 +227,15 @@ class Request {
      **/
     public function isSessionEndedRequest(){
         return $this->isSessionEndRequest();
+    }
+
+    /**
+     * 获取请求的时间戳
+     *
+     * @return string
+     */
+    public function getTimestamp() {
+        return $this->data['request']['timestamp'];
     }
 
     /**
