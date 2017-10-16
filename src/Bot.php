@@ -12,23 +12,23 @@ abstract class Bot{
     private $event = [];
 
     /**
-     * DuerOS对Bot的请求
+     * DuerOS对Bot的请求。instance of Request
      **/
     public $request;
 
     /**
-     * Bot返回给DuerOS的结果
+     * Bot返回给DuerOS的结果。instance of Response
      **/
     public $response;
 
     /**
-     * DuerOS提供的session。
+     * DuerOS提供的session。instance of Session
      * 短时记忆能力
      **/
     public $session;
 
     /**
-     * 度秘NLU对query解析的结果
+     * 度秘NLU对query解析的结果。instance of Nlu
      **/
     public $nlu;
     
@@ -51,13 +51,65 @@ abstract class Bot{
         $this->response = new Response($this->request, $this->session, $this->nlu);
     }
 
+    /**
+     * @desc 添加对LaunchRequest 的处理函数
+     * @example
+     * <pre>
+     * $this->addLaunchHandler(function(){
+     *     return [
+     *         'outputSpeech' => '欢迎使用'
+     *     ];
+     * });
+     * </pre>
+     *
+     * @param function $func 处理函数。返回值作为response给DuerOS
+     * @return null
+     **/
+    protected function addLaunchHandler($func) {
+        return $this->addHandler('LaunchRequest', $func);    
+    }
+
+    /**
+     * @desc 添加对SessionEndedRequest 的处理函数
+     * @example
+     * <pre>
+     * $this->addSessionEndedHandler(function(){
+     *      // TODO: clear status
+     * });
+     * </pre>
+     *
+     * @param function $func 处理函数。DuerOS不会使用该返回值
+     * @return null
+     **/
+    protected function addSessionEndedHandler($func) {
+        return $this->addHandler('SessionEndedRequest', $func);    
+    }
+
+    /**
+     * @desc 添加对特定意图的处理函数
+     * @example
+     * <pre>
+     * $this->addIntentHandler('intentName', function(){
+     *     return [
+     *         'outputSpeech' => '你的意图，我已经处理好了'
+     *     ];
+     * });
+     * </pre>
+     *
+     * @param string $intentName  意图名称
+     * @param function $func 处理函数。返回值作为response给DuerOS
+     * @return null
+     **/
+    protected function addIntentHandler($intentName, $func) {
+        return $this->addHandler('#'.$intentName, $func);    
+    }
 
     /**
      * @desc 条件处理。顺序相关，优先匹配先添加的条件：
      *       1、如果满足，则执行，有返回值则停止
      *       2、满足条件，执行回调返回null，继续寻找下一个满足的条件
-     * @param string|array $mix
-     * @param function $func
+     * @param string $mix 条件，比如意图以'#'开头'#intentName'；或者是'LaunchRequest'、'SessionEndedRequest'
+     * @param function $func 处理函数，满足$mix条件后执行该函数
      * @return null
      **/
     protected function addHandler($mix, $func=null){
@@ -90,16 +142,27 @@ abstract class Bot{
      *        1、在event处理、条件处理之之后执行Intercept.postprocess
      *
      * @param Intercept $intercept
-     * @return null;
+     * @return null
      **/
     protected function addIntercept(Intercept $intercept){
         $this->intercept[] = $intercept;
     }
 
     /**
-     * @desc 绑定一个端上事件的处理回调。有event，不执行handler
-     * @param string  $event。namespace.name
-     * @param function $func
+     * @desc 绑定一个事件的处理回调。
+     * @link http://developer.dueros.baidu.com/doc/dueros-conversational-service/device-interface/audio-player_markdown 具体事件参考
+     *
+     * @example
+     * <pre>
+     * $this->addEventListener('AudioPlayer.PlaybackStarted', function($event){
+     *     return [
+     *         'outputSpeech' => '事件处理好啦',
+     *     ];
+     * });
+     * </pre>
+     *
+     * @param string  $event 绑定的事件名称，比如AudioPlayer.PlaybackStarted
+     * @param function $func 处理函数，传入参数为事件的request，返回值做完response给DuerOS
      * @return null
      **/
     protected function addEventListener($event, $func){
@@ -109,7 +172,7 @@ abstract class Bot{
     }
 
     /**
-     * @desc 快捷方法。获取当前intent的名字
+     * @desc 快捷方法。获取第一个intent的名字
      *
      * @param null
      * @return string
@@ -121,9 +184,9 @@ abstract class Bot{
     }
 
     /**
-     * @desc 快捷方法。获取session某个字段，call session的getData
-     * @param string $field
-     * @param string $default
+     * @desc 快捷方法。获取session某个字段，与Session的getData功能相同
+     * @param string $field 属性的key
+     * @param string $default 如果该字段为空，使用$default返回
      * @return string
      **/
     public function getSessionAttribute($field=null, $default=null){
@@ -131,18 +194,18 @@ abstract class Bot{
     }
 
     /**
-     * @desc 快捷方法。设置session某个字段，call session的setData
-     *       key: a.b.c 表示设置session['a']['b']['c'] 的值
-     * @param string $field
-     * @param string $value
-     * @param string $default
+     * @desc 快捷方法。设置session某个字段，与Session的setData功能相同。
+     *       $field = 'a.b.c' 表示设置session['a']['b']['c'] 的值
+     * @param string $field 属性的key
+     * @param string $value 对应的值
+     * @param string $default 如果$value为空，使用$default
      **/
     public function setSessionAttribute($field, $value, $default=null){
         return $this->session->setData($field, $value, $default); 
     }
 
     /**
-     * @desc 快捷方法。清空session，call session的clear
+     * @desc 快捷方法。清空session，与Session的clear相同
      * @param null
      * @return null
      **/
@@ -151,31 +214,33 @@ abstract class Bot{
     }
 
     /**
-     * @desc 快捷方法。获取一个槽位的值，call nlu中的getSlot
-     * @param string $field
+     * @desc 快捷方法。获取一个槽位的值，与Nlu中的getSlot相同
+     * @param string $field 槽位名
+     * @param integer $index  第几个intent，默认第一个
      * @return string
      **/
-    public function getSlot($field){
+    public function getSlot($field, $index = 0){
         if($this->nlu){
-            return $this->nlu->getSlot($field);
+            return $this->nlu->getSlot($field, $index);
         }
     }
 
     /**
-     * @desc 快捷方法。设置一个槽位的值，call nlu中的setSlot
-     * @param string $field
-     * @param string $value
+     * @desc 快捷方法。设置一个槽位的值，与Nlu中的setSlot相同
+     * @param string $field 槽位名
+     * @param string $value 槽位的值
+     * @param integer $index  第几个intent，默认第一个
      * @return string
      **/
-    public function setSlot($field, $value){
+    public function setSlot($field, $value, $index = 0){
         if($this->nlu){
-            return $this->nlu->setSlot($field, $value); 
+            return $this->nlu->setSlot($field, $value, $index); 
         }
     }
 
     /**
-     * @desc 告诉DuerOS，在多轮对话中，等待用户的回答
-     *       注意：如果有设置Nlu的ask，自动告诉DuerOS，不用调用
+     * @desc 告诉DuerOS，在多轮对话中，等待用户的回答。
+     *       注意：如果有设置Nlu的ask，SDK自动告诉DuerOS，无须调用
      * @param null
      * @return null
      **/
@@ -195,10 +260,10 @@ abstract class Bot{
     }
 
     /**
-     * @desc 事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
+     * @desc 事件路由添加后，需要执行此函数，对添加的条件、事件进行判断。
      *       将第一个return 非null的结果作为此次的response
      *
-     * @param boolean $build  false：不进行封装，直接返回handler的result
+     * @param boolean $build  如果为false：不进行response封装，直接返回handler的result
      * @return array|string  封装后的结果为json string
      **/
     public function run($build=true){

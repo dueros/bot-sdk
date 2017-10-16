@@ -9,7 +9,8 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     const ENQUEUE = 'ENQUEUE';
 
     /**
-     * @param string $playBehavior ，默认替换所有
+     * @param string $url 音频播放地址
+     * @param string $playBehavior 默认替换所有
      *               REPLACE_ALL: 立即停止当前播放并清除播放队列，立即播放指令中的audio item。
      *               ENQUEUE: 将audio item添加到当前队列的尾部。
      *               REPLACE_ENQUEUED: 替换播放队列中的所有audio item，但不影响当前正在播放的audio item。
@@ -31,6 +32,7 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     }
 
     /**
+     * 设置token
      * @desc 设置directive的token. 默认在构造时自动生成了token，可以覆盖
      * @param string $token 音频的token
      * @return null
@@ -42,6 +44,7 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     }
 
     /**
+     * 获取token
      * @desc 获取directive的token. 默认在构造时自动生成了token
      * @param null
      * @return string
@@ -51,8 +54,9 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     }
 
     /**
+     * 设置音频地址
      * @desc 设置directive的音频地址url
-     * @param string $url
+     * @param string $url 音频地址
      * @return null
      **/
     public function setUrl($url){

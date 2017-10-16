@@ -19,6 +19,8 @@ class Session{
     }
 
     /**
+     * 清空session
+     * @desc 清空session，最终返回DuerOS的response session的attributes为空
      * @param null
      * @return null
      **/

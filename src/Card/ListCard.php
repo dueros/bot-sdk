@@ -14,8 +14,20 @@ class ListCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
     }
 
     /**
+     * 添加列表项
+     * @example
+     * <pre>
+     * $item = new ListCardItem();
+     * $item->setTitle('');
+     * $item->setContent('');
+     * $item->setUrl('');
+     * $item->setImage('');
+     *
+     * $listCard = new ListCard();
+     * $listCard->addItem($item);
+     * </pre>
      * @param listCardItem ListCardItem 列表项
-     * @return self
+     * @return ListCard
      **/
     public function addItem($listCardItem){
         if($listCardItem instanceof ListCardItem) {

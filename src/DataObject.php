@@ -11,9 +11,10 @@ trait DataObject{
     private $data=[];
 
     /**
+     * 获取值
      * @desc 获取a.b.c 对应 array[a][b][c]的值
-     * @param string $field
-     * @param string $default 
+     * @param string $field 属性名
+     * @param string $default 默认值，如果对应属性值为空，使用$default返回
      * @return mixed
      **/
     public function getData($field=null,$default=null){
@@ -32,9 +33,9 @@ trait DataObject{
 
     /**
      * @desc 设置a.b.c 对应 array[a][b][c]的值
-     * @param string $field
-     * @param mixed $value
-     * @param string $default 
+     * @param string $field 属性名
+     * @param mixed $value 值
+     * @param string $default  默认值，如果值为空，使用$default
      * @return null
      **/
     public function setData($field,$value,$default=null){

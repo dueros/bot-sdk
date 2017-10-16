@@ -14,9 +14,10 @@ class ImageCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
     }
 
     /**
+     * 添加一个图片项
      * @param string $src 图片地址
      * @param string $thumbnail  图片缩率图地址
-     * @return self
+     * @return ImageCard
      **/
     public function addItem($src, $thumbnail=''){
         if(!$src) {

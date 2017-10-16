@@ -32,9 +32,9 @@ class Response{
     private $shouldEndSession = true;
 
     /**
-     * @param Request $request
-     * @param Session $session
-     * @param Nlu $nlu
+     * @param Request $request 请求对象
+     * @param Session $session session对象
+     * @param Nlu $nlu nlu对象
      * @return null
      **/
     public function __construct($request, $session, $nlu){
@@ -45,6 +45,8 @@ class Response{
     }
 
     /**
+     * 设置对话结束
+     *
      * @param null
      * @return null
      **/
@@ -67,14 +69,17 @@ class Response{
     }
 
     /** 
-     * @param array $data
+     * @desc 构造response返回结果
+     * @param array $data 数据
+     * @example
+     * <pre>
      * $data = [
      *    "card"=> $card // instanceof Card\BaseCard
-     *    "directives"=> $directive  TODO
+     *    "directives"=> $directives  // array
      *    "outputSpeech"=> "string"
      *    "reprompt" => "string"
      *  ]
-     *
+     * </pre>
      * @return string
      */
     public function build($data){
@@ -127,7 +132,7 @@ class Response{
 
     /**
      * @desc 通过正则<speak>..</speak>，判断是纯文本还是ssml，生成对应的format
-     * @param string|array $mix
+     * @param string|array $mix 输入的语句
      * @return array
      **/
     public function formatSpeech($mix){
