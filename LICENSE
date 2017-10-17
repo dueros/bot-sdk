@@ -1,4 +1,3 @@
-<?php
 /**
  * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
  *
@@ -13,26 +12,4 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @desc 标准卡片类
  **/
-namespace Baidu\Duer\Botsdk\Card;
-
-class StandardCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
-
-    /**
-     * @example
-     * <pre>
-     * $card = new StandardCard();
-     * $card->setTitle('');
-     * $card->setContent('');
-     * $card->setImage('');
-     * </pre>
-     * @param null
-     * @return null
-     **/
-    public function __construct() {
-        $this->data['type'] = 'standard';
-        parent::__construct(['title', 'content', 'image']);
-    }
-}
