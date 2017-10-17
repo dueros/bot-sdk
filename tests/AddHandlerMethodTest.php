@@ -15,9 +15,6 @@
  * limitations under the License.
  **/
 
-ini_set("display_errors", "On");
-ini_set('track_errors', true);
-ini_set('error_reporting', E_ALL & ~E_NOTICE);
 
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;

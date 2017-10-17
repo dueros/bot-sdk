@@ -1,12 +1,4 @@
 <?php
-
-ini_set("display_errors", "On");
-ini_set('track_errors', true);
-ini_set('error_reporting', E_ALL & ~E_NOTICE);
-
-require '../vendor/autoload.php';
-use PHPUnit\Framework\TestCase;
-
 /**
  * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
  *
@@ -24,6 +16,10 @@ use PHPUnit\Framework\TestCase;
  * 
  * @desc TextCard类的测试类
  */
+
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+
 class TextCardTest extends PHPUnit_Framework_TestCase{
 	
 	/**

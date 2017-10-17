@@ -1,7 +1,4 @@
 <?php
-require '../vendor/autoload.php';
-use PHPUnit\Framework\TestCase;
-
 /**
  * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
  *
@@ -19,6 +16,10 @@ use PHPUnit\Framework\TestCase;
  *
  * @desc LaunchRequest类的测试类
  */
+
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+
 class LaunchRequestTest extends PHPUnit_Framework_TestCase{
 	
 	/**
