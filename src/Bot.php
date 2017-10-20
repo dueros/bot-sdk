@@ -45,12 +45,18 @@ abstract class Bot{
      * 度秘NLU对query解析的结果。instance of Nlu
      **/
     public $nlu;
+
+    /**
+     * 统计Bot运行中产生的技能数据。instance of BotMonitor
+     **/
+    public $botMonitor;
     
     /**
      * @param array $postData us对bot的数据。默认可以为空，sdk自行获取
      * @return null
      **/
     public function __construct($postData=[] ) {
+        $this->botMonitor = new BotMonitor($postData);
         if(!$postData){
             $rawInput = file_get_contents("php://input");
             $rawInput = str_replace("", "", $rawInput);
@@ -292,7 +298,9 @@ abstract class Bot{
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
+            $this->botMonitor->setPreEventStart();
             $ret = $intercept->preprocess($this);
+            $this->botMonitor->setPreEventEnd();
             if($ret) {
                 break; 
             }
@@ -301,17 +309,25 @@ abstract class Bot{
         if(!$ret) {
             //event process
             if($eventHandler) {
+                $this->botMonitor->setDeviceEventStart();
                 $event = $this->request->getEventData();
-                $ret = $this->callFunc($eventHandler, $event); 
+                $ret = $this->callFunc($eventHandler, $event);
+                $this->botMonitor->setDeviceEventEnd();
             }else{
+                $this->botMonitor->setEventStart();
                 $ret = $this->dispatch();
+                $this->botMonitor->setEventEnd();
             }
         }
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
+            $this->botMonitor->setPostEventStart();
             $ret = $intercept->postprocess($this, $ret);
+            $this->botMonitor->setPostEventEnd();
         }
+
+        $this->botMonitor->setResponseData($ret);
 
         if(!$build) {
             return $ret; 
