@@ -11,6 +11,8 @@ abstract class Bot{
     private $intercept = [];
     private $event = [];
 
+    public $certificate;
+
     /**
      * DuerOS对Bot的请求。instance of Request
      **/
@@ -33,10 +35,28 @@ abstract class Bot{
     public $nlu;
     
     /**
+     * 构造函数
+     * @example
+     * <pre>
+     * // 子类调用
+     * parent::__construct($requestBody, $privateKey);
+     * // 或者
+     * parent::__construct($privateKey);
+     * </pre>
+     *
      * @param array $postData us对bot的数据。默认可以为空，sdk自行获取
+     * @param string $privateKey 私钥内容 
      * @return null
      **/
-    public function __construct($postData=[] ) {
+    public function __construct($postData=[], $privateKey = '') {
+        /**
+         * 如果第一个参数是字符串，认为是privateKey
+         */
+        if ($postData && is_string($postData)) {
+            $privateKey = $postData;
+            $postData = false;
+        }
+
         if(!$postData){
             $rawInput = file_get_contents("php://input");
             $rawInput = str_replace("", "", $rawInput);
@@ -44,6 +64,7 @@ abstract class Bot{
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
         $this->request = new Request($postData);
+        $this->certificate = new Certificate($privateKey);
 
         $this->session = $this->request->getSession();
 
