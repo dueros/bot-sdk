@@ -82,7 +82,7 @@ abstract class Bot{
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
-        $this->botMonitor = new BotMonitor($postData);
+        //$this->botMonitor = new BotMonitor($postData);
         $this->request = new Request($postData);
         $this->certificate = new Certificate($privateKey);
 
@@ -319,9 +319,9 @@ abstract class Bot{
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
-            $this->botMonitor->setPreEventStart();
+            //$this->botMonitor->setPreEventStart();
             $ret = $intercept->preprocess($this);
-            $this->botMonitor->setPreEventEnd();
+            //$this->botMonitor->setPreEventEnd();
             if($ret) {
                 break; 
             }
@@ -330,25 +330,25 @@ abstract class Bot{
         if(!$ret) {
             //event process
             if($eventHandler) {
-                $this->botMonitor->setDeviceEventStart();
+                //$this->botMonitor->setDeviceEventStart();
                 $event = $this->request->getEventData();
                 $ret = $this->callFunc($eventHandler, $event);
-                $this->botMonitor->setDeviceEventEnd();
+                //$this->botMonitor->setDeviceEventEnd();
             }else{
-                $this->botMonitor->setEventStart();
+                //$this->botMonitor->setEventStart();
                 $ret = $this->dispatch();
-                $this->botMonitor->setEventEnd();
+                //$this->botMonitor->setEventEnd();
             }
         }
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
-            $this->botMonitor->setPostEventStart();
+            //$this->botMonitor->setPostEventStart();
             $ret = $intercept->postprocess($this, $ret);
-            $this->botMonitor->setPostEventEnd();
+            //$this->botMonitor->setPostEventEnd();
         }
 
-        $this->botMonitor->setResponseData($ret);
+        //$this->botMonitor->setResponseData($ret);
 
         if(!$build) {
             return $ret; 

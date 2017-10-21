@@ -122,7 +122,7 @@ class Response{
 
         $ret = [
             'version' => '2.0',
-            'context' => $this->nlu ? $this->nlu->toUpdateIntent() : null, 
+            'context' => ($this->nlu ? $this->nlu->toUpdateIntent() : null)?($this->nlu ? $this->nlu->toUpdateIntent() : null)    :(object)[], 
             'session' => $this->session->toResponse(),
             'response' => [
                 //'needDetermine' => $this->confirm ? true : false,
