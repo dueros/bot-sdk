@@ -28,7 +28,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-        $this->data = json_decode(file_get_contents(dirname(__FILE__).'/intent_request.json'), true);
+        $this->data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
         $this->request = new Baidu\Duer\Botsdk\Request($this->data);
         $this->session = $this->request->getSession();
         $this->nlu = $this->request->getNlu();
@@ -64,7 +64,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase{
 			'outputSpeech' => '测试服务，欢迎光临',
 		];
 		$json = $this->response->build($ret);
-		$rt = '{"version":"2.0","context":{"updateIntent":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":false,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null}}';
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":false,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null}}';
 		$this->assertEquals($json, $rt);
 	}
 

@@ -55,7 +55,7 @@ class BotTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-		$data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
+		$data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request.json'), true);
         $this->bot = new Bot($data);
     }	
 
@@ -133,7 +133,7 @@ class BotTest extends PHPUnit_Framework_TestCase{
 	 */
 	function testRun(){
 		$ret = $this->bot->run();
-		$rt = '{"version":"2.0","context":{"updateIntent":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null}}';
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null}}';
         $this->assertEquals($ret, $rt);
 	}
 

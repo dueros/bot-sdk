@@ -71,7 +71,7 @@ class AddInterceptMethodTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-		$data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
+		$data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request.json'), true);
         $this->bot = new AddInterceptMethodTestBot($data);
     }	
 
@@ -80,7 +80,7 @@ class AddInterceptMethodTest extends PHPUnit_Framework_TestCase{
 	 **/
 	function testAddIntercept(){
 		$ret = $this->bot->run();
-		$rt = '{"version":"2.0","context":{"updateIntent":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":{"type":"PlainText","text":"preprocess"},"reprompt":null}}';
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":{"type":"PlainText","text":"preprocess"},"reprompt":null}}';
         $this->assertEquals($ret, $rt);	
 	}
 

@@ -49,7 +49,7 @@ class AddEventListenerMethodTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-		$data = json_decode(file_get_contents(dirname(__FILE__).'/json/audio_player.json'), true);
+		$data = json_decode(file_get_contents(dirname(__FILE__).'/../json/audio_player.json'), true);
         $this->bot = new AddEventListenerMethodTestBot($data);
     }
 	
@@ -58,7 +58,7 @@ class AddEventListenerMethodTest extends PHPUnit_Framework_TestCase{
      **/	
 	function testAddEventListener(){
 		$ret = $this->bot->run();
-		$rt = '{"version":"2.0","context":{"updateIntent":null},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":{"type":"PlainText","text":"这是一个测试回复，表面bot已经收到了端上返回的AudioPlayer.PlaybackStarted event"},"reprompt":null}}';
+		$rt = '{"version":"2.0","context":null,"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":{"type":"PlainText","text":"这是一个测试回复，表面bot已经收到了端上返回的AudioPlayer.PlaybackStarted event"},"reprompt":null}}';
         $this->assertEquals($ret, $rt);	
 	}
 

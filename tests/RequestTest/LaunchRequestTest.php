@@ -27,7 +27,7 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-		$this->data = json_decode(file_get_contents(dirname(__FILE__).'/json/launch.json'), true);
+		$this->data = json_decode(file_get_contents(dirname(__FILE__).'/../json/launch.json'), true);
 		$this->request = new Baidu\Duer\Botsdk\Request($this->data);	
     }
 

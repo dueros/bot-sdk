@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
  *
@@ -13,43 +14,39 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
- * @desc Session类的测试类
+ *
+ * @desc ImageCard类的测试类
  */
- 
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
 
-class SessionTest extends PHPUnit_Framework_TestCase{
+class ImageCardTest extends PHPUnit_Framework_TestCase{
 	
 	/**
      * @before
      */
     public function setupSomeFixtures()
     {
-        $data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
-        $this->session = new Baidu\Duer\Botsdk\Session($data['session']);
-    }	
-
+		$this->card = new Baidu\Duer\Botsdk\Card\ImageCard();
+    }
+	
 	/**
-     * @desc 测试setData方法
+     * @desc 测试addItem方法
      */
-	function testSetData(){
-		$this->session->setData('status', '1');
-		$response = [
-            'attributes' => [
-				'status' => '1'
-			]
-        ];
-		$this->assertEquals($this->session->toResponse(), $response);
-	}
+	function testAddItem(){
+		$this->card->addItem('www.png');	
+		$card = [
+			'type' => 'image',
+			'list' =>  [['src' => 'www.png']]
+		];
+		$this->assertEquals($this->card->getData(), $card);
 
-	/**
-     * @desc 测试getData方法
-     */
-	function testGetData(){
-		$this->session->setData('status', '1');
-		$this->assertEquals($this->session->getData('status'), 1);
+		$this->card->addItem('www.png','www.thumbnail');	
+		$card = [
+			'type' => 'image',
+			'list' =>  [['src' => 'www.png'],['src' => 'www.png', 'thumbnail' => 'www.thumbnail']]
+		];
+		$this->assertEquals($this->card->getData(), $card);
 	}
 
 }

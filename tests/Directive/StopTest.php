@@ -14,42 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @desc Session类的测试类
+ * @desc Stop类的测试类
  */
- 
+
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
 
-class SessionTest extends PHPUnit_Framework_TestCase{
+class StopTest extends PHPUnit_Framework_TestCase{
 	
 	/**
      * @before
      */
     public function setupSomeFixtures()
     {
-        $data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
-        $this->session = new Baidu\Duer\Botsdk\Session($data['session']);
+        $this->stop = new Baidu\Duer\Botsdk\Directive\AudioPlayer\Stop();
     }	
 
 	/**
-     * @desc 测试setData方法
-     */
-	function testSetData(){
-		$this->session->setData('status', '1');
-		$response = [
-            'attributes' => [
-				'status' => '1'
-			]
-        ];
-		$this->assertEquals($this->session->toResponse(), $response);
-	}
-
-	/**
-     * @desc 测试getData方法
-     */
+	 * @desc 测试getData方法
+	 */
 	function testGetData(){
-		$this->session->setData('status', '1');
-		$this->assertEquals($this->session->getData('status'), 1);
+		$data = ['type' => 'AudioPlayer.Stop'];
+		$this->assertEquals($this->stop->getData(), $data);
 	}
 
 }

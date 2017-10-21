@@ -27,7 +27,7 @@ class NluTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-        $data = json_decode(file_get_contents(dirname(__FILE__).'/intent_request.json'), true);
+        $data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
         $this->nlu = new Baidu\Duer\Botsdk\Nlu($data['request']['intents']);
 		$this->data = $data['request']['intents'];
 		$this->updateIntent = [

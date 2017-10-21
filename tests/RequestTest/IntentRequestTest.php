@@ -26,7 +26,7 @@ class IntentRequestTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-        $this->data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
+        $this->data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request.json'), true);
         $this->request = new Baidu\Duer\Botsdk\Request($this->data);
     }	
 

@@ -14,42 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @desc Session类的测试类
+ * @desc StandardCard类的测试类
  */
- 
+
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
 
-class SessionTest extends PHPUnit_Framework_TestCase{
+class StandardCardTest extends PHPUnit_Framework_TestCase{
 	
 	/**
      * @before
      */
     public function setupSomeFixtures()
     {
-        $data = json_decode(file_get_contents(dirname(__FILE__).'/json/intent_request.json'), true);
-        $this->session = new Baidu\Duer\Botsdk\Session($data['session']);
+		$this->card = new Baidu\Duer\Botsdk\Card\StandardCard();
     }	
-
-	/**
-     * @desc 测试setData方法
-     */
-	function testSetData(){
-		$this->session->setData('status', '1');
-		$response = [
-            'attributes' => [
-				'status' => '1'
-			]
-        ];
-		$this->assertEquals($this->session->toResponse(), $response);
-	}
 
 	/**
      * @desc 测试getData方法
      */
 	function testGetData(){
-		$this->session->setData('status', '1');
-		$this->assertEquals($this->session->getData('status'), 1);
+		$this->card->setTitle('title');
+        $this->card->setContent('这是StandardCard');
+        $this->card->setImage('www.png');	
+		$card = [
+			'type' => 'standard',
+			'title' => 'title',
+			'content' => '这是StandardCard',
+			'image' => 'www.png'
+		];
+		$this->assertEquals($this->card->getData(), $card);
 	}
 
 }
