@@ -1,0 +1,48 @@
+{
+    "version": "2.0",
+	"cuid": "cuid",
+	"log_id": "log_id",
+    "session": {
+        "new": true,
+        "sessionId": "sessionId",
+        "attributes": {}
+    },
+    "context": {
+        "System": {
+            "application": {
+                "applicationId": "botId"
+            },
+            "user": {
+                "userId": "userId",
+				"userInfo": {
+                    "location": {
+                        "geo": {
+                            "bd09ll": {
+                                "longitude": 12.12,
+                                "latitude": 34.12
+                            },
+                            "wgs84": {
+                                "longitude": 12.12,
+                                "latitude": 34.12
+                            },
+                            "bd09mc": {
+                                "longitude": 111112.12,
+                                "latitude": 322224.12
+                            }
+                        }
+                    }
+                }
+            },
+			"device" : {
+				"deviceId" : "deviceId",
+				"supportedInterfaces" : {
+					"VoiceInput" : {},
+					"VoiceOutput" : {}
+				}
+			}
+		}
+    },
+    "request": {
+        "type": "LaunchRequest"
+    }
+}

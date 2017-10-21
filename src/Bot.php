@@ -1,6 +1,20 @@
 <?php
-/**
- * Bot-sdk基类。使用都需要继承这个类
+/** 
+ * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @desc Bot-sdk基类。使用都需要继承这个类
  * @author yuanpeng01@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
@@ -33,6 +47,11 @@ abstract class Bot{
      * 度秘NLU对query解析的结果。instance of Nlu
      **/
     public $nlu;
+
+    /**
+     * 统计Bot运行中产生的技能数据。instance of BotMonitor
+     **/
+    public $botMonitor;
     
     /**
      * 构造函数
@@ -63,6 +82,7 @@ abstract class Bot{
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
+        $this->botMonitor = new BotMonitor($postData);
         $this->request = new Request($postData);
         $this->certificate = new Certificate($privateKey);
 
@@ -299,7 +319,9 @@ abstract class Bot{
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
+            $this->botMonitor->setPreEventStart();
             $ret = $intercept->preprocess($this);
+            $this->botMonitor->setPreEventEnd();
             if($ret) {
                 break; 
             }
@@ -308,17 +330,25 @@ abstract class Bot{
         if(!$ret) {
             //event process
             if($eventHandler) {
+                $this->botMonitor->setDeviceEventStart();
                 $event = $this->request->getEventData();
-                $ret = $this->callFunc($eventHandler, $event); 
+                $ret = $this->callFunc($eventHandler, $event);
+                $this->botMonitor->setDeviceEventEnd();
             }else{
+                $this->botMonitor->setEventStart();
                 $ret = $this->dispatch();
+                $this->botMonitor->setEventEnd();
             }
         }
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
+            $this->botMonitor->setPostEventStart();
             $ret = $intercept->postprocess($this, $ret);
+            $this->botMonitor->setPostEventEnd();
         }
+
+        $this->botMonitor->setResponseData($ret);
 
         if(!$build) {
             return $ret; 
