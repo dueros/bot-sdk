@@ -4,7 +4,8 @@
     "description": "度秘bot开发的PHP SDK",
     "keywords": ["duer","bot"],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "monitor/bot-monitor":"dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.3"

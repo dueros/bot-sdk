@@ -1,5 +1,19 @@
 <?php
 /**
+ * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * @desc tax个税服务
  * @author tianlong02
  * */
@@ -45,7 +59,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 	 * @return null
 	 * */
 	public function __construct($postData = []) {
-		parent::__construct($postData);
+		//parent::__construct($postData, file_get_contents(dirname(__file__).'/../../src/privkey.pem'));
+		//parent::__construct(file_get_contents(dirname(__file__).'/../../src/privkey.pem'));
+		parent::__construct();
 		$this->log = new \Baidu\Duer\Botsdk\Log([
 				// 日志存储路径
 				'path' => 'log/',
@@ -56,7 +72,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		// 记录这次请求的query
 		$this->log->setField('query', $this->request->getQuery());
 		//$this->addIntercept(new \Baidu\Duer\Botsdk\Plugins\DuerSessionIntercept());
-        $this->addHandler('LaunchRequest', function(){
+        $this->addLaunchHandler(function(){
             $card = new ListCard();
             $item = new ListCardItem();
             $item->setTitle('title')
@@ -74,12 +90,12 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 
         });
 
-        $this->addHandler('SessionEndedRequest', function(){
+        $this->addSessionEndedHandler(function(){
             return null; 
         });
 
 		// 在匹配到intent的情况下，首先询问月薪
-		$this->addHandler('#personal_income_tax.inquiry', function() {
+		$this->addIntentHandler('personal_income_tax.inquiry', function() {
             if(!$this->getSlot('monthlysalary')) {
 				$this->nlu->ask('monthlysalary');
                 $card = new TextCard('您的税前工资是多少呢？');
@@ -87,6 +103,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 				return [
 					'card' => $card,
                     'reprompt' => '您的税前工资是多少呢？',
+                    'resource' => [
+                        'type' => 1,
+                    ],
 				];
             }else if(!$this->getSlot('location')) {
 		        // 在存在monthlysalary槽位的情况下，首先验证monthlysalary槽位值是否合法，然后询问location槽位
