@@ -63,4 +63,13 @@ class PlayTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals($offset, 1000);
 	}
 
+	/**
+     * @desc 测试setProgressReportIntervalMs方法
+     */
+	function testSetProgressReportIntervalMs(){
+		$this->play->setProgressReportIntervalMs(3000);
+		$intervalMs = $this->play->getData()['audioItem']['stream']['progressReportIntervalMs'];
+		$this->assertEquals($intervalMs, 3000);
+	}
+
 }
