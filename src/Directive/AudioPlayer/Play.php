@@ -39,7 +39,7 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
         $this->data['audioItem'] = [
             'stream' => [
-                //'streamFormat' => '',  
+                'streamFormat' => 'MP3',  
                 'url' => $url,
                 'offsetInMilliSeconds' => 0,
                 'token' => $this->genToken(),
@@ -92,4 +92,17 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
             $this->data['audioItem']['stream']['offsetInMilliSeconds'] = $milliSeconds;
         }
     }
+
+ 	/**
+     * @desc 设置directive的属性。定时上报事件的间隔时间
+     * @param integer $intervalMs  毫秒数。
+     * @return null
+     **/
+    public function setProgressReportIntervalMs($intervalMs){
+        if(is_numeric($intervalMs)) {
+            $intervalMs = (int)$intervalMs;
+            $this->data['audioItem']['stream']['progressReportIntervalMs'] = $intervalMs;
+        }
+    }
+
 }
