@@ -39,7 +39,7 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
         $this->data['audioItem'] = [
             'stream' => [
-                'streamFormat' => 'MP3',  
+                'streamFormat' => 'AUDIO_MP3',  
                 'url' => $url,
                 'offsetInMilliSeconds' => 0,
                 'token' => $this->genToken(),
@@ -102,6 +102,18 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
         if(is_numeric($intervalMs)) {
             $intervalMs = (int)$intervalMs;
             $this->data['audioItem']['stream']['progressReportIntervalMs'] = $intervalMs;
+        }
+    }
+
+	/**
+     * @desc 设置directive的属性。音频流格式，streamFormat 默认AUDIO_MP3,为音频流时可取值AUDIO_MP3、AUDIO_M3U8、AUDIO_M4A
+     * @param enum $streamFormat  取值:'AUDIO_MP3'、'AUDIO_M3U8'、'AUDIO_M4A'
+     * @return null
+     **/
+    public function setStreamFormat($streamFormat){
+		$streamFormatArray = ['AUDIO_MP3', 'AUDIO_M3U8', 'AUDIO_M4'];
+        if(in_array($streamFormat, $streamFormatArray)) {
+            $this->data['audioItem']['stream']['streamFormat'] = $streamFormat;
         }
     }
 

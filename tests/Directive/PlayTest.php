@@ -72,4 +72,17 @@ class PlayTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals($intervalMs, 3000);
 	}
 
+	/**
+     * @desc 测试setStreamFormat方法
+     */
+	function testSetStreamFormat(){
+		$this->play->setStreamFormat('AUDIO_M3U8');
+		$streamFormat = $this->play->getData()['audioItem']['stream']['streamFormat'];
+		$this->assertEquals($streamFormat, 'AUDIO_M3U8');
+
+		$this->play->setStreamFormat('M4A');
+		$streamFormat = $this->play->getData()['audioItem']['stream']['streamFormat'];
+		$this->assertFalse($streamFormat == 'M4A');
+	}
+
 }
