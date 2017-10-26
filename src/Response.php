@@ -164,4 +164,8 @@ class Response{
             ];
         }
     }
+
+    public function illegalRequest() {
+        return json_encode(['status'=>1, 'msg'=>'非法请求']);
+    }
 }

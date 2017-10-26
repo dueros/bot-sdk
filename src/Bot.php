@@ -308,6 +308,11 @@ abstract class Bot{
      * @return array|string  封装后的结果为json string
      **/
     public function run($build=true){
+        // 验证请求签名
+        if(!$this->certificate->verifyRequest()) {
+            return $this->response->illegalRequest();     
+        }
+
         //handler event
         $eventHandler = $this->getRegisterEventHandler();
 

@@ -18,6 +18,7 @@
  */
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
+use Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
 
 class PlayTest extends PHPUnit_Framework_TestCase{
 	
@@ -26,7 +27,7 @@ class PlayTest extends PHPUnit_Framework_TestCase{
      */
     public function setupSomeFixtures()
     {
-        $this->play = new Baidu\Duer\Botsdk\Directive\AudioPlayer\Play('www.baidu.com');
+        $this->play = new Play('www.baidu.com');
     }	
 
 	/**
@@ -70,6 +71,19 @@ class PlayTest extends PHPUnit_Framework_TestCase{
 		$this->play->setProgressReportIntervalMs(3000);
 		$intervalMs = $this->play->getData()['audioItem']['stream']['progressReportIntervalMs'];
 		$this->assertEquals($intervalMs, 3000);
+	}
+
+	/**
+     * @desc 测试setStreamFormat方法
+     */
+	function testSetStreamFormat(){
+		$this->play->setStreamFormat(Play::STREAM_FORMAT_M3U8);
+		$streamFormat = $this->play->getData()['audioItem']['stream']['streamFormat'];
+		$this->assertEquals($streamFormat, 'AUDIO_M3U8');
+
+		$this->play->setStreamFormat(Play::STREAM_FORMAT_M4A);
+		$streamFormat = $this->play->getData()['audioItem']['stream']['streamFormat'];
+		$this->assertTrue($streamFormat == 'AUDIO_M4A');
 	}
 
 }

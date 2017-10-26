@@ -23,6 +23,9 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     const REPLACE_ALL = 'REPLACE_ALL';
     const REPLACE_ENQUEUED = 'REPLACE_ENQUEUED';
     const ENQUEUE = 'ENQUEUE';
+    const STREAM_FORMAT_MP3 = 'AUDIO_MP3';
+    const STREAM_FORMAT_M3U8 = 'AUDIO_M3U8';
+    const STREAM_FORMAT_M4A = 'AUDIO_M4A';
 
     /**
      * @param string $url 音频播放地址
@@ -39,7 +42,7 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
         $this->data['audioItem'] = [
             'stream' => [
-                'streamFormat' => 'MP3',  
+                'streamFormat' => self::STREAM_FORMAT_MP3,  
                 'url' => $url,
                 'offsetInMilliSeconds' => 0,
                 'token' => $this->genToken(),
@@ -102,6 +105,18 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
         if(is_numeric($intervalMs)) {
             $intervalMs = (int)$intervalMs;
             $this->data['audioItem']['stream']['progressReportIntervalMs'] = $intervalMs;
+        }
+    }
+
+	/**
+     * @desc 设置directive的属性。音频流格式，streamFormat 默认STREAM_FORMAT_MP3
+     * @param enum $streamFormat  取值: STREAM_FORMAT_MP3、STREAM_FORMAT_M3U8、STREAM_FORMAT_M4A
+     * @return null
+     **/
+    public function setStreamFormat($streamFormat = self::STREAM_FORMAT_MP3){
+		$streamFormatArray = [self::STREAM_FORMAT_MP3, self::STREAM_FORMAT_M3U8, self::STREAM_FORMAT_M4A];
+        if(in_array($streamFormat, $streamFormatArray)) {
+            $this->data['audioItem']['stream']['streamFormat'] = $streamFormat;
         }
     }
 
