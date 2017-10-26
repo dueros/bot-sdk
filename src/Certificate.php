@@ -6,6 +6,7 @@
 namespace Baidu\Duer\Botsdk;
 
 class Certificate{
+    private $verifyRequestSign = false;
     /**
      * @param string $privateKeyContent 私钥内容，使用监控统计功能或者推送功能需要提供
      * @return null
@@ -15,6 +16,27 @@ class Certificate{
         //$this->data = json_encode($request->getData());
         $this->data = file_get_contents("php://input");
         $this->privateKey = $privateKeyContent;
+        $this->verifyRequestSign = false;
+    }
+
+    /**
+     * 开启验证请求参数签名，阻止非法请求
+     *
+     * @param null
+     * @return null
+     */
+    public function enableVerifyRequestSign() {
+        $this->verifyRequestSign = true; 
+    }
+
+    /**
+     * 关闭验证请求参数签名
+     *
+     * @param null
+     * @return null
+     */
+    public function disableVerifyRequestSign() {
+        $this->verifyRequestSign = false; 
     }
 
     /**
@@ -24,12 +46,25 @@ class Certificate{
     private function getRequestPublicKey() {
         //TODO get from head 
         //$filename = dirname(__file__).'/cacert.pem';
-        $filename = $_SERVER['HTTP_SIGNATUREURL'];
+        $filename = $_SERVER['HTTP_SIGNATURECERTURL'];
         if(!$filename) {
             return; 
         }
 
-        return openssl_pkey_get_public(file_get_contents($filename));
+        $cache = dirname(__file__).'/'.md5($filename);
+        $content = '';
+        if(!file_exists($cache)) {
+            $content = file_get_contents($filename);
+            if(!$content) {
+                return; 
+            }
+
+            file_put_contents($cache, $content);
+        }
+
+        $content = file_get_contents($cache); 
+
+        return openssl_pkey_get_public($content);
     }
 
     /**
@@ -38,6 +73,10 @@ class Certificate{
      * @return boolean
      */
     public function verifyRequest() {
+        if(!$this->verifyRequestSign) {
+            return true; 
+        }
+
         $publicKey = $this->getRequestPublicKey(); 
         if(!$publicKey || !$this->data) {
             return false; 
