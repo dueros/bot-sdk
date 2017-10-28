@@ -86,6 +86,29 @@ class Nlu{
         return $slots[$field]['value'];
     }
 
+	 /**
+     * 获取槽位的确认状态
+     * @desc 获取一个slot对应的confirmationStatus
+     * @param string $field 槽位名
+     * @return string 槽位的confirmationStatus
+     **/
+    public function getSlotConfirmationStatus($field, $index=0) {
+        if(empty($field)){
+            return;
+        }
+
+        $slots = $this->data[$index]['slots'];
+        return $slots[$field]['confirmationStatus'];
+    }
+
+	 /**
+     * 获取意图的确认状态
+     * @desc 获取一个intent对应的confirmationStatus
+     * @return string 意图的confirmationStatus
+     **/
+    public function getIntentConfirmationStatus($index=0) {
+        return $this->data[$index]['confirmationStatus'];
+    }
 
     /**
      * @desc 获取当前的intent 名
