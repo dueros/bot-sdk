@@ -31,6 +31,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
        parent::__construct($postData); 
 
        // 开启校验请求参数签名
+       // php 得支持open ssl扩展
        $this->certificate->enableVerifyRequestSign();
     }
 }
