@@ -17,7 +17,7 @@
  * @desc tax个税服务
  * @author tianlong02
  * */
-require '../../vendor/autoload.php';
+require '../../../../../vendor/autoload.php';
 use \Logger; 
 use \Utils; 
 use \Baidu\Duer\Botsdk\Card\TextCard;

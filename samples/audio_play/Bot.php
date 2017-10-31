@@ -17,7 +17,7 @@
  * @desc 这是一个将所有对话都代理给DuerOS来处理
  **/
 
-require '../../vendor/autoload.php';
+require '../../../../../vendor/autoload.php';
 use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
 use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Stop;
 

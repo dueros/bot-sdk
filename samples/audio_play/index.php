@@ -17,7 +17,9 @@
  **/
 require "Bot.php";
 $bot = new Bot();
-
+if($_SERVER['REQUEST_METHOD'] == 'HEAD'){
+	header('HTTP/1.1 204 No Content');
+}
 header("Content-Type: application/json");
 
 $ret = $bot->run();
