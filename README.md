@@ -13,7 +13,7 @@
 * 提供了事件监听接口
 
 ## 安装、使用BOT SDK进行开发 
-度秘BOT SDK采用[PSR-4规范](http://www.php-fig.org/psr/psr-4/)自动加载 , PHP版本确保在5.4.42及以上。使用[composer](https://getcomposer.org/)执行如下命令进行安装：
+度秘BOT SDK采用[PSR-4规范](http://www.php-fig.org/psr/psr-4/)自动加载 , PHP版本确保在5.4.42及以上。要验证请求参数来自DuerOS，php还得支持openssl扩展。使用[composer](https://getcomposer.org/)执行如下命令进行安装：
 ```shell
 composer require dueros/bot-sdk:2.0.*@dev
 ```
@@ -29,6 +29,10 @@ class Bot extends Baidu\Duer\Botsdk\Bot{
      */
     public function __construct($postData = []) {
        parent::__construct($postData); 
+
+       // 开启校验请求参数签名
+       // php 得支持open ssl扩展
+       $this->certificate->enableVerifyRequestSign();
     }
 }
 ```

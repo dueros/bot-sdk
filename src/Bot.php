@@ -539,4 +539,11 @@ abstract class Bot{
         return $str;
     }
 
+    public function declareEffect() {
+        $this->response->setNeedDetermine();     
+    }
+
+    public function effectConfirmed() {
+        return $this->request->isDetermined();         
+    }
 }
