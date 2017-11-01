@@ -44,6 +44,20 @@ class NluTest extends PHPUnit_Framework_TestCase{
 	}
 
 	/**
+     * @desc 测试getSlotConfirmationStatus方法
+     */
+	function testGetSlotConfirmationStatus(){
+		$this->assertEquals($this->nlu->getSlotConfirmationStatus('city'), 'NONE');
+	}
+
+	/**
+     * @desc 测试getIntentConfirmationStatus方法
+     */
+	function testGetIntentConfirmationStatus(){
+		$this->assertEquals($this->nlu->getIntentConfirmationStatus(), 'NONE');
+	}
+
+	/**
      * @desc 测试getIntentName方法
      */
 	function testGetIntentName(){

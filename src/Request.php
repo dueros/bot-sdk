@@ -212,6 +212,13 @@ class Request {
             return $this->data['context']['System']['user']['userInfo']['location']; 
         }
     }
+
+    public function isDetermined() {
+        if($this->requestType == 'IntentRequest') {
+            return $this->data['request']['determined'];
+        }
+        return false;
+    }
     
     /**
      * 是否为调起bot

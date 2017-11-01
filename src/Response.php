@@ -45,6 +45,8 @@ class Response{
      **/
     private $shouldEndSession = true;
 
+    private $needDetermine = false;
+
     /**
      * @param Request $request 请求对象
      * @param Session $session session对象
@@ -125,7 +127,6 @@ class Response{
             'context' => ($this->nlu ? $this->nlu->toUpdateIntent() : null)?($this->nlu ? $this->nlu->toUpdateIntent() : null)    :(object)[], 
             'session' => $this->session->toResponse(),
             'response' => [
-                //'needDetermine' => $this->confirm ? true : false,
                 'directives' => $directives,
                 'shouldEndSession' => $this->shouldEndSession,
                 'card' => $data['card']?$data['card']->getData():null,
@@ -136,6 +137,10 @@ class Response{
                 ]:null
             ]
         ];
+
+        if($this->needDetermine) {
+            $ret['response']['needDetermine'] = $this->needDetermine;
+        }
 
         
         $str=json_encode($ret, JSON_UNESCAPED_UNICODE);
@@ -167,5 +172,9 @@ class Response{
 
     public function illegalRequest() {
         return json_encode(['status'=>1, 'msg'=>'非法请求']);
+    }
+
+    public function setNeedDetermine(){
+        $this->needDetermine = true; 
     }
 }

@@ -19,7 +19,10 @@
 
 	require "Bot.php";
 	$tax = new Bot();
-
+	if($_SERVER['REQUEST_METHOD'] == 'HEAD'){
+		header('HTTP/1.1 204 No Content');
+	}
+	header("Content-Type: application/json");
 	//记录整体执行时间
 	$tax->log->markStart('all_t');
 	$ret = $tax->run();

@@ -21,7 +21,7 @@
  * 第三轮，结束对话，提示用户可以say hello 开始对话
  **/
 
-require '../../vendor/autoload.php';
+require '../../../../../vendor/autoload.php';
 
 use \Baidu\Duer\Botsdk\Card\TextCard;
 
