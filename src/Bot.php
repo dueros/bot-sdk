@@ -84,7 +84,7 @@ abstract class Bot{
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
-        $this->botMonitor = new BotMonitor($postData);
+        $this->botMonitor = new \Baidu\Apm\BotMonitorsdk\BotMonitor($postData, $privateKey);
         $this->request = new Request($postData);
         $this->certificate = new Certificate($privateKey);
 
