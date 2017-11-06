@@ -483,26 +483,17 @@ abstract class Bot{
      * @return boolean
      **/
     private function checkHandler($handler){
-        $token = $this->getToken($handler);
-        if(!is_array($token)) {
-            return false; 
+		$rg = [
+            'intent' => '/#([\w\.\d_]+)/',
+            'requestType' => '/^(LaunchRequest|SessionEndedRequest)$/',
+        ];
+        if(preg_match($rg['requestType'], $handler) && $this->request->getType() == $handler){
+            return true;
         }
-
-        $arr = []; 
-        foreach($token as $t) {
-            if($t['type'] == 'str') {
-                $arr[] = $t['value']; 
-            }else{
-                $arr[] = $this->tokenValue($t['value']); 
-            }
+        if(preg_match($rg['intent'], $handler) && '#' . $this->getIntentName() == $handler){
+            return true;
         }
-        
-        $str = implode('', $arr);
-        //字符串中有$
-        $str = str_replace('$', '\$', $str);
-        //var_dump($str);
-        $func = create_function('', 'return ' . implode('', $arr) . ';');
-        return $func();
+        return false;
     }
 
     /**
