@@ -19,7 +19,7 @@
  **/
 namespace Baidu\Duer\Botsdk;
 
-use \Baidu\Apm\BotMonitorsdk;
+//use \Baidu\Apm\BotMonitorsdk;
 
 abstract class Bot{
 
@@ -53,7 +53,7 @@ abstract class Bot{
     /**
      * 统计Bot运行中产生的技能数据。instance of BotMonitor
      **/
-    public $botMonitor;
+//    public $botMonitor;
     
     /**
      * 构造函数
@@ -84,9 +84,10 @@ abstract class Bot{
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
-        $this->botMonitor = new \Baidu\Apm\BotMonitorsdk\BotMonitor($postData, $privateKey);
+//        $this->botMonitor = new \Baidu\Apm\BotMonitorsdk\BotMonitor($postData, $privateKey);
         $this->request = new Request($postData);
         $this->certificate = new Certificate($privateKey);
+
 
         $this->session = $this->request->getSession();
 
@@ -326,9 +327,9 @@ abstract class Bot{
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
-            $this->botMonitor->setPreEventStart();
+//            $this->botMonitor->setPreEventStart();
             $ret = $intercept->preprocess($this);
-            $this->botMonitor->setPreEventEnd();
+//            $this->botMonitor->setPreEventEnd();
             if($ret) {
                 break; 
             }
@@ -337,26 +338,26 @@ abstract class Bot{
         if(!$ret) {
             //event process
             if($eventHandler) {
-                $this->botMonitor->setDeviceEventStart();
+//                $this->botMonitor->setDeviceEventStart();
                 $event = $this->request->getEventData();
                 $ret = $this->callFunc($eventHandler, $event);
-                $this->botMonitor->setDeviceEventEnd();
+//                $this->botMonitor->setDeviceEventEnd();
             }else{
-                $this->botMonitor->setEventStart();
+//                $this->botMonitor->setEventStart();
                 $ret = $this->dispatch();
-                $this->botMonitor->setEventEnd();
+//                $this->botMonitor->setEventEnd();
             }
         }
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
-            $this->botMonitor->setPostEventStart();
+//            $this->botMonitor->setPostEventStart();
             $ret = $intercept->postprocess($this, $ret);
-            $this->botMonitor->setPostEventEnd();
+//            $this->botMonitor->setPostEventEnd();
         }
 
-        $this->botMonitor->setResponseData($ret);
-        $this->botMonitor->uploadData();
+//        $this->botMonitor->setResponseData($ret);
+//        $this->botMonitor->uploadData();
 
         if(!$build) {
             return $ret; 
@@ -483,26 +484,17 @@ abstract class Bot{
      * @return boolean
      **/
     private function checkHandler($handler){
-        $token = $this->getToken($handler);
-        if(!is_array($token)) {
-            return false; 
+		$rg = [
+            'intent' => '/#([\w\.\d_]+)/',
+            'requestType' => '/^(LaunchRequest|SessionEndedRequest)$/',
+        ];
+        if(preg_match($rg['requestType'], $handler) && $this->request->getType() == $handler){
+            return true;
         }
-
-        $arr = []; 
-        foreach($token as $t) {
-            if($t['type'] == 'str') {
-                $arr[] = $t['value']; 
-            }else{
-                $arr[] = $this->tokenValue($t['value']); 
-            }
+        if(preg_match($rg['intent'], $handler) && '#' . $this->getIntentName() == $handler){
+            return true;
         }
-        
-        $str = implode('', $arr);
-        //字符串中有$
-        $str = str_replace('$', '\$', $str);
-        //var_dump($str);
-        $func = create_function('', 'return ' . implode('', $arr) . ';');
-        return $func();
+        return false;
     }
 
     /**
