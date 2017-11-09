@@ -494,6 +494,9 @@ abstract class Bot{
         if(preg_match($rg['intent'], $handler) && '#' . $this->getIntentName() == $handler){
             return true;
         }
+		if($handler === 'true' || $handler === true){
+            return true;
+        }
         return false;
     }
 
