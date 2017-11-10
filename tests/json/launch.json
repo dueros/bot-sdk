@@ -4,8 +4,7 @@
 	"log_id": "log_id",
     "session": {
         "new": true,
-        "sessionId": "sessionId",
-        "attributes": {}
+        "sessionId": "sessionId"
     },
     "context": {
         "System": {
