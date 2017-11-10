@@ -190,14 +190,14 @@ class Response{
     }
 
 	/**
-     * @desc 通过控制expectSpeech来控制麦克风开关(内部使用)
+     * @desc 通过控制expectSpeech来控制麦克风开关
      **/
 	public function setExpectSpeech(){
         $this->expectSpeech = true; 
     }
 
 	/**
-     * @desc 表示本次返回的结果是否为兜底结果(内部使用)
+     * @desc 表示本次返回的结果是否为兜底结果
      **/
     public function setFallBack(){
         $this->fallBack = true; 

@@ -543,14 +543,14 @@ abstract class Bot{
     }
 
 	/**
-     * @desc 通过控制expectSpeech来控制麦克风开(内部使用)
+     * @desc 通过控制expectSpeech来控制麦克风开
      **/
     public function setExpectSpeech(){
 		$this->response->setExpectSpeech();
     }
 
 	/**
-     * @desc 表示本次返回的结果是兜底结果(内部使用)
+     * @desc 表示本次返回的结果是兜底结果
      **/
     public function setFallBack(){
 		$this->response->setFallBack();
