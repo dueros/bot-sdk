@@ -70,7 +70,6 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
 	}
 
 	/**
-	 * @deprecated sdk更新后测试
      * @desc 测试getUserInfo方法
      */
 	function testGetUserInfo(){
@@ -92,7 +91,7 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
 				]
 			]
 		];
-#		$this->assertEquals($this->request->getUserInfo(), $userInfo);
+		$this->assertEquals($this->request->getUserInfo(), $userInfo);
 	}
 
 	/**
@@ -164,7 +163,7 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
      * @desc 测试getLogId方法
      */
 	function testGetLogId(){
-		$this->assertEquals($this->request->getLogId(), 'log_id');
+		$this->assertEquals($this->request->getLogId(), 'requestId');
 	}
 
 	/**
