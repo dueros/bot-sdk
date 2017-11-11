@@ -444,8 +444,3 @@ $bot->log->notice('remind');
 //test fatal log
 $this->log->fatal("this is a fatal log");
 ```
-
-### 连接DuerOS调试（TODO）
-
-
-## 如何部署，接入度秘DuerOS条件
