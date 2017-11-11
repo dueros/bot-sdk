@@ -106,6 +106,12 @@ class Response{
         if($this->nlu && $this->nlu->hasAsked()){
             $this->shouldEndSession = false;
         }
+		
+		$data['directives'] = isset($data['directives'])?$data['directives']:null;
+		$data['card'] = isset($data['card'])?$data['card']:null;
+		$data['outputSpeech'] = isset($data['outputSpeech'])?$data['outputSpeech']:null;
+		$data['resource'] = isset($data['resource'])?$data['resource']:null;
+		$data['reprompt'] = isset($data['reprompt'])?$data['reprompt']:null;
 
         $directives = $data['directives'] ? $data['directives'] : [];
         //directive to data

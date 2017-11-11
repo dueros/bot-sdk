@@ -28,8 +28,8 @@ class Session{
      **/
     public function __construct($data) {
         $this->data = isset($data['attributes'])?$data['attributes']:[]; 
-        $this->sessionId = $data['sessionId'];
-        $this->isNew = $data['new'];
+        $this->sessionId = isset($data['sessionId'])?$data['sessionId']:'';
+        $this->isNew = isset($data['new'])?$data['new']:false;
     }
 
     /**
