@@ -1,7 +1,6 @@
 {
     "version": "2.0",
 	"cuid": "cuid",
-	"log_id": "log_id",
     "session": {
         "new": true,
         "sessionId": "sessionId"
@@ -42,6 +41,8 @@
 		}
     },
     "request": {
-        "type": "LaunchRequest"
+        "type": "LaunchRequest",
+		"requestId" : "requestId",
+  		"timestamp" : "1000000"
     }
 }
