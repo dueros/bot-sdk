@@ -544,9 +544,10 @@ abstract class Bot{
 
 	/**
      * @desc 通过控制expectSpeech来控制麦克风开
+	 * @param bool $expectSpeech
      **/
-    public function setExpectSpeech(){
-		$this->response->setExpectSpeech();
+    public function setExpectSpeech($expectSpeech){
+		$this->response->setExpectSpeech($expectSpeech);
     }
 
 	/**
