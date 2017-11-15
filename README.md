@@ -444,3 +444,17 @@ $bot->log->notice('remind');
 //test fatal log
 $this->log->fatal("this is a fatal log");
 ```
+
+## 数据统计
+### BotMonitor是什么
+它可以帮助您收集和分析您开发的bot运行中产生的数据，帮助您实时查看应用运行状态，及时发现应用中存在的问题，提升>用户体验。目前，BotMonitor提供应用性能分析、用户行为统计。使用BotMonitor，您可以方便的在自己的DBP平台查看Bot的用户量、会话量、请求量、QPS以及Session的相关统计数据指标。
+
+### bot-sdk如何使用BotMonitor数据统计
+在construct中使用如下方法
+```php
+//$privateKey为私钥内容,0代表你的Bot在DBP平台debug环境，1或者其他整数代表online环境
+$this->botMonitor->setEnvironmentInfo($privateKey, 0);
+//环境信息配置完成后，你需要打开BotMonitor数据采集上报开关(默认是开启的,你可以根据自己需求打开或者关闭),true代表打开，false代表关闭
+$this->botMonitor->setMonitorEnabled(true);
+```
+具体数据统计的说明和使用可以参考BotMonitor文档
