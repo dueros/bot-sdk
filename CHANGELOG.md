@@ -11,3 +11,6 @@
 
 #1.0.5
 * Response 中针对只返回resource，补command，确保不被中控干掉
+
+#2.1.4
+* 增加数据统计BotMonitor
