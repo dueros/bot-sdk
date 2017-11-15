@@ -19,7 +19,7 @@
  **/
 namespace Baidu\Duer\Botsdk;
 
-//use \Baidu\Apm\BotMonitorsdk;
+use \Baidu\Apm\BotMonitorsdk;
 
 abstract class Bot{
 
@@ -53,7 +53,7 @@ abstract class Bot{
     /**
      * 统计Bot运行中产生的技能数据。instance of BotMonitor
      **/
-//    public $botMonitor;
+    public $botMonitor;
     
     /**
      * 构造函数
@@ -84,7 +84,7 @@ abstract class Bot{
             $postData = json_decode($rawInput, true);
             //Logger::debug($this->getSourceType() . " raw input" . $raw_input);
         }
-//        $this->botMonitor = new \Baidu\Apm\BotMonitorsdk\BotMonitor($postData, $privateKey);
+        $this->botMonitor = new \Baidu\Apm\BotMonitorsdk\BotMonitor($postData);
         $this->request = new Request($postData);
         $this->certificate = new Certificate($privateKey);
 
@@ -327,9 +327,9 @@ abstract class Bot{
         //intercept beforeHandler
         $ret = [];
         foreach($this->intercept as $intercept) {
-//            $this->botMonitor->setPreEventStart();
+            $this->botMonitor->setPreEventStart();
             $ret = $intercept->preprocess($this);
-//            $this->botMonitor->setPreEventEnd();
+            $this->botMonitor->setPreEventEnd();
             if($ret) {
                 break; 
             }
@@ -338,31 +338,32 @@ abstract class Bot{
         if(!$ret) {
             //event process
             if($eventHandler) {
-//                $this->botMonitor->setDeviceEventStart();
+                $this->botMonitor->setDeviceEventStart();
                 $event = $this->request->getEventData();
                 $ret = $this->callFunc($eventHandler, $event);
-//                $this->botMonitor->setDeviceEventEnd();
+                $this->botMonitor->setDeviceEventEnd();
             }else{
-//                $this->botMonitor->setEventStart();
+                $this->botMonitor->setEventStart();
                 $ret = $this->dispatch();
-//                $this->botMonitor->setEventEnd();
+                $this->botMonitor->setEventEnd();
             }
         }
 
         //intercept afterHandler
         foreach($this->intercept as $intercept) {
-//            $this->botMonitor->setPostEventStart();
+            $this->botMonitor->setPostEventStart();
             $ret = $intercept->postprocess($this, $ret);
-//            $this->botMonitor->setPostEventEnd();
+            $this->botMonitor->setPostEventEnd();
         }
 
-//        $this->botMonitor->setResponseData($ret);
-//        $this->botMonitor->uploadData();
+        $res = $this->response->build($ret);
+        $this->botMonitor->setResponseData($res);
+        $this->botMonitor->uploadData();
 
         if(!$build) {
             return $ret; 
         }
-        return $this->response->build($ret);
+        return $res;
     }
 
     /**
@@ -544,9 +545,10 @@ abstract class Bot{
 
 	/**
      * @desc 通过控制expectSpeech来控制麦克风开
+	 * @param bool $expectSpeech
      **/
-    public function setExpectSpeech(){
-		$this->response->setExpectSpeech();
+    public function setExpectSpeech($expectSpeech){
+		$this->response->setExpectSpeech($expectSpeech);
     }
 
 	/**

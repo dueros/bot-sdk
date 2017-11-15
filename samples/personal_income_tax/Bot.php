@@ -18,8 +18,6 @@
  * @author tianlong02
  * */
 require '../../../../../vendor/autoload.php';
-use \Logger; 
-use \Utils; 
 use \Baidu\Duer\Botsdk\Card\TextCard;
 use \Baidu\Duer\Botsdk\Card\StandardCard;
 use \Baidu\Duer\Botsdk\Card\ListCard;

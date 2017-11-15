@@ -47,7 +47,7 @@ class Response{
 
     private $needDetermine = false;
 
-	private $expectSpeech = false;
+	private $expectSpeech;
 
     private $fallBack = false;
 
@@ -152,7 +152,7 @@ class Response{
             $ret['response']['needDetermine'] = $this->needDetermine;
         }
 
-		if($this->expectSpeech) {
+		if(isset($this->expectSpeech)) {
             $ret['response']['expectSpeech'] = $this->expectSpeech;
         }
 
@@ -197,9 +197,12 @@ class Response{
 
 	/**
      * @desc 通过控制expectSpeech来控制麦克风开关
+ 	 * @param bool $setExpectSpeech
      **/
-	public function setExpectSpeech(){
-        $this->expectSpeech = true; 
+	public function setExpectSpeech($expectSpeech){
+		if(is_bool($expectSpeech)){
+        	$this->expectSpeech = $expectSpeech; 
+		}
     }
 
 	/**
