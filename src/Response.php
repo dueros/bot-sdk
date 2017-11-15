@@ -47,6 +47,10 @@ class Response{
 
     private $needDetermine = false;
 
+	private $expectSpeech;
+
+    private $fallBack = false;
+
     /**
      * @param Request $request 请求对象
      * @param Session $session session对象
@@ -102,6 +106,12 @@ class Response{
         if($this->nlu && $this->nlu->hasAsked()){
             $this->shouldEndSession = false;
         }
+		
+		$data['directives'] = isset($data['directives'])?$data['directives']:null;
+		$data['card'] = isset($data['card'])?$data['card']:null;
+		$data['outputSpeech'] = isset($data['outputSpeech'])?$data['outputSpeech']:null;
+		$data['resource'] = isset($data['resource'])?$data['resource']:null;
+		$data['reprompt'] = isset($data['reprompt'])?$data['reprompt']:null;
 
         $directives = $data['directives'] ? $data['directives'] : [];
         //directive to data
@@ -142,6 +152,13 @@ class Response{
             $ret['response']['needDetermine'] = $this->needDetermine;
         }
 
+		if(isset($this->expectSpeech)) {
+            $ret['response']['expectSpeech'] = $this->expectSpeech;
+        }
+
+		if($this->fallBack) {
+            $ret['response']['fallBack'] = $this->fallBack;
+        }
         
         $str=json_encode($ret, JSON_UNESCAPED_UNICODE);
         return $str;
@@ -177,4 +194,22 @@ class Response{
     public function setNeedDetermine(){
         $this->needDetermine = true; 
     }
+
+	/**
+     * @desc 通过控制expectSpeech来控制麦克风开关
+ 	 * @param bool $setExpectSpeech
+     **/
+	public function setExpectSpeech($expectSpeech){
+		if(is_bool($expectSpeech)){
+        	$this->expectSpeech = $expectSpeech; 
+		}
+    }
+
+	/**
+     * @desc 表示本次返回的结果是否为兜底结果
+     **/
+    public function setFallBack(){
+        $this->fallBack = true; 
+    }
+
 }

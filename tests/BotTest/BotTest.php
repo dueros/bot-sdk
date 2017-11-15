@@ -137,4 +137,29 @@ class BotTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals($ret, $rt);
 	}
 
+	/**
+	 * @desc 用于测试run方法
+	 */
+	function testSetExpectSpeech(){
+		$this->bot->setExpectSpeech(false);
+		$ret = $this->bot->run();
+		$rt ='{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null,"expectSpeech":false}}';
+        $this->assertEquals($ret, $rt);
+
+		$this->bot->setExpectSpeech(true);
+		$ret = $this->bot->run();
+		$rt ='{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null,"expectSpeech":true}}';
+        $this->assertEquals($ret, $rt);
+	}
+
+	/**
+	 * @desc 用于测试run方法
+	 */
+	function testSetFallBack(){
+		$this->bot->setFallBack();
+		$ret = $this->bot->run();
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null,"fallBack":true}}';
+        $this->assertEquals($ret, $rt);
+	}
+
 }

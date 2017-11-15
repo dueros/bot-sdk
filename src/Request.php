@@ -101,7 +101,9 @@ class Request {
      * @return string
      **/
     public function getDeviceId() {
-        return $this->data['context']['System']['device']['deviceId']; 
+		if(isset($this->data['context']['System']['device']['deviceId'])){
+        	return $this->data['context']['System']['device']['deviceId']; 
+		}
     }
 
     /**
@@ -112,7 +114,9 @@ class Request {
      * @return array
      **/
     public function getAudioPlayerContext() {
-        return $this->data['context']['AudioPlayer']; 
+		if(isset($this->data['context']['AudioPlayer'])){
+			return $this->data['context']['AudioPlayer'];
+		}
     }
 
     /**
@@ -124,7 +128,9 @@ class Request {
      **/
 
     public function getAppLauncherContext() {
-        return $this->data['context']['AppLauncher']; 
+		if(isset($this->data['context']['AppLauncher'])){
+			return $this->data['context']['AppLauncher'];
+		}
     }
 
     /**
@@ -150,7 +156,9 @@ class Request {
      * @return array
      **/
     public function getUserInfo() {
-        return $this->data['user_info'];
+		if(isset($this->data['context']['System']['user']['userInfo'])){
+        	return $this->data['context']['System']['user']['userInfo'];
+		}
     }
     
     /**
@@ -171,7 +179,9 @@ class Request {
      * @return string
      **/
     public function getUserId() {
-        return $this->data['context']['System']['user']['userId']; 
+		if(isset($this->data['context']['System']['user']['userId'])){
+			return $this->data['context']['System']['user']['userId'];
+		}
     }
 
     /**
@@ -193,7 +203,7 @@ class Request {
      * @return string
      **/
     public function getQuery() {
-        if($this->requestType == 'IntentRequest') {
+        if($this->requestType == 'IntentRequest' && isset($this->data['request']['query']['original'])) {
             return $this->data['request']['query']['original'];
         }
         return '';
@@ -208,13 +218,13 @@ class Request {
      * @return array
      **/
     public function getLocation() {
-        if(isset($this->data['context']['System']['user']['userInfo'])) {
+        if(isset($this->data['context']['System']['user']['userInfo']['location'])) {
             return $this->data['context']['System']['user']['userInfo']['location']; 
         }
     }
 
     public function isDetermined() {
-        if($this->requestType == 'IntentRequest') {
+        if($this->requestType == 'IntentRequest' && isset($this->data['request']['determined'])) {
             return $this->data['request']['determined'];
         }
         return false;
@@ -256,7 +266,9 @@ class Request {
      * @return string
      */
     public function getTimestamp() {
-        return $this->data['request']['timestamp'];
+		if(isset($this->data['request']['timestamp'])){
+			return $this->data['request']['timestamp'];
+		}
     }
 
     /**
@@ -267,7 +279,7 @@ class Request {
      * @return string
      */
     public function getLogId() {
-        return $this->data['log_id'];
+        return isset($this->data['request']['requestId'])?$this->data['request']['requestId']:null;
     }
     
     /**
@@ -277,7 +289,9 @@ class Request {
      * @return string
      **/
     public function getBotId() {
-        return $this->data['context']['System']['application']['applicationId']; 
+		if(isset($this->data['context']['System']['application']['applicationId'])){
+			return $this->data['context']['System']['application']['applicationId'];
+		}
     }
 
     /**

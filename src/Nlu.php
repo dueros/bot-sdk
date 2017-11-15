@@ -82,8 +82,8 @@ class Nlu{
             return;
         }
 
-        $slots = $this->data[$index]['slots'];
-        return $slots[$field]['value'];
+        $slots = isset($this->data[$index]['slots'])?$this->data[$index]['slots']:[];
+        return isset($slots[$field]['value'])?$slots[$field]['value']:'';
     }
 
 	 /**
@@ -97,8 +97,8 @@ class Nlu{
             return;
         }
 
-        $slots = $this->data[$index]['slots'];
-        return $slots[$field]['confirmationStatus'];
+        $slots = isset($this->data[$index]['slots'])?$this->data[$index]['slots']:[];
+        return isset($slots[$field]['confirmationStatus'])?$slots[$field]['confirmationStatus']:'NONE';
     }
 
 	 /**
@@ -107,7 +107,7 @@ class Nlu{
      * @return string 意图的confirmationStatus
      **/
     public function getIntentConfirmationStatus($index=0) {
-        return $this->data[$index]['confirmationStatus'];
+        return isset($this->data[$index]['confirmationStatus'])?$this->data[$index]['confirmationStatus']:'NONE';
     }
 
     /**
@@ -116,7 +116,7 @@ class Nlu{
      * @return string
      **/
     public function getIntentName(){
-        return $this->data[0]['name'];
+        return isset($this->data[0]['name'])?$this->data[0]['name']:'';
     }
 
     /**
@@ -169,7 +169,7 @@ class Nlu{
     private function getUpdateIntent(){
         return [
                 'name' => $this->getIntentName(),
-                'slots' => $this->data[0]['slots'],
+                'slots' => isset($this->data[0]['slots'])?$this->data[0]['slots']:[],
             ];
     }
 
@@ -181,7 +181,7 @@ class Nlu{
      **/
     public function toUpdateIntent(){
         return [
-            'intent' => $this->data[0]
+            'intent' => isset($this->data[0])?$this->data[0]:[]
         ]; 
     }
 
@@ -203,7 +203,7 @@ class Nlu{
      * @return null
      **/
     public function setConfirmSlot($field){
-        $slots = $this->data[0]['slots'];
+        $slots = isset($this->data[0]['slots'])?$this->data[0]['slots']:[];
 
         if(array_key_exists($field, $slots)) {
             $this->directive = [

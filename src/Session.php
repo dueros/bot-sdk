@@ -27,9 +27,9 @@ class Session{
      * @return null
      **/
     public function __construct($data) {
-        $this->data = $data['attributes']; 
-        $this->sessionId = $data['sessionId'];
-        $this->isNew = $data['new'];
+        $this->data = isset($data['attributes'])?$data['attributes']:[]; 
+        $this->sessionId = isset($data['sessionId'])?$data['sessionId']:'';
+        $this->isNew = isset($data['new'])?$data['new']:false;
     }
 
     /**

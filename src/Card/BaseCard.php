@@ -40,7 +40,7 @@ abstract class BaseCard{
                 $arr = [$arr]; 
             }
 
-            $this->data['cueWords'] = $this->data['cueWords']?$this->data['cueWords']:[];
+            $this->data['cueWords'] = isset($this->data['cueWords'])?$this->data['cueWords']:[];
             $this->data['cueWords'] = array_merge($this->data['cueWords'], $arr);
         }
 

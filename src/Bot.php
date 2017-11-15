@@ -495,6 +495,9 @@ abstract class Bot{
         if(preg_match($rg['intent'], $handler) && '#' . $this->getIntentName() == $handler){
             return true;
         }
+		if($handler === 'true' || $handler === true){
+            return true;
+        }
         return false;
     }
 
@@ -539,4 +542,20 @@ abstract class Bot{
     public function effectConfirmed() {
         return $this->request->isDetermined();         
     }
+
+	/**
+     * @desc 通过控制expectSpeech来控制麦克风开
+	 * @param bool $expectSpeech
+     **/
+    public function setExpectSpeech($expectSpeech){
+		$this->response->setExpectSpeech($expectSpeech);
+    }
+
+	/**
+     * @desc 表示本次返回的结果是兜底结果
+     **/
+    public function setFallBack(){
+		$this->response->setFallBack();
+    } 
+
 }

@@ -81,4 +81,39 @@ class ResponseTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals($formatSpeech, $rt);
 	}
 
+	/**
+     * @desc 测试setNeedDetermine方法
+     */
+	function testSetNeedDetermine(){
+		$formatSpeech = $this->response->setNeedDetermine();
+		$json = $this->response->build($ret);
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":null,"reprompt":null,"needDetermine":true}}';
+		$this->assertEquals($json, $rt);
+	}
+
+	/**
+     * @desc 测试setFormatSpeech方法
+     */
+	function testSetExpectSpeech(){
+		$formatSpeech = $this->response->setExpectSpeech(false);
+		$json = $this->response->build($ret);
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":null,"reprompt":null,"expectSpeech":false}}';
+		$this->assertEquals($json, $rt);
+
+		$formatSpeech = $this->response->setExpectSpeech(true);
+		$json = $this->response->build($ret);
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":null,"reprompt":null,"expectSpeech":true}}';
+		$this->assertEquals($json, $rt);
+
+	}
+
+	/**
+     * @desc 测试setFallBack方法
+     */
+	function testSetFallBack(){
+		$formatSpeech = $this->response->setFallBack();
+		$json = $this->response->build($ret);
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":null,"reprompt":null,"fallBack":true}}';
+		$this->assertEquals($json, $rt);
+	}
 }
