@@ -356,7 +356,7 @@ abstract class Bot{
             $this->botMonitor->setPostEventEnd();
         }
 
-        $res = $this->response->build($ret)
+        $res = $this->response->build($ret);
         $this->botMonitor->setResponseData($res);
         $this->botMonitor->uploadData();
 
