@@ -458,3 +458,4 @@ $this->botMonitor->setEnvironmentInfo($privateKey, 0);
 $this->botMonitor->setMonitorEnabled(true);
 ```
 具体数据统计的说明和使用可以参考BotMonitor文档
+https://packagist.org/packages/monitor/bot-monitor

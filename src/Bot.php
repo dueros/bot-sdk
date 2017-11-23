@@ -22,6 +22,7 @@ namespace Baidu\Duer\Botsdk;
 use \Baidu\Apm\BotMonitorsdk;
 
 abstract class Bot{
+	const DEFAULT_EVENT_NAME = '__default__';
 
     private $handler = [];
     private $intercept = [];
@@ -215,6 +216,16 @@ abstract class Bot{
         }
     }
 
+	/**
+     * @desc 默认兜底事件的处理回调。
+     * @param function $func 处理函数，传入参数为事件的request，返回值做完response给DuerOS
+     * @return null
+     **/
+    protected function addDefaultEventListener($func){
+        if($func) {
+            $this->event[self::DEFAULT_EVENT_NAME] = $func;
+        }
+    }
     /**
      * @desc 快捷方法。获取第一个intent的名字
      *
@@ -394,9 +405,11 @@ abstract class Bot{
         $eventData = $this->request->getEventData();
         if($eventData['type']) {
             $key = $eventData['type'];
-            if($this->event[$key]) {
+            if(isset($this->event[$key])) {
                 return $this->event[$key];
-            }
+            }else if(isset($this->event[self::DEFAULT_EVENT_NAME])){
+				return $this->event[self::DEFAULT_EVENT_NAME];
+			}
         }
     }
 
