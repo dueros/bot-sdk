@@ -12,7 +12,19 @@
             },
             "user": {
                 "userId": "userId",
+				"accessToken" : "access_token",
+				"externalAccessTokens" : [ 
+				{
+					"oauthInfoId" : "oauthInfoId", 
+					"accessToken" : "accessToken"
+				}
+				],
 				"userInfo": {
+					"account": {  
+						"baidu": {  
+							"baiduUid": "baiduUid"
+						}
+					},
                     "location": {
                         "geo": {
                             "bd09ll": {
@@ -32,10 +44,11 @@
                 }
             },
 			"device" : {
+				"originalDeviceId" : "originalDeviceId",
 				"deviceId" : "deviceId",
 				"supportedInterfaces" : {
-					"VoiceInput" : {},
-					"VoiceOutput" : {}
+					"VoiceInput" : {"VoiceInput" : "VoiceInput"},
+					"VoiceOutput" : {"VoiceOutput" : "VoiceOutput"}
 				}
 			}
 		}

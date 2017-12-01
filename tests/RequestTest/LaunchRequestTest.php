@@ -74,6 +74,11 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
      */
 	function testGetUserInfo(){
 		$userInfo = [
+			"account" => [
+				"baidu" => [
+					"baiduUid" => "baiduUid"
+				]
+			],
 			"location" => [
 				"geo" => [
 					"bd09ll" => [
@@ -94,6 +99,12 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals($this->request->getUserInfo(), $userInfo);
 	}
 
+	/**
+     * @desc 测试getBaiduUid方法
+     */
+	function testGetBaiduUid(){
+		$this->assertEquals($this->request->getBaiduUid(), 'baiduUid');
+	}
 	/**
      * @desc 测试getType方法
      */
@@ -173,4 +184,29 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals($this->request->getBotId(), 'botId');
 	}
 
+	/**
+     * @desc 测试getOriginalDeviceId方法
+     */
+	function testGetOriginalDeviceId(){
+		$this->assertEquals($this->request->getOriginalDeviceId(), 'originalDeviceId');
+	}
+
+
+	/**
+     * @desc 测试getAccessToken方法
+     */
+	function testGetAccessToken(){
+		$this->assertEquals($this->request->getAccessToken(), 'access_token');
+	}
+
+	/**
+     * @desc 测试getExternalAccessTokens方法
+     */
+	function testGetExternalAccessTokens(){
+		$externalAccessTokens = [[
+			"oauthInfoId" => "oauthInfoId",
+            "accessToken" => "accessToken"
+		]];
+		$this->assertEquals($this->request->getExternalAccessTokens(), $externalAccessTokens);
+	}
 }

@@ -106,6 +106,18 @@ class Request {
 		}
     }
 
+	/**
+     * @desc 获取来自端上报的原始设备Id
+     * @param null
+     * @return string
+     **/
+    public function getOriginalDeviceId() {
+		if(isset($this->data['context']['System']['device']['originalDeviceId'])){
+        	return $this->data['context']['System']['device']['originalDeviceId']; 
+		}
+    }
+
+
     /**
      * 获取设备音频播放的状态
      *
@@ -151,7 +163,7 @@ class Request {
     }
 
     /**
-     * @deprecated
+     * @desc 获取用户信息
      * @param null
      * @return array
      **/
@@ -161,9 +173,19 @@ class Request {
 		}
     }
     
+	/**
+	 * @desc 获取百度uid
+     * @param null
+     * @return array
+     **/
+    public function getBaiduUid() {
+		if(isset($this->data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid'])){
+        	return $this->data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid'];
+		}
+    }
+
     /**
      * 获取request类型
-     *
      * @param null
      * @return string 
      */
@@ -181,6 +203,28 @@ class Request {
     public function getUserId() {
 		if(isset($this->data['context']['System']['user']['userId'])){
 			return $this->data['context']['System']['user']['userId'];
+		}
+    }
+
+	/**
+     * 获取accessToken
+     * @param null
+     * @return string
+     **/
+    public function getAccessToken() {
+		if(isset($this->data['context']['System']['user']['accessToken'])){
+			return $this->data['context']['System']['user']['accessToken'];
+		}
+    }
+
+	/**
+     * 获取externalAccessTokens
+     * @param null
+     * @return array
+     **/
+    public function getExternalAccessTokens() {
+		if(isset($this->data['context']['System']['user']['externalAccessTokens'])){
+			return $this->data['context']['System']['user']['externalAccessTokens'];
 		}
     }
 
@@ -274,7 +318,6 @@ class Request {
     /**
      * 获取log_id
      *
-     * @deprecated
      * @param null
      * @return string
      */
