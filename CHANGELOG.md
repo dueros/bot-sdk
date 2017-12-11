@@ -17,3 +17,7 @@
 
 #2.1.5
 * Request增加新的接口
+
+#2.1.6
+* 增加autoCompleteSpeech字段, 默认为true
+
