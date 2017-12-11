@@ -66,6 +66,15 @@ class ResponseTest extends PHPUnit_Framework_TestCase{
 		$json = $this->response->build($ret);
 		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":false,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},"reprompt":null}}';
 		$this->assertEquals($json, $rt);
+
+		$ret = [
+			'card' => $card,
+			'autoCompleteSpeech' => false
+		];
+		$json = $this->response->build($ret);
+		$rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":false,"card":{"type":"txt","content":"测试服务"},"resource":null,"outputSpeech":null,"reprompt":null}}';
+		$this->assertEquals($json, $rt);
+
 	}
 
 	/**

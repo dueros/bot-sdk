@@ -113,6 +113,11 @@ class Response{
 		$data['resource'] = isset($data['resource'])?$data['resource']:null;
 		$data['reprompt'] = isset($data['reprompt'])?$data['reprompt']:null;
 
+		$autoCompleteSpeech = true;
+		if(isset($data['autoCompleteSpeech']) && is_bool($data['autoCompleteSpeech'])){
+			$autoCompleteSpeech = $data['autoCompleteSpeech'];
+		}
+
         $directives = $data['directives'] ? $data['directives'] : [];
         //directive to data
         $directives = array_values(array_filter(array_map(function($directive){
@@ -127,8 +132,8 @@ class Response{
                 $directives[] = $arr;
             }
         }
-
-        if(!$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\TextCard) {
+	
+        if($autoCompleteSpeech && !$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\TextCard) {
             $data['outputSpeech'] = $data['card']->getData('content');
         }
 
