@@ -1,1 +1,1 @@
-BUILD_SUBMITTER -u . -m baidu/duer/bot-sdk -c "cd baidu/duer/bot-sdk"
+BUILD_SUBMITTER -u . -m baidu/duer/bot-sdk -c "cd baidu/duer/bot-sdk && mkdir output"

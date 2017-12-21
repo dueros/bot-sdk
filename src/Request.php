@@ -267,6 +267,11 @@ class Request {
         }
     }
 
+	/**
+     * @desc 
+     * @param null
+     * @return array|bool
+     **/
     public function isDetermined() {
         if($this->requestType == 'IntentRequest' && isset($this->data['request']['determined'])) {
             return $this->data['request']['determined'];

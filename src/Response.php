@@ -192,10 +192,17 @@ class Response{
         }
     }
 
+	/**
+     * @desc  非法请求
+     * @return json
+     **/
     public function illegalRequest() {
         return json_encode(['status'=>1, 'msg'=>'非法请求']);
     }
 
+	/**
+     * @desc 设置needDetermine为true
+     **/
     public function setNeedDetermine(){
         $this->needDetermine = true; 
     }

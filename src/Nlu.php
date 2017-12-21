@@ -104,6 +104,7 @@ class Nlu{
 	 /**
      * 获取意图的确认状态
      * @desc 获取一个intent对应的confirmationStatus
+     * @param $index
      * @return string 意图的confirmationStatus
      **/
     public function getIntentConfirmationStatus($index=0) {

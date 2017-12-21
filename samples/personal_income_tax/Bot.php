@@ -61,10 +61,10 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
 		//parent::__construct(file_get_contents(dirname(__file__).'/../../src/privkey.pem'));
 		parent::__construct();
 		$this->log = new \Baidu\Duer\Botsdk\Log([
-				// 日志存储路径
-				'path' => 'log/',
-				// 日志打印最低输出级别
-				'level' => \Baidu\Duer\Botsdk\Log::NOTICE,
+			// 日志存储路径
+			'path' => 'log/',
+			// 日志打印最低输出级别
+			'level' => \Baidu\Duer\Botsdk\Log::NOTICE,
 		]);
 
 		// 记录这次请求的query
@@ -81,10 +81,10 @@ class Bot extends \Baidu\Duer\Botsdk\Bot {
             $card->addItem($item);
             $this->waitAnswer();
             return [
-                    'card' => $card,
-					//'outputSpeech' => '<speak>欢迎光临</speak>' 
-					'outputSpeech' => '所得税为您服务',
-				];
+            	'card' => $card,
+				//'outputSpeech' => '<speak>欢迎光临</speak>' 
+				'outputSpeech' => '所得税为您服务',
+			];
 
         });
 

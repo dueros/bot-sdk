@@ -21,3 +21,5 @@
 #2.1.6
 * 增加autoCompleteSpeech字段, 默认为true
 
+#2.1.7
+* 增加注释
