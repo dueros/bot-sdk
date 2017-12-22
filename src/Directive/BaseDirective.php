@@ -31,6 +31,7 @@ abstract class BaseDirective{
     /**
      * 生成token
      * @desc 生成token.  生成一个伪唯一的token
+     * @return string
      **/
     protected function genToken(){
         $str = md5(uniqid(mt_rand(), true));  

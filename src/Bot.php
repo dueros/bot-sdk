@@ -254,6 +254,7 @@ abstract class Bot{
      * @param string $field 属性的key
      * @param string $value 对应的值
      * @param string $default 如果$value为空，使用$default
+     * @return bool
      **/
     public function setSessionAttribute($field, $value, $default=null){
         return $this->session->setData($field, $value, $default); 
@@ -449,8 +450,9 @@ abstract class Bot{
     }
 
     /**
-     * @param null
-     * @return null
+     * @param &$token
+     * @param $rule
+     * @return array $token
      **/
     private function _getToken(&$token, $rule) {
         if($rule === "" || $rule === null) {
@@ -548,10 +550,17 @@ abstract class Bot{
         return $str;
     }
 
+	/**
+     * @desc
+     **/
     public function declareEffect() {
         $this->response->setNeedDetermine();     
     }
 
+	/**
+     * @desc
+     * @return bool
+     **/
     public function effectConfirmed() {
         return $this->request->isDetermined();         
     }
