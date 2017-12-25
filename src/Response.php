@@ -47,9 +47,11 @@ class Response{
 
     private $needDetermine = false;
 
-	private $expectSpeech;
+    private $expectSpeech;
 
     private $fallBack = false;
+
+    private $outputAudio;
 
     /**
      * @param Request $request 请求对象
@@ -107,16 +109,17 @@ class Response{
             $this->shouldEndSession = false;
         }
 		
-		$data['directives'] = isset($data['directives'])?$data['directives']:null;
-		$data['card'] = isset($data['card'])?$data['card']:null;
-		$data['outputSpeech'] = isset($data['outputSpeech'])?$data['outputSpeech']:null;
-		$data['resource'] = isset($data['resource'])?$data['resource']:null;
-		$data['reprompt'] = isset($data['reprompt'])?$data['reprompt']:null;
+        $data['directives'] = isset($data['directives'])?$data['directives']:null;
+        $data['card'] = isset($data['card'])?$data['card']:null;
+        $data['outputSpeech'] = isset($data['outputSpeech'])?$data['outputSpeech']:null;
+        $data['resource'] = isset($data['resource'])?$data['resource']:null;
+        $data['reprompt'] = isset($data['reprompt'])?$data['reprompt']:null;
+        $outputAudio = isset($data['outputAudio'])?$data['outputAudio']:null;
 
-		$autoCompleteSpeech = true;
-		if(isset($data['autoCompleteSpeech']) && is_bool($data['autoCompleteSpeech'])){
-			$autoCompleteSpeech = $data['autoCompleteSpeech'];
-		}
+        $autoCompleteSpeech = true;
+        if(isset($data['autoCompleteSpeech']) && is_bool($data['autoCompleteSpeech'])){
+            $autoCompleteSpeech = $data['autoCompleteSpeech'];
+        }
 
         $directives = $data['directives'] ? $data['directives'] : [];
         //directive to data
@@ -157,14 +160,18 @@ class Response{
             $ret['response']['needDetermine'] = $this->needDetermine;
         }
 
-		if(isset($this->expectSpeech)) {
+        if(isset($this->expectSpeech)) {
             $ret['response']['expectSpeech'] = $this->expectSpeech;
         }
 
-		if($this->fallBack) {
+        if($this->fallBack) {
             $ret['response']['fallBack'] = $this->fallBack;
         }
-        
+
+        if($outputAudio instanceof OutputAudio) {
+            $ret['response']['outputAudio'] =  $outputAudio->getData();    
+        }
+
         $str=json_encode($ret, JSON_UNESCAPED_UNICODE);
         return $str;
     }
@@ -176,6 +183,12 @@ class Response{
      **/
     public function formatSpeech($mix){
         if(is_array($mix)) {
+            if(isset($mix['ttsKey']) && isset($mix['templateSlots']) && is_array($mix['templateSlots'])){
+                $ttsTemplate['type'] = 'TTSTemplate';
+                $ttsTemplate['ttsTemplates']['ttsKey'] = $mix['ttsKey'];
+                $ttsTemplate['ttsTemplates']['templateSlots'] = $mix['templateSlots'];
+                return $ttsTemplate;
+            }
             return $mix; 
         }
 
@@ -192,7 +205,7 @@ class Response{
         }
     }
 
-	/**
+    /**
      * @desc  非法请求
      * @return json
      **/
@@ -200,28 +213,29 @@ class Response{
         return json_encode(['status'=>1, 'msg'=>'非法请求']);
     }
 
-	/**
+    /**
      * @desc 设置needDetermine为true
      **/
     public function setNeedDetermine(){
         $this->needDetermine = true; 
     }
 
-	/**
+    /**
      * @desc 通过控制expectSpeech来控制麦克风开关
- 	 * @param bool $setExpectSpeech
+ 	 * @param bool $expectSpeech 麦克风是否开启
      **/
-	public function setExpectSpeech($expectSpeech){
-		if(is_bool($expectSpeech)){
-        	$this->expectSpeech = $expectSpeech; 
-		}
+    public function setExpectSpeech($expectSpeech){
+        if(is_bool($expectSpeech)){
+            $this->expectSpeech = $expectSpeech; 
+        }
     }
 
-	/**
+    /**
      * @desc 表示本次返回的结果是否为兜底结果
      **/
     public function setFallBack(){
         $this->fallBack = true; 
     }
+
 
 }

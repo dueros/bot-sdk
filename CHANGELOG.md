@@ -23,3 +23,7 @@
 
 #2.1.7
 * 增加注释
+
+#2.1.8
+* outputAudio
+* TTSTemplate
