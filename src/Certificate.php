@@ -59,12 +59,27 @@ class Certificate{
                 return; 
             }
 
-            file_put_contents($cache, $content);
+            file_put_contents($cache, $content, LOCK_EX);
         }
 
-        $content = file_get_contents($cache); 
+        $content = $this->getFileContentSafety($cache); 
 
         return openssl_pkey_get_public($content);
+    }
+
+    /**
+     * @desc 高并发情况下，避免由于证书更新导致不安全读写
+     *
+     * @param string $filename 文件名
+     */
+    private function getFileContentSafety($filename) {
+        $file = fopen($filename, 'r');
+        flock($file, LOCK_SH);
+        $content = file_get_contents($filename);
+        flock($file, LOCK_UN);
+        fclose($file);
+
+        return $content;
     }
 
     /**
