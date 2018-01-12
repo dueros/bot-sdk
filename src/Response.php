@@ -51,8 +51,6 @@ class Response{
 
     private $fallBack = false;
 
-    private $outputAudio;
-
     /**
      * @param Request $request 请求对象
      * @param Session $session session对象
@@ -114,7 +112,6 @@ class Response{
         $data['outputSpeech'] = isset($data['outputSpeech'])?$data['outputSpeech']:null;
         $data['resource'] = isset($data['resource'])?$data['resource']:null;
         $data['reprompt'] = isset($data['reprompt'])?$data['reprompt']:null;
-        $outputAudio = isset($data['outputAudio'])?$data['outputAudio']:null;
 
         $autoCompleteSpeech = true;
         if(isset($data['autoCompleteSpeech']) && is_bool($data['autoCompleteSpeech'])){
@@ -168,10 +165,6 @@ class Response{
             $ret['response']['fallBack'] = $this->fallBack;
         }
 
-        if($outputAudio instanceof OutputAudio) {
-            $ret['response']['outputAudio'] =  $outputAudio->getData();    
-        }
-
         $str=json_encode($ret, JSON_UNESCAPED_UNICODE);
         return $str;
     }
@@ -182,14 +175,8 @@ class Response{
      * @return array
      **/
     public function formatSpeech($mix){
-        if(is_array($mix)) {
-            if(isset($mix['ttsKey']) && isset($mix['templateSlots']) && is_array($mix['templateSlots'])){
-                $ttsTemplate['type'] = 'TTSTemplate';
-                $ttsTemplate['ttsTemplates']['ttsKey'] = $mix['ttsKey'];
-                $ttsTemplate['ttsTemplates']['templateSlots'] = $mix['templateSlots'];
-                return $ttsTemplate;
-            }
-            return $mix; 
+        if($mix instanceof Extensions\TTSTemplate){
+           return $mix->getData(); 
         }
 
         if(preg_match('/<speak>/', $mix)) {
