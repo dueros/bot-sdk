@@ -101,9 +101,9 @@ class Request {
      * @return string
      **/
     public function getDeviceId() {
-		if(isset($this->data['context']['System']['device']['deviceId'])){
-        	return $this->data['context']['System']['device']['deviceId']; 
-		}
+        if(isset($this->data['context']['System']['device']['deviceId'])){
+            return $this->data['context']['System']['device']['deviceId']; 
+        }
     }
 
 	/**
@@ -112,9 +112,9 @@ class Request {
      * @return string
      **/
     public function getOriginalDeviceId() {
-		if(isset($this->data['context']['System']['device']['originalDeviceId'])){
-        	return $this->data['context']['System']['device']['originalDeviceId']; 
-		}
+        if(isset($this->data['context']['System']['device']['originalDeviceId'])){
+            return $this->data['context']['System']['device']['originalDeviceId']; 
+        }
     }
 
 
@@ -126,9 +126,9 @@ class Request {
      * @return array
      **/
     public function getAudioPlayerContext() {
-		if(isset($this->data['context']['AudioPlayer'])){
-			return $this->data['context']['AudioPlayer'];
-		}
+        if(isset($this->data['context']['AudioPlayer'])){
+            return $this->data['context']['AudioPlayer'];
+        }
     }
 
     /**
@@ -138,11 +138,10 @@ class Request {
      * @param null
      * @return array
      **/
-
     public function getAppLauncherContext() {
-		if(isset($this->data['context']['AppLauncher'])){
-			return $this->data['context']['AppLauncher'];
-		}
+        if(isset($this->data['context']['AppLauncher'])){
+            return $this->data['context']['AppLauncher'];
+        }
     }
 
     /**
@@ -168,20 +167,20 @@ class Request {
      * @return array
      **/
     public function getUserInfo() {
-		if(isset($this->data['context']['System']['user']['userInfo'])){
-        	return $this->data['context']['System']['user']['userInfo'];
-		}
+        if(isset($this->data['context']['System']['user']['userInfo'])){
+            return $this->data['context']['System']['user']['userInfo'];
+        }
     }
     
-	/**
-	 * @desc 获取百度uid
+    /**
+     * @desc 获取百度uid
      * @param null
      * @return array
      **/
     public function getBaiduUid() {
-		if(isset($this->data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid'])){
-        	return $this->data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid'];
-		}
+        if(isset($this->data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid'])){
+            return $this->data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid'];
+        }
     }
 
     /**
@@ -201,31 +200,31 @@ class Request {
      * @return string
      **/
     public function getUserId() {
-		if(isset($this->data['context']['System']['user']['userId'])){
-			return $this->data['context']['System']['user']['userId'];
-		}
+        if(isset($this->data['context']['System']['user']['userId'])){
+            return $this->data['context']['System']['user']['userId'];
+        }
     }
 
-	/**
+    /**
      * 获取accessToken
      * @param null
      * @return string
      **/
     public function getAccessToken() {
-		if(isset($this->data['context']['System']['user']['accessToken'])){
-			return $this->data['context']['System']['user']['accessToken'];
-		}
+        if(isset($this->data['context']['System']['user']['accessToken'])){
+            return $this->data['context']['System']['user']['accessToken'];
+        }
     }
 
-	/**
+    /**
      * 获取externalAccessTokens
      * @param null
      * @return array
      **/
     public function getExternalAccessTokens() {
-		if(isset($this->data['context']['System']['user']['externalAccessTokens'])){
-			return $this->data['context']['System']['user']['externalAccessTokens'];
-		}
+        if(isset($this->data['context']['System']['user']['externalAccessTokens'])){
+            return $this->data['context']['System']['user']['externalAccessTokens'];
+        }
     }
 
     /**
@@ -337,9 +336,9 @@ class Request {
      * @return string
      **/
     public function getBotId() {
-		if(isset($this->data['context']['System']['application']['applicationId'])){
-			return $this->data['context']['System']['application']['applicationId'];
-		}
+        if(isset($this->data['context']['System']['application']['applicationId'])){
+            return $this->data['context']['System']['application']['applicationId'];
+        }
     }
 
     /**

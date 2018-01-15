@@ -13,29 +13,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
- * @desc Stop类的测试类
- */
+ *
+ * @desc 账号关联卡片类
+ **/
+namespace Baidu\Duer\Botsdk\Card;
 
-require '../vendor/autoload.php';
-use PHPUnit\Framework\TestCase;
-
-class StopTest extends PHPUnit_Framework_TestCase{
+class LinkAccountCard extends \Baidu\Duer\Botsdk\Card\BaseCard{
 
     /**
-     * @before
-     */
-    public function setupSomeFixtures()
-    {
-        $this->stop = new Baidu\Duer\Botsdk\Directive\AudioPlayer\Stop();
-    }	
-
-    /**
-     * @desc 测试getData方法
-     */
-    function testGetData(){
-        $data = ['type' => 'AudioPlayer.Stop'];
-        $this->assertEquals($this->stop->getData(), $data);
+     * @return null
+     **/
+    public function __construct() {
+        $this->data['type'] = 'LinkAccount';
     }
-
 }

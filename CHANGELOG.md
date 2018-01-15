@@ -23,3 +23,7 @@
 
 #2.1.7
 * 增加注释
+
+#2.1.8
+* TTSTemplate 话术模板
+* LinkAccountCard账号关联卡片

@@ -50,7 +50,7 @@ function genUsData($usData, $sendData){
                             "type"=> $nlu['intent'],
                             "score"=> 100,
                             "content"=> "",
-							"result_list"=> array_map(function($slot){
+                            "result_list"=> array_map(function($slot){
                                 return [
                                     "key"=>$slot['name'],
                                     "type"=>"text",
