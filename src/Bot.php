@@ -550,14 +550,14 @@ abstract class Bot{
         return $str;
     }
 
-	/**
+    /**
      * @desc
      **/
     public function declareEffect() {
         $this->response->setNeedDetermine();     
     }
 
-	/**
+    /**
      * @desc
      * @return bool
      **/
@@ -565,19 +565,19 @@ abstract class Bot{
         return $this->request->isDetermined();         
     }
 
-	/**
+    /**
      * @desc 通过控制expectSpeech来控制麦克风开
-	 * @param bool $expectSpeech
+     * @param bool $expectSpeech 是否开启麦克风
      **/
     public function setExpectSpeech($expectSpeech){
-		$this->response->setExpectSpeech($expectSpeech);
+        $this->response->setExpectSpeech($expectSpeech);
     }
 
-	/**
+    /**
      * @desc 表示本次返回的结果是兜底结果
      **/
     public function setFallBack(){
-		$this->response->setFallBack();
+        $this->response->setFallBack();
     } 
 
 }
