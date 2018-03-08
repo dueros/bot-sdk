@@ -37,6 +37,7 @@ class Nlu{
      **/
     private $directive = [];
 
+    private $afterSearchScore;
 
     /**
      * @param array $data
@@ -181,9 +182,34 @@ class Nlu{
      * @return array
      **/
     public function toUpdateIntent(){
-        return [
-            'intent' => isset($this->data[0])?$this->data[0]:[]
+        $ret = [
+            'intent' => isset($this->data[0])?$this->data[0]:[],
         ]; 
+
+        $afterSearchScore = $this->getAfterSearchScore();
+        if(isset($afterSearchScore) && is_double($afterSearchScore)){
+            $ret['afterSearchScore'] = $afterSearchScore;
+        }
+        return $ret; 
+    }
+
+    /**
+     * @desc 获取afterSearchScore
+     * @return double
+     **/
+    public function getAfterSearchScore(){
+        return $this->afterSearchScore;
+    }
+
+    /**
+     * @desc 设置afterSearchScore
+     * @param double $score
+     * @return null
+     **/
+    public function setAfterSearchScore($score){
+        if(is_double($score)){
+            $this->afterSearchScore = $score;
+        }
     }
 
     /**

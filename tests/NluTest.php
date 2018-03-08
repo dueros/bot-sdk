@@ -133,4 +133,12 @@ class NluTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals($this->nlu->toDirective(), $directive);
     }
 
+    /**
+     * @desc 测试setAfterSearchScore方法
+     */
+    function testSetAfterSearchScore(){
+        $this->nlu->setAfterSearchScore(10.0);
+        $this->assertEquals($this->nlu->getAfterSearchScore(), 10.0);
+    }
+
 }
