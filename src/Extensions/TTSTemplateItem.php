@@ -18,42 +18,50 @@
  **/
 namespace Baidu\Duer\Botsdk\Extensions;
 
-class TTSTemplate{
+class TTSTemplateItem{
 
     private $data = [];
 
      /**
-     * @param TTSTemplateItem  $TTSTemplate 话术模板
+     * @param string $ttsKey 每个话术模板对应的唯一key
+     * @param array $templateSlots 每个话术模板的槽位信息
      **/
-    public function __construct($TTSTemplates = []) {
-        $this->data['type'] = 'TTSTemplate';
-        if(is_array($TTSTemplates) && $TTSTemplates){
-            foreach($TTSTemplates as $TTSTemplate){
-                if($TTSTemplate instanceof TTSTemplateItem){
-                    $this->data['ttsTemplates'][] = $TTSTemplate->getData();
-                }
-            }
+    public function __construct($ttsKey) {
+        if($ttsKey && is_string($ttsKey)){
+            $this->data['ttsKey'] = $ttsKey;
         }
     }
-
 
     /**
      * @desc 添加TemplateSlot
      * @param string $slotKey 槽位名称
      * @param string $slotValue 槽位值
      **/
-    public function addTTSTemplate($TTSTemplate){
-        if($TTSTemplate instanceof TTSTemplateItem){
-            $this->data['ttsTemplates'][] = $TTSTemplate->getData();
+    public function addTemplateSlot($slotKey, $slotValue){
+        if($slotKey && is_string($slotKey) && is_string($slotValue)){
+            $templateSlot = [
+                'slotKey' => $slotKey,
+                'slotValue' => $slotValue
+            ];
+            $this->data['templateSlots'][] = $templateSlot;
         }
     }
 
+    /**
+     * @desc 设置话术模板key
+     * @param string $ttsKey 每个话术模板对应的唯一key
+     **/
+    public function setTtsKey($ttsKey){
+        if($ttsKey && is_string($ttsKey)){
+            $this->data['ttsKey'] = $ttsKey;
+        }
+    }
 
     /**
      * @desc 清除话术模板的槽位信息
      **/
-    public function clearTTSTemplates(){
-        $this->data['ttsTemplates'] = [];
+    public function clearTemplateSlots(){
+        $this->data['templateSlots'] = [];
     }
 
     /**

@@ -27,3 +27,7 @@
 #2.1.8
 * TTSTemplate 话术模板
 * LinkAccountCard账号关联卡片
+
+#2.1.9
+* TTSTemplates 话术模板更新
+* after search服务给出的打分 
