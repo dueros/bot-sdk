@@ -1,0 +1,79 @@
+<?php
+/**
+ * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @desc Response类的测试类
+ */
+
+
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+
+class TTSTemplatesTest extends PHPUnit_Framework_TestCase{
+
+    /**
+     * @before
+     */
+    public function setupSomeFixtures()
+    {
+        $this->data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request.json'), true);
+        $this->request = new Baidu\Duer\Botsdk\Request($this->data);
+        $this->session = $this->request->getSession();
+        $this->nlu = $this->request->getNlu();
+        $this->response = new Baidu\Duer\Botsdk\Response($this->request, $this->session, $this->nlu);	
+    }	
+
+
+    /**
+     * @desc 用于测试addTemplate方法
+     */
+    function testAddTemplate(){
+        $ttsKey = 'ttsKey';
+        $slotKey1 = 'slotKey1';
+        $slotValue1 = 'slotValue1';
+        $slotKey2 = 'slotKey2';
+        $slotValue2 = 'slotValue2';
+        $ttsTemplates = new Baidu\Duer\Botsdk\Extensions\TTSTemplate($template);
+        $ttsTemplateItem = new Baidu\Duer\Botsdk\Extensions\TTSTemplateItem($ttsKey);
+        $ttsTemplateItem->addTemplateSlot($slotKey1, $slotValue1);
+        $ttsTemplateItem->addTemplateSlot($slotKey2, $slotValue2);
+        $ttsTemplates->addTTSTemplate($ttsTemplateItem);
+        $ret = ['outputSpeech' => $ttsTemplates];
+        $ret = $this->response->build($ret);;
+        $rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":{"type":"TTSTemplate","ttsTemplates":[{"ttsKey":"ttsKey","templateSlots":[{"slotKey":"slotKey1","slotValue":"slotValue1"},{"slotKey":"slotKey2","slotValue":"slotValue2"}]}]},"reprompt":null}}';
+        $this->assertEquals($ret, $rt);
+    }
+
+    /**
+     * @desc 用于测试clearTTSTemplates方法
+     */
+    function testClearTTSTemplates(){
+        $ttsKey = 'ttsKey';
+        $slotKey1 = 'slotKey1';
+        $slotValue1 = 'slotValue1';
+        $slotKey2 = 'slotKey2';
+        $slotValue2 = 'slotValue2';
+        $ttsTemplates = new Baidu\Duer\Botsdk\Extensions\TTSTemplate($template);
+        $ttsTemplateItem = new Baidu\Duer\Botsdk\Extensions\TTSTemplateItem($ttsKey);
+        $ttsTemplateItem->addTemplateSlot($slotKey1, $slotValue1);
+        $ttsTemplateItem->addTemplateSlot($slotKey2, $slotValue2);
+        $ttsTemplates->addTTSTemplate($ttsTemplateItem);
+        $ttsTemplates->clearTTSTemplates();
+        $ret = ['outputSpeech' => $ttsTemplates];
+        $ret = $this->response->build($ret);;
+        $rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":{"type":"TTSTemplate","ttsTemplates":[]},"reprompt":null}}';
+        $this->assertEquals($ret, $rt);
+    }	
+}
