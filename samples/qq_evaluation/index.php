@@ -18,19 +18,19 @@
  **/
 
 require "Bot.php";
-$tax = new Bot();
+$qq = new Bot();
 if($_SERVER['REQUEST_METHOD'] == 'HEAD'){
     header('HTTP/1.1 204 No Content');
 }
 header("Content-Type: application/json");
 //记录整体执行时间
-$tax->log->markStart('all_t');
-$ret = $tax->run();
-$tax->log->markEnd('all_t');
+$qq->log->markStart('all_t');
+$ret = $qq->run();
+$qq->log->markEnd('all_t');
 
 //打印日志
 //or 在register_shutdown_function增加一个执行函数
-$tax->log->notice($tax->log->getField('url_t'));
-$tax->log->notice();
+$qq->log->notice($qq->log->getField('url_t'));
+$qq->log->notice();
 
 print $ret;
