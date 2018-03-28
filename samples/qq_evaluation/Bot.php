@@ -20,7 +20,7 @@
  *
  **/
 
-require '/home/worker/tmp/vendor/autoload.php';
+require '../../../../vendor/autoload.php';
 
 use \Baidu\Duer\Botsdk\Card\TextCard;
 use \Baidu\Duer\Botsdk\Card\StandardCard;

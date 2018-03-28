@@ -18,9 +18,9 @@
  * @author joyce
  * @email:zhangzhaojing@baidu.com
  **/
-
-require '/home/worker/tmp/vendor/autoload.php';
-require '/home/worker/bot-sdk/today_on_history/simple_html_dom.php';
+ 
+require '../../../../vendor/autoload.php';
+require '../simple_html_dom.php';
 
 use \Baidu\Duer\Botsdk\Card\TextCard;
 use \Baidu\Duer\Botsdk\Card\StandardCard;
