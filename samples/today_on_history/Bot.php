@@ -25,13 +25,18 @@ require '/home/worker/bot-sdk/today_on_history/simple_html_dom.php';
 use \Baidu\Duer\Botsdk\Card\TextCard;
 use \Baidu\Duer\Botsdk\Card\StandardCard;
 
-class Bot extends \Baidu\Duer\Botsdk\Bot
-{
+class Bot extends \Baidu\Duer\Botsdk\Bot {
+    //接口url
     private static $url = "http://www.todayonhistory.com/index.php?m=content&c=index&a=json_event&page=1&pagesize=40&";
+    //欢迎页图片url
     private static $pUrl = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892410230,3126045607&fm=27&gp=0.jpg";
-
-    public function __construct($postData = [])
-    {
+    
+    /**
+    * 构造函数
+    * @param null
+    * @return null
+    */
+    public function __construct($postData = []) {
         parent::__construct();
 
         $this->log = new \Baidu\Duer\Botsdk\Log([
@@ -115,8 +120,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
      * @param null
      * @return string $data 当前日期的历史事例
      **/
-    public function getHistory()
-    {
+    public function getHistory() {
         $currentDate = $this->getSlot('currentDate');
 
         //将日期2018-03-04提取出来
@@ -156,8 +160,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
      * @param string $hisUrl 事件信息
      * @return string $desc 事件信息
      */
-    public function getHistoryDetail($url)
-    {
+    public function getHistoryDetail($url) {
         $detail = file_get_html($url);
         $desc = "";
         foreach ($detail->find('div.body') as $e) {
@@ -178,8 +181,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
      * @param string $url html地址
      * @return array $data 事件信息
      */
-    public function getHtmlInfo($url,$timeout = 3, $headerAry = '')
-    {
+    public function getHtmlInfo($url,$timeout = 3, $headerAry = '') {
         $this->log->markStart('url_t');
         
         if(is_array($timeout)) {

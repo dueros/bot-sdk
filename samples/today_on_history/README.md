@@ -51,3 +51,8 @@ bot：（say other thing）
 
 
 -------
+
+## 使用资源
+
+simple_html_dom类文件
+获取html文件中不同标签的内容

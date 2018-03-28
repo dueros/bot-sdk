@@ -25,10 +25,6 @@ if (!this->getSlot('qqNumber')) {
     }
 
 ```    
-## 功能新增
-在原始版本上加入音频和视频的播放功能。（此处只作为功能展示，无实际意义）
-使用度秘bot中的[音频和视频播放类](https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/audioplayer_markdown)
-
 
 ## 使用例子：
 

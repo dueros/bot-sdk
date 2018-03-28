@@ -21,27 +21,22 @@
  **/
 
 require '/home/worker/tmp/vendor/autoload.php';
-require '/home/worker/baidu/duer/bot-sdk/src/Directive/VideoPlayer/VideoPlay.php';
-require '/home/worker/baidu/duer/bot-sdk/src/Directive/VideoPlayer/VideoStop.php';
 
 use \Baidu\Duer\Botsdk\Card\TextCard;
 use \Baidu\Duer\Botsdk\Card\StandardCard;
-use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
-use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Stop;
-use \Baidu\Duer\Botsdk\Directive\VideoPlayer\VideoPlay;
-use \Baidu\Duer\Botsdk\Directive\VideoPlayer\VideoStop;
 
-class Bot extends \Baidu\Duer\Botsdk\Bot
-{
+class Bot extends \Baidu\Duer\Botsdk\Bot {
     //获得权限的appkey
     private static $appkey = "96e651aba46125748ab8850630609186";
+    //欢迎页图片url
     private static $picUrl = "http://img.25pp.com/uploadfile/soft/images/2014/0226/20140226041227784.jpg";
-    private static $audioUrl = "http://zhangmenshiting.qianqian.com/data2/music/efe3a49758c7d41ad5a4ab7a2c91768c/298010536/298010536.mp3?xcode=daf893b599eaa44fb123be2e4a685e68";
-    private static $videoUrl = "http://dbp-resource.gz.bcebos.com/1-3.mov?authorization=bce-auth-v1%2Ff8691eb9f642440ca5bce93bf35f5d4a%2F2018-03-13T07%3A34%3A45Z%2F-1%2Fhost%2F6cddc1490899db6b43aa614e481a4e3dec2b06c7acd73be8aec7536ca7da67cf";
 
-    //构造函数
-    public function __construct($postData = [])
-    {
+    /**
+    * 构造函数
+    * @param null
+    * @return null
+    **/
+    public function __construct($postData = []) {
         parent::__construct();
         $this->log = new \Baidu\Duer\Botsdk\Log([
 
@@ -55,10 +50,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
         $this->log->setField('query', $this->request->getQuery());
 
         //添加对LaunchRequest 的处理函数
-        $this->addLaunchHandler(function ()
-        {
-            $directive = new play(self::$audioUrl);
-
+        $this->addLaunchHandler(function () {
             $card = new StandardCard();
             $card->setTitle('QQ测吉凶')
                 ->setContent('欢迎使用‘QQ测吉凶’')
@@ -66,7 +58,6 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
 
             $this->waitAnswer();
             return [
-                'directives' => [$directive],
                 'card' => $card,
                 'outputSpeech' => '欢迎使用QQ测吉凶’',
             ];
@@ -106,8 +97,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
      * @param null
      * @return $data 获取的消息
      **/
-    public function testQqFate()
-    {
+    public function testQqFate() {
         $qq = $this->getSlot('qqNumber');
 
         //构造接口url
@@ -123,14 +113,12 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
         if ($data) {
             if ($data['error_code'] == '0') {
                 $fate = $data['result']['data'];
-                $directive = new videoplay(self::$videoUrl);
 
                 $card = new TextCard($qq."\r\n"
                     .'运势:'."\r\n".$fate['conclusion']."\r\n"
                     .'运势分析:'."\r\n".$fate['analysis']);
                 
                 return [
-                    'directives' => [$directive],
                     'card' => $card,
                     'outputSpeech' => $qq
                         .'运势:'.$fate['conclusion']
