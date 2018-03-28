@@ -18,7 +18,7 @@
  * @author qinwei01@baidu.com
  * */
 require '../../../../../vendor/autoload.php';
-
+require 'Pinyin.php';
 use \Baidu\Duer\Botsdk\Card\StandardCard;
 use \Baidu\Duer\Botsdk\Card\ListCard;
 use \Baidu\Duer\Botsdk\Card\ListCardItem;
@@ -120,13 +120,13 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
                 'outputSpeech' => '你的税前工资是多少呢？',
                 'reprompt' => '你的税前工资是多少呢？'
             ];
-        } else if (!$this->getSlot('city')) {
+        } else if (!$this->getSlot('sys.city')) {
             // 在存在monthlysalary槽位的情况下，首先验证monthlysalary槽位值是否合法，然后询问城市city槽位
             $ret = $this->checkMonthlysalary();
             if ($ret != null) {
                 return $ret;
             }
-            $this->nlu->ask('city');
+            $this->nlu->ask('sys.city');
             $card = $this->getStandardCard('个税查询', '你在哪个城市缴税呢?');
             $this->waitAnswer();
             return [
@@ -149,6 +149,14 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
     public function computeOne(){
         //获取个税的所有数据
         $data = $this->getTaxData();
+        if (!$data){
+            $this->nlu->ask('sys.city');
+            $card = $this->getStandardCard('当前不支持此城市的查询', '当前不支持此城市的查询，请选择其他城市');
+            return [
+                'card' => $card,
+                'outputSpeech' => '当前不支持此城市的查询，请选择其他城市？',
+            ];
+        }
         //获取个税类型槽位
         $taxType = $this->getSlot('compute_type');
         $imageUrl = self::$inquiry_type[$taxType]['imageUrl'];
@@ -171,6 +179,14 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
     public function computeAll(){
         //获取个税数据
         $data = $this->getTaxData();
+        if (!$data){
+            $this->nlu->ask('sys.city');
+            $card = $this->getStandardCard('当前不支持此城市的查询', '当前不支持此城市的查询，请选择其他城市');
+            return [
+                'card' => $card,
+                'outputSpeech' => '当前不支持此城市的查询，请选择其他城市？',
+            ];
+        }
         $result = '';
         foreach(self::$inquiry_type as $value){
             $content = $this->processTemplate($value['content'], $data);
@@ -196,22 +212,15 @@ class Bot extends \Baidu\Duer\Botsdk\Bot
             return $ret;
         }
         //获取城市槽位
-        $location = $this->getSlot('city');
-
+        $location = $this->getSlot('sys.city');
+        $city = json_decode($location, true)['city'];
+        $city = Pinyin::getPinyin($city);
         //带参数的URL
-        $url = self::$url . '&base_gjj=' . $monthlysalary. '&origin_salary=' . $monthlysalary . '&city=' . $location;
+        $url = self::$url . '&base_gjj=' . $monthlysalary. '&origin_salary=' . $monthlysalary . '&city=' . $city;
         $this->log->markStart('url_t');
-        $data = file_get_contents($url);
+        $data = @file_get_contents($url);
         $this->log->markEnd('url_t');
         $data = json_decode($data, true);
-        if (!$data){
-            $this->nlu->ask('city');
-            $card = $this->getStandardCard('当前不支持此城市的查询', '当前不支持此城市的查询，请选择其他城市');
-            return [
-                'card' => $card,
-                'outputSpeech' => '当前不支持此城市的查询，请选择其他城市？',
-            ];
-        }
         return $data;
     }
 
