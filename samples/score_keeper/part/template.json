@@ -1,0 +1,57 @@
+{
+    "version": "v2.0",
+        "session": {
+            "new": true,
+            "sessionId": "d3b1be46-5309-4a4c-9a1e-ff9ddc15d8ed"
+        },
+        "context": {
+            "System": {
+                "user": {
+                    "userId": "67945170",
+                    "userInfo": {
+                        "account": []
+                    }
+                },
+                "application": {
+                    "applicationId": "edb022af-c75a-86f3-700b-f535ad32d0a9"
+                },
+                "device": {
+                    "deviceId": "6d5729dc4682ecb0327baab4f8681ffd",
+                    "supportedInterfaces": {
+                        "VoiceInput": [],
+                        "VoiceOutput": [],
+                        "AudioPlayer": []
+                    }
+                },
+                "apiAccessToken": "GDi5kQyQ7C+zPAwaoey00tEJpzKM+fkmGQKJRnuNxGV/PDtahLqBs932DxBjlQLmpZzG+PE72GBz+uWpO1wG9lAnwg0+20LuHdSSljekyZTaRbi6yuchQ2Xn/YwqRTBLxPIG32Q4JRYZUTbhBrKuYtNmIj8OA1XZyXJ16Stow4cRWGCYQRoHql82RPEkc0LEcreKHMHNlF2yz+VssZCNlujY2paYvnAiPGfKRW9swrVvNSFk96y0w+7Y4zefqR/GJjSeMmUvygerZskrPO2QzgstLiJHeRyjXrW64qHNJnUAGO+Jt8sRThOyCMK1OWRU",
+                "apiEndPoint": "https://xiaodu.baidu.com"
+            }
+        },
+        "request": {
+            "query": {
+                "type": "TEXT",
+                "original": "增加选手张三"
+            },
+            "dialogState": "COMPLETED",
+            "intents": [
+            {
+                "name": "add_player",
+                "confirmationStatus": "NONE",
+                "slots": {
+                    "player": {
+                        "name": "player",
+                        "value": "张三",
+                        "values": [
+                            "张三"
+                            ],
+                        "confirmationStatus": "NONE"
+                    }
+                }
+            }
+            ],
+                "type": "IntentRequest",
+                "requestId": "9af40642417841f78c232b02620ebd7b_0",
+                "timestamp": "1522048216",
+                "dialogRequestId": "4d407316-ad16-4131-9f2e-248ceaa5c1bd"
+        }
+}
