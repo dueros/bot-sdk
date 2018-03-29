@@ -634,6 +634,7 @@ class Bot extends Baidu\Duer\Botsdk\Bot
      * @param $content 标准卡片文本内容
      * @param $reprompt 用户语句不相干时的提示语句, 默认为null
      * @param $speech 标准卡片的语言朗读内容,默认为null, 此时outputSpeech 与content内容相同
+     * @return $ret
      * */
     public function getStandardCard($title, $content, $reprompt = null, $speech = null){
         $card = new StandardCard();
