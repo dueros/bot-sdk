@@ -50,7 +50,7 @@ class Log{
         $this->_in_line=$options['in_line'];
         $this->options=$options;
 
-        $this->logid = $_SERVER['HTTP_SAIYALOGID'] ? $_SERVER['HTTP_SAIYALOGID']:''.time().mt_rand(1000, 10000);
+        $this->logid = isset($_SERVER['HTTP_SAIYALOGID']) ? $_SERVER['HTTP_SAIYALOGID']:''.time().mt_rand(1000, 10000);
         date_default_timezone_set('Asia/Shanghai');
     }
 

@@ -46,7 +46,7 @@ class Certificate{
     private function getRequestPublicKey() {
         //TODO get from head 
         //$filename = dirname(__file__).'/cacert.pem';
-        $filename = $_SERVER['HTTP_SIGNATURECERTURL'];
+        $filename = isset($_SERVER['HTTP_SIGNATURECERTURL']) ? $_SERVER['HTTP_SIGNATURECERTURL'] : false;
         if(!$filename) {
             return; 
         }
