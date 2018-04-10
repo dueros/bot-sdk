@@ -78,7 +78,7 @@ class Nlu{
      * @param string $field 槽位名
      * @return string 槽位值
      **/
-    public function getSlot($field, $index=0) {
+    public function getSlot($field, $index = 0) {
         if(empty($field)){
             return;
         }
@@ -93,7 +93,7 @@ class Nlu{
      * @param string $field 槽位名
      * @return string 槽位的confirmationStatus
      **/
-    public function getSlotConfirmationStatus($field, $index=0) {
+    public function getSlotConfirmationStatus($field, $index = 0) {
         if(empty($field)){
             return;
         }
