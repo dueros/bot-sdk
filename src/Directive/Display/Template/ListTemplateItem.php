@@ -26,28 +26,62 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
         parent::__construct(['token', 'image']);
     }
 
+
     /**
-     * @param array $primaryText 一级文本结构体
-     * @param array $secondaryText 二级文本结构体
-     * @param array $tertiaryText 三级文本结构体
-     * @return $this
+     * @desc 设置图片
+     * @param string $url
+     * @param string $widthPixels
+     * @param string $heightPixels
+     * @return array
      */
-    public function setTextContent($primaryText, $secondaryText = [], $tertiaryText = []){
-        if (! $primaryText) {
-            return $this;
+    public function setImage($url, $widthPixels = '', $heightPixels = ''){
+        if(!$url) {
+            return [];
         }
-        $this->data['textContent']['primaryText'] = $primaryText;
-
-        if($secondaryText) {
-            $this->data['textContent']['secondaryText'] = $secondaryText;
+        $this->data['image']['url'] = $url;
+        if($widthPixels){
+            $this->data['image']['widthPixels'] = $widthPixels;
         }
-
-        if($tertiaryText) {
-            $this->data['textContent']['tertiaryText'] = $tertiaryText;
+        if($heightPixels){
+            $this->data['image']['heightPixels'] = $heightPixels;
         }
-
     }
 
+    /**
+     * @desc 设置列表元素一级标题
+     * @param string $type 文本类型
+     * @param string $text 文本内容
+     */
+    public function setPrimaryText($type, $text){
+        if($type && $text) {
+            $this->data['textContent']['primaryText']['type'] = $type;
+            $this->data['textContent']['primaryText']['text'] = $text;
+        }
+    }
+
+    /**
+     * @desc 设置列表元素二级标题
+     * @param string $type 文本类型
+     * @param string $text 文本内容
+     */
+    public function setSecondaryText($type, $text){
+        if($type && $text) {
+            $this->data['textContent']['secondaryText']['type'] = $type;
+            $this->data['textContent']['secondaryText']['text'] = $text;
+        }
+    }
+
+    /**
+     * @desc 设置列表元素三级标题
+     * @param string $type 文本类型
+     * @param string $text 文本内容
+     */
+    public function setTertiaryText($type, $text){
+        if($type && $text) {
+            $this->data['textContent']['tertiaryText']['type'] = $type;
+            $this->data['textContent']['tertiaryText']['text'] = $text;
+        }
+    }
 
 }
  

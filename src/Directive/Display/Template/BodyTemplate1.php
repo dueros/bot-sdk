@@ -21,17 +21,25 @@ namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 class BodyTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
     public function __construct() {
         $this->data['type'] = 'BodyTemplate1';
-        parent::__construct(['token', 'title', 'backgroundImage']);
+        parent::__construct(['token', 'title']);
     }
 
     /**
-     * @param string $position 文本垂直方向的位置
-     * @param array $text 文字内容对应的结构
+     * @param string $type 文本类型
+     * @param string $text 文本内容
+     * @param string $position 文本位置
+     * @return $this
      */
-    public function setTextContent($position, $text){
-        if($position && $text) {
-            $this->data['textContent']['position'] = $position;
-            $this->data['textContent']['text'] = $text;
+    public function setTextContent($type, $text, $position = ''){
+        if($type && $text) {
+            $this->data['textContent']['text']['type'] = $type;
+            $this->data['textContent']['text']['text'] = $text;
+        } else {
+            return $this;
+        }
+
+        if($position){
+            $this->data['textContent']['text']['position'] = $position ;
         }
     }
 

@@ -30,43 +30,27 @@ abstract class BaseTemplate{
         $this->supportSetField = $fields;
     }
 
-
     /**
-     * @desc 设置图片结构
-     * @param string $url 图片地址
-     * @param string $widthPixels 图片宽度
-     * @param string $heightPixels 图片高度
-     * @return array
+     * @desc 设置背景图片
+     * @param string $url
+     * @param string $widthPixels
+     * @param string $heightPixels
+     * @return $this|array
      */
-    public function setImageStructure($url, $widthPixels = '', $heightPixels = ''){
+    public function setBackGroundImage($url, $widthPixels = '', $heightPixels = ''){
         if(!$url) {
             return [];
         }
-        $image['url'] = $url;
+        $this->data['backgroundImage']['url'] = $url;
         if($widthPixels){
-            $image['widthPixels'] = $widthPixels;
+            $this->data['backgroundImage']['widthPixels'] = $widthPixels;
         }
-        if($widthPixels){
-            $image['widthPixels'] = $heightPixels;
+        if($heightPixels){
+            $this->data['backgroundImage']['heightPixels'] = $heightPixels;
         }
-        return $image;
+        return $this;
     }
 
-    /**
-     * @desc 设置文本结构
-     * @param string $type 文本类型
-     * @param string $text 文本内容
-     * @return array
-     */
-    public function setTextStructure($type, $text){
-        if($type && $text) {
-            $textArrs['type'] = $type;
-            $textArrs['text'] = $text;
-            return $textArrs;
-        } else {
-            return [];
-        }
-    }
 
 
     /**

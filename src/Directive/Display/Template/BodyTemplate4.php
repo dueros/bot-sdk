@@ -24,7 +24,27 @@ class BodyTemplate4 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      */
     public function __construct() {
         $this->data['type'] = 'BodyTemplate4';
-        parent::__construct(['token', 'image', 'backgroundImage', 'title', 'content']);
+        parent::__construct(['token', 'title', 'content']);
+    }
+
+    /**
+     * @desc 设置图片
+     * @param string $url
+     * @param string $widthPixels
+     * @param string $heightPixels
+     * @return array
+     */
+    public function setImage($url, $widthPixels = '', $heightPixels = ''){
+        if(!$url) {
+            return [];
+        }
+        $this->data['image']['url'] = $url;
+        if($widthPixels){
+            $this->data['image']['widthPixels'] = $widthPixels;
+        }
+        if($heightPixels){
+            $this->data['image']['heightPixels'] = $heightPixels;
+        }
     }
 
 }

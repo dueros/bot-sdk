@@ -24,7 +24,7 @@ class ListTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      */
     public function __construct() {
         $this->data['type'] = 'ListTemplate2';
-        parent::__construct(['token', 'backgroundImage', 'title']);
+        parent::__construct(['token', 'title']);
     }
 
     /**
