@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Copyright (c) 2017 Baidu, Inc. All Rights Reserved.
  *
@@ -14,28 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc ListCard的列表项类
+ * @desc 日志类
  **/
-namespace Baidu\Duer\Botsdk\Card;
-
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
+namespace Baidu\Duer\Botsdk;
+class Utils{
 
     /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
+     * 生成token
+     * @desc 生成token.  生成一个伪唯一的token
+     * @return string
      **/
-    public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+    public static function genToken(){
+        $str = md5(uniqid(mt_rand(), true));
+        $uuid  = substr($str,0,8) . '-';
+        $uuid .= substr($str,8,4) . '-';
+        $uuid .= substr($str,12,4) . '-';
+        $uuid .= substr($str,16,4) . '-';
+        $uuid .= substr($str,20,12);
+        return $uuid;
     }
 }
- 

@@ -82,8 +82,8 @@ class Request {
     public function getNlu(){
         return $this->nlu;
     }
-    
-    
+
+
     /**
      * @deprecated
      * @desc 返回设备信息
@@ -106,7 +106,7 @@ class Request {
         }
     }
 
-	/**
+    /**
      * @desc 获取来自端上报的原始设备Id
      * @param null
      * @return string
@@ -132,6 +132,52 @@ class Request {
     }
 
     /**
+     * 获取设备视频播放的状态
+     *
+     * @desc 获取设备视频播放的状态
+     * @param null
+     * @return array
+     **/
+    public function getVideoPlayerContext() {
+        if(isset($this->data['context']['VideoPlayer'])){
+            return $this->data['context']['VideoPlayer'];
+        }
+    }
+
+    /**
+     * @desc 获取screen context
+     * @param null
+     * @return array
+     **/
+    public function getScreenContext() {
+        if(isset($this->data['context']['Screen'])){
+            return $this->data['context']['Screen'];
+        }
+    }
+
+    /**
+     * @desc 获取screen token
+     * @param null
+     * @return array
+     **/
+    public function getScreenTokenFromContext() {
+        if(isset($this->data['context']['Screen']['token'])){
+            return $this->data['context']['Screen']['token'];
+        }
+    }
+
+    /**
+     * @desc 获取screen card
+     * @param null
+     * @return array
+     **/
+    public function getScreenCardFromContext() {
+        if(isset($this->data['context']['Screen']['card'])){
+            return $this->data['context']['Screen']['card'];
+        }
+    }
+
+    /**
      * 获取设备app安装列表
      *
      * @desc 获取设备app安装列表
@@ -153,10 +199,10 @@ class Request {
      **/
     public function getEventData() {
         if($this->requestType == 'IntentRequest'
-           || $this->isSessionEndedRequest()
-           || $this->isLaunchRequest()) {
-              return; 
-           }
+            || $this->isSessionEndedRequest()
+            || $this->isLaunchRequest()) {
+                return; 
+            }
 
         return $this->data['request'];
     }
@@ -171,7 +217,7 @@ class Request {
             return $this->data['context']['System']['user']['userInfo'];
         }
     }
-    
+
     /**
      * @desc 获取百度uid
      * @param null
@@ -266,7 +312,7 @@ class Request {
         }
     }
 
-	/**
+    /**
      * @desc 
      * @param null
      * @return array|bool
@@ -277,7 +323,7 @@ class Request {
         }
         return false;
     }
-    
+
     /**
      * 是否为调起bot
      *
@@ -314,9 +360,9 @@ class Request {
      * @return string
      */
     public function getTimestamp() {
-		if(isset($this->data['request']['timestamp'])){
-			return $this->data['request']['timestamp'];
-		}
+        if(isset($this->data['request']['timestamp'])){
+            return $this->data['request']['timestamp'];
+        }
     }
 
     /**
@@ -328,7 +374,7 @@ class Request {
     public function getLogId() {
         return isset($this->data['request']['requestId'])?$this->data['request']['requestId']:null;
     }
-    
+
     /**
      * 获取botid
      *

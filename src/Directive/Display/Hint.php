@@ -13,29 +13,29 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @desc ListCard的列表项类
+ * 
+ * @desc 用于生成Hint指令的类
  **/
-namespace Baidu\Duer\Botsdk\Card;
+namespace Baidu\Duer\Botsdk\Directive\Display;
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
-
+class Hint extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
-     **/
-    public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+     * @desc 构造函数
+     * @param string|array $text
+     */
+    public function __construct($text) {
+        parent::__construct('Hint');
+        if(is_string($text) && $text){
+            $text = [$text]; 
+        }
+        if(is_array($text)){
+            foreach ($text as $value) {
+                $item['type'] = 'PlainText';
+                $item['text'] = $value;
+                $this->data['hints'][] = $item; 
+            } 
+        }
     }
 }
  
+

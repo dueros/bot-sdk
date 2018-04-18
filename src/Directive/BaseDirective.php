@@ -18,6 +18,8 @@
  **/
 namespace Baidu\Duer\Botsdk\Directive;
 
+use Baidu\Duer\Botsdk\Utils; 
+
 abstract class BaseDirective{
     protected $data = [];
     /**
@@ -29,27 +31,21 @@ abstract class BaseDirective{
     }
 
     /**
-     * 生成token
-     * @desc 生成token.  生成一个伪唯一的token
-     * @return string
-     **/
-    protected function genToken(){
-        $str = md5(uniqid(mt_rand(), true));  
-        $uuid  = substr($str,0,8) . '-';  
-        $uuid .= substr($str,8,4) . '-';  
-        $uuid .= substr($str,12,4) . '-';  
-        $uuid .= substr($str,16,4) . '-';  
-        $uuid .= substr($str,20,12);  
-        return $uuid;
-    }
-
-    /**
      * 获取命令的数据
      * @param null
      * @return array
      **/
     public function getData(){
         return $this->data; 
+    }
+
+    /**
+     * 生成token
+     * @param null
+     * @return string
+     **/
+    protected function genToken(){
+        return Utils::genToken();
     }
 }
  

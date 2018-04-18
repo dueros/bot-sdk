@@ -13,29 +13,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @desc ListCard的列表项类
+ * 
  **/
-namespace Baidu\Duer\Botsdk\Card;
+namespace Baidu\Duer\Botsdk\Directive\AudioPlayer\Control;
+/**
+ * @desc ShowPlayListButton类
+ */
+class ShowPlayListButton extends Button{
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
+    const NAME = 'SHOW_PLAYLIST';
 
-    /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
-     **/
+   /**
+    * @desc 构造函数
+    */ 
     public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+        parent::__construct(self::NAME);
     }
+
 }
  
+
