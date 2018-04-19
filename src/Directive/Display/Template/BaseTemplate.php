@@ -46,10 +46,7 @@ abstract class BaseTemplate{
      * @param string $heightPixels
      * @return $this|array
      */
-    public function setBackGroundImage($url, $widthPixels = '', $heightPixels = ''){
-        if(!$url) {
-            return [];
-        }
+    public function setBackGroundImage($url = '', $widthPixels = '', $heightPixels = ''){
         $this->data['backgroundImage']['url'] = $url;
         if($widthPixels){
             $this->data['backgroundImage']['widthPixels'] = $widthPixels;
