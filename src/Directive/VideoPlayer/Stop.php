@@ -13,29 +13,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @desc ListCard的列表项类
+ * 
+ * @desc 用于生成Stop指令的类
  **/
-namespace Baidu\Duer\Botsdk\Card;
+namespace Baidu\Duer\Botsdk\Directive\VideoPlayer;
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
-
-    /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
-     **/
+class Stop extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+        parent::__construct('VideoPlayer.Stop');
     }
 }
  
+

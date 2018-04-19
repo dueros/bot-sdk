@@ -13,29 +13,29 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @desc ListCard的列表项类
- **/
-namespace Baidu\Duer\Botsdk\Card;
+ * 
+ * @desc Stop类的测试类
+ */
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+
+class VideoStopTest extends PHPUnit_Framework_TestCase{
 
     /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
-     **/
-    public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+     * @before
+     */
+    public function setupSomeFixtures()
+    {
+        $this->stop = new Baidu\Duer\Botsdk\Directive\VideoPlayer\Stop();
+    }	
+
+    /**
+     * @desc 测试getData方法
+     */
+    function testGetData(){
+        $data = ['type' => 'VideoPlayer.Stop'];
+        $this->assertEquals($this->stop->getData(), $data);
     }
+
 }
- 
