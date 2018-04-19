@@ -30,9 +30,9 @@ class RenderTemplate extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
      * @param string $templateType 模版类型
      * @return null
      */
-    public function setBodyTemplate($template) {
+    public function setTemplate($template) {
         if($template instanceof BaseTemplate) {
-            $this->data['Template'] = $template->getData();
+            $this->data['template'] = $template->getData();
         }
     }
 

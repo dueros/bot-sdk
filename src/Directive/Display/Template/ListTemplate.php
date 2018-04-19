@@ -18,12 +18,28 @@
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
-class ListTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplate {
+abstract class ListTemplate extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
     /**
-     * ListTemplate2 constructor.
+     * TextImageTemplate constructor.
+     * @param string $type
      */
-    public function __construct() {
-        parent::__construct('ListTemplate2');
+    public function __construct($type) {
+        $this->data['type'] = $type;
+        parent::__construct(['token', 'title']);
+    }
+
+    /**
+     * @param $listTemplateItem ListTemplateItem 列表项
+     * @return $this
+     */
+    public function addItem($listTemplateItem) {
+        if($listTemplateItem instanceof ListTemplateItem) {
+            if(!$this->data['listItems']) {
+                $this->data['listItems'] = [];
+            }
+            $this->data['listItems'][] = $listTemplateItem->getData();
+        }
+        return $this;
     }
 
 }

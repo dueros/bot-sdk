@@ -42,23 +42,17 @@ class BodyTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
 
     /**
      * @desc 设置文本结构
-     * @param string $type 文本类型
+     * @param string $content 文本类型
      * @param string $text 文本内容
-     * @param string $position 文本位置
      */
-    public function setTextContent($type = self::PLAIN_TEXT, $text = '', $position = self::TOP_LEFT){
-        if(in_array($type, self::$textTypeArr)){
-            $this->data['textContent']['text']['type'] = $type;
-        } else {
-            $this->data['textContent']['text']['type'] = self::PLAIN_TEXT;
-        }
-
-        $this->data['textContent']['text']['text'] = $text;
+    public function setPlainTextContent($text, $position = self::TOP_LEFT){
+        $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        $this->data['textContent']['text'] = $textStructure;
 
         if(in_array($position, self::$positionArr)){
-            $this->data['textContent']['text']['position'] = $position ;
+            $this->data['textContent']['position'] = $position ;
         } else {
-            $this->data['textContent']['text']['position'] = self::TOP_LEFT;
+            $this->data['textContent']['position'] = self::TOP_LEFT;
         }
     }
 

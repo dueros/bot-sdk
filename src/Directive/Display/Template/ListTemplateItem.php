@@ -33,56 +33,36 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      * @param string $widthPixels
      * @param string $heightPixels
      */
-    public function setImage($url = '', $widthPixels = '', $heightPixels = ''){
-        $this->data['image']['url'] = $url;
-        if($widthPixels){
-            $this->data['image']['widthPixels'] = $widthPixels;
-        }
-        if($heightPixels){
-            $this->data['image']['heightPixels'] = $heightPixels;
-        }
+    public function setImage($url, $widthPixels = '', $heightPixels = ''){
+        $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
+        $this->data['image'] = $imageStructure;
     }
 
     /**
      * @desc 设置列表元素一级标题
-     * @param string $type 文本类型
      * @param string $text 文本内容
      */
-    public function setPrimaryText($type = self::PLAIN_TEXT, $text = ''){
-        if(in_array($type, self::$textTypeArr)){
-            $this->data['textContent']['primaryText']['type'] = $type;
-        } else {
-            $this->data['textContent']['primaryText']['type'] = self::PLAIN_TEXT;
-        }
-        $this->data['textContent']['primaryText']['text'] = $text;
+    public function setPlainPrimaryText($text){
+        $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        $this->data['textContent']['primaryText'] = $textStructure;
     }
 
     /**
      * @desc 设置列表元素二级标题
-     * @param string $type 文本类型
      * @param string $text 文本内容
      */
-    public function setSecondaryText($type = self::PLAIN_TEXT, $text = ''){
-        if(in_array($type, self::$textTypeArr)){
-            $this->data['textContent']['secondaryText']['type'] = $type;
-        } else {
-            $this->data['textContent']['secondaryText']['type'] = self::PLAIN_TEXT;
-        }
-        $this->data['textContent']['secondaryText']['text'] = $text;
+    public function setPlainSecondaryText($text){
+        $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        $this->data['textContent']['secondaryText'] = $textStructure;
     }
 
     /**
      * @desc 设置列表元素三级标题
-     * @param string $type 文本类型
      * @param string $text 文本内容
      */
-    public function setTertiaryText($type = self::PLAIN_TEXT, $text = ''){
-        if(in_array($type, self::$textTypeArr)){
-            $this->data['textContent']['tertiaryText']['type'] = $type;
-        } else {
-            $this->data['textContent']['tertiaryText']['type'] = self::PLAIN_TEXT;
-        }
-        $this->data['textContent']['tertiaryText']['text'] = $text;
+    public function setPlainTertiaryText($text){
+        $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        $this->data['textContent']['tertiaryText'] = $textStructure;
     }
 
 }

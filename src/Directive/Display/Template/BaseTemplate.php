@@ -44,19 +44,45 @@ abstract class BaseTemplate{
      * @param string $url
      * @param string $widthPixels
      * @param string $heightPixels
-     * @return $this|array
      */
-    public function setBackGroundImage($url = '', $widthPixels = '', $heightPixels = ''){
-        $this->data['backgroundImage']['url'] = $url;
-        if($widthPixels){
-            $this->data['backgroundImage']['widthPixels'] = $widthPixels;
-        }
-        if($heightPixels){
-            $this->data['backgroundImage']['heightPixels'] = $heightPixels;
-        }
-        return $this;
+    public function setBackGroundImage($url, $widthPixels = '', $heightPixels = ''){
+        $image = $this->createImageStructure($url, $widthPixels, $heightPixels);
+        $this->data['backgroundImage'] = $image;
     }
 
+    /**
+     * @desc 构造图片结构体
+     * @param string $url
+     * @param string $widthPixels
+     * @param string $heightPixels
+     * @return array
+     */
+    protected function createImageStructure($url, $widthPixels, $heightPixels){
+        $image['url'] = $url;
+        if($widthPixels){
+            $image['widthPixels'] = $widthPixels;
+        }
+        if($heightPixels){
+            $image['heightPixels'] = $heightPixels;
+        }
+        return $image;
+    }
+
+    /**
+     * @desc 构造文本结构体
+     * @param string $content 文本内容
+     * @param string $type 文本类型
+     * @return array
+     */
+    protected function createTextStructure($content, $type = self::PLAIN_TEXT){
+        if(in_array($type, self::$textTypeArr)){
+            $text['type'] = $type;
+        } else {
+            $text['type'] = self::PLAIN_TEXT;
+        }
+        $text['text'] = $content;
+        return $text;
+    }
 
 
     /**

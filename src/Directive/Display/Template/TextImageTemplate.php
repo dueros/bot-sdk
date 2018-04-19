@@ -18,27 +18,34 @@
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
-class BodyTemplate5 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
+abstract class TextImageTemplate extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
     /**
-     * BodyTemplate5 constructor.
+     * TextImageTemplate constructor.
+     * @param string $type
      */
-    public function __construct() {
-        $this->data['type'] = 'BodyTemplate5';
+    public function __construct($type) {
+        $this->data['type'] = $type;
         parent::__construct(['token', 'title']);
     }
 
     /**
-     * @desc 添加图片
-     * @param string $url 图片地址
-     * @param string $widthPixels 图片宽度
-     * @param string $heightPixels 图片高度
+     * @desc 设置图片
+     * @param string $url
+     * @param string $widthPixels
+     * @param string $heightPixels
      */
-    public function addImages($url, $widthPixels = '', $heightPixels = '') {
+    public function setImage($url, $widthPixels = '', $heightPixels = ''){
         $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
-        if(!$this->data['images']) {
-            $this->data['images'] = [];
-        }
-        $this->data['images'][] = $imageStructure;
+        $this->data['image'] = $imageStructure;
+    }
+
+    /**
+     * @desc 设置文本
+     * @param string $type 文本类型
+     */
+    public function setPlainContent($text){
+        $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        $this->data['content'] =$textStructure ;
     }
 
 }

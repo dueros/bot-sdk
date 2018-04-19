@@ -18,43 +18,12 @@
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
-class BodyTemplate4 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
+class BodyTemplate4 extends \Baidu\Duer\Botsdk\Directive\Display\Template\TextImageTemplate {
     /**
      * BodyTemplate4 constructor.
      */
     public function __construct() {
-        $this->data['type'] = 'BodyTemplate4';
-        parent::__construct(['token', 'title']);
-    }
-
-    /**
-     * @desc 设置图片
-     * @param string $url
-     * @param string $widthPixels
-     * @param string $heightPixels
-     */
-    public function setImage($url = '', $widthPixels = '', $heightPixels = ''){
-        $this->data['image']['url'] = $url;
-        if($widthPixels){
-            $this->data['image']['widthPixels'] = $widthPixels;
-        }
-        if($heightPixels){
-            $this->data['image']['heightPixels'] = $heightPixels;
-        }
-    }
-
-    /**
-     * @desc 设置文本
-     * @param string $type 文本类型
-     * @param string $text 文本内容
-     */
-    public function setContent($type = self::PLAIN_TEXT, $text = ''){
-        if(in_array($type, self::$textTypeArr)){
-            $this->data['content']['type'] = $type;
-        } else {
-            $this->data['content']['type'] = self::PLAIN_TEXT;
-        }
-        $this->data['content']['text'] = $text;
+        parent::__construct('BodyTemplate4');
     }
 
 }
