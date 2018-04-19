@@ -32,12 +32,8 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      * @param string $url
      * @param string $widthPixels
      * @param string $heightPixels
-     * @return array
      */
-    public function setImage($url, $widthPixels = '', $heightPixels = ''){
-        if(!$url) {
-            return [];
-        }
+    public function setImage($url = '', $widthPixels = '', $heightPixels = ''){
         $this->data['image']['url'] = $url;
         if($widthPixels){
             $this->data['image']['widthPixels'] = $widthPixels;
@@ -52,11 +48,13 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      * @param string $type 文本类型
      * @param string $text 文本内容
      */
-    public function setPrimaryText($type, $text){
-        if($type && $text) {
+    public function setPrimaryText($type = self::PLAIN_TEXT, $text = ''){
+        if(in_array($type, self::$textTypeArr)){
             $this->data['textContent']['primaryText']['type'] = $type;
-            $this->data['textContent']['primaryText']['text'] = $text;
+        } else {
+            $this->data['textContent']['primaryText']['type'] = self::PLAIN_TEXT;
         }
+        $this->data['textContent']['primaryText']['text'] = $text;
     }
 
     /**
@@ -64,11 +62,13 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      * @param string $type 文本类型
      * @param string $text 文本内容
      */
-    public function setSecondaryText($type, $text){
-        if($type && $text) {
+    public function setSecondaryText($type = self::PLAIN_TEXT, $text = ''){
+        if(in_array($type, self::$textTypeArr)){
             $this->data['textContent']['secondaryText']['type'] = $type;
-            $this->data['textContent']['secondaryText']['text'] = $text;
+        } else {
+            $this->data['textContent']['secondaryText']['type'] = self::PLAIN_TEXT;
         }
+        $this->data['textContent']['secondaryText']['text'] = $text;
     }
 
     /**
@@ -76,11 +76,13 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      * @param string $type 文本类型
      * @param string $text 文本内容
      */
-    public function setTertiaryText($type, $text){
-        if($type && $text) {
+    public function setTertiaryText($type = self::PLAIN_TEXT, $text = ''){
+        if(in_array($type, self::$textTypeArr)){
             $this->data['textContent']['tertiaryText']['type'] = $type;
-            $this->data['textContent']['tertiaryText']['text'] = $text;
+        } else {
+            $this->data['textContent']['tertiaryText']['type'] = self::PLAIN_TEXT;
         }
+        $this->data['textContent']['tertiaryText']['text'] = $text;
     }
 
 }

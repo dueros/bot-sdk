@@ -24,7 +24,7 @@ class BodyTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      */
     public function __construct() {
         $this->data['type'] = 'BodyTemplate2';
-        parent::__construct(['token', 'title', 'content']);
+        parent::__construct(['token', 'title']);
     }
 
     /**
@@ -32,12 +32,8 @@ class BodyTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      * @param string $url
      * @param string $widthPixels
      * @param string $heightPixels
-     * @return array
      */
-    public function setImage($url, $widthPixels = '', $heightPixels = ''){
-        if(!$url) {
-            return [];
-        }
+    public function setImage($url = '', $widthPixels = '', $heightPixels = ''){
         $this->data['image']['url'] = $url;
         if($widthPixels){
             $this->data['image']['widthPixels'] = $widthPixels;
@@ -45,6 +41,20 @@ class BodyTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
         if($heightPixels){
             $this->data['image']['heightPixels'] = $heightPixels;
         }
+    }
+
+    /**
+     * @desc 设置文本
+     * @param string $type 文本类型
+     * @param string $text 文本内容
+     */
+    public function setContent($type = self::PLAIN_TEXT, $text = ''){
+        if(in_array($type, self::$textTypeArr)){
+            $this->data['content']['type'] = $type;
+        } else {
+            $this->data['content']['type'] = self::PLAIN_TEXT;
+        }
+        $this->data['content']['text'] = $text;
     }
 
 }

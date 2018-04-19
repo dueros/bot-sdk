@@ -24,21 +24,16 @@ class BodyTemplate5 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      */
     public function __construct() {
         $this->data['type'] = 'BodyTemplate5';
-        parent::__construct(['token', 'title', 'content']);
+        parent::__construct(['token', 'title']);
     }
 
     /**
-     * @desc 添加图片内容
+     * @desc 添加图片
      * @param string $url 图片地址
      * @param string $widthPixels 图片宽度
      * @param string $heightPixels 图片高度
-     * @return $this
      */
-    public function addImages($url, $widthPixels = '', $heightPixels = '') {
-        if(! $url){
-            return $this;
-        }
-
+    public function addImages($url = '', $widthPixels = '', $heightPixels = '') {
         $image['url'] = $url;
         if($widthPixels){
             $image['widthPixels'] = $widthPixels;

@@ -22,6 +22,15 @@ abstract class BaseTemplate{
     protected $data=[];
     protected $supportSetField = [];
 
+    //文本类型
+    const PLAIN_TEXT = 'PlainText';
+    const RICH_TEXT = 'RichText';
+
+    protected static $textTypeArr = array(
+        self::PLAIN_TEXT,
+        self::RICH_TEXT,
+    );
+
     /**
      * BaseTemplate constructor.
      * @param array $fields 允许通过魔术方法设置的字段
@@ -74,9 +83,6 @@ abstract class BaseTemplate{
      * @throws \Exception
      */
     public function __call($name, $arguments){
-        /**
-         * 将规定的field 通过setFieldName('content')来设置
-         **/
         $operation = substr($name, 0, 3);
         $field = lcfirst(substr($name, 3));
         if($operation == 'set' && in_array($field, $this->supportSetField)) {

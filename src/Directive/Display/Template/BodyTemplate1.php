@@ -19,27 +19,46 @@
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
 class BodyTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
+
+    //文本位置
+    const TOP_LEFT = 'TOP-LEFT';
+    const CENTER = 'CENTER';
+    const BOTTOM_LEFT = 'BOTTOM-LEFT';
+
+    protected static $positionArr = array(
+        self::TOP_LEFT,
+        self::BOTTOM_LEFT,
+        self::CENTER,
+    );
+
+    /**
+     * BodyTemplate1 constructor.
+     */
     public function __construct() {
         $this->data['type'] = 'BodyTemplate1';
         parent::__construct(['token', 'title']);
     }
 
+
     /**
+     * @desc 设置文本结构
      * @param string $type 文本类型
      * @param string $text 文本内容
      * @param string $position 文本位置
-     * @return $this
      */
-    public function setTextContent($type, $text, $position = ''){
-        if($type && $text) {
+    public function setTextContent($type = self::PLAIN_TEXT, $text = '', $position = self::TOP_LEFT){
+        if(in_array($type, self::$textTypeArr)){
             $this->data['textContent']['text']['type'] = $type;
-            $this->data['textContent']['text']['text'] = $text;
         } else {
-            return $this;
+            $this->data['textContent']['text']['type'] = self::PLAIN_TEXT;
         }
 
-        if($position){
+        $this->data['textContent']['text']['text'] = $text;
+
+        if(in_array($position, self::$positionArr)){
             $this->data['textContent']['text']['position'] = $position ;
+        } else {
+            $this->data['textContent']['text']['position'] = self::TOP_LEFT;
         }
     }
 
