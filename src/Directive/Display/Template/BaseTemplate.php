@@ -61,7 +61,7 @@ abstract class BaseTemplate{
      */
     protected function createImageStructure($url, $widthPixels, $heightPixels){
         if(!$url){
-            return [];
+            return;
         }
 
         $image['url'] = $url;
@@ -82,7 +82,7 @@ abstract class BaseTemplate{
      */
     protected function createTextStructure($content, $type = self::PLAIN_TEXT){
         if(!$content){
-            return [];
+            return;
         }
 
         if(in_array($type, self::$textTypeArr)){

@@ -23,11 +23,11 @@ class BodyTemplate3 extends \Baidu\Duer\Botsdk\Directive\Display\Template\TextIm
      * @example
      * <pre>
      * $bodyTemplate = new BodyTemplate3();
-     * $bodyTemplate->setToken($token);
-     * $bodyTemplate->setImage($url, $widthPixels, $heightPixels);
-     * $bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
-     * $bodyTemplate->setTitle($title);
-     * $bodyTemplate->setPlainContent($text); //设置plain类型的文本
+     * $bodyTemplate->setToken('token');
+     * $bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+     * $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+     * $bodyTemplate->setTitle('托尔斯泰的格言');
+     * $bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); //设置plain类型的文本
      * </pre>
      * BodyTemplate3 constructor.
      */

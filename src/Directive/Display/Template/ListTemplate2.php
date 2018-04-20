@@ -23,17 +23,18 @@ class ListTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\ListTe
      * @example
      * <pre>
      * $listTemplate = new ListTemplate2();
-     * $listTemplate->setToken($token);
-     * $listTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
-     * $listTemplate->setTitle($title);
+     * $listTemplate->setToken('token');
+     * $listTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+     * $listTemplate->setTitle(''托尔斯泰的格言'');
      *
      * //设置列表数组listItems其中一项
      * $listTemplateItem = new ListTemplateItem();
-     * $listTemplateItem->setToken($token);
-     * $listTemplateItem->setImage($url, $widthPixels, $heightPixels);
-     * $listTemplateItem->setPlainPrimaryText($content) //设置一级标题
-     * $listTemplateItem->setPlainSecondaryText($content) //设置二级标题
-     *
+     * $listTemplateItem->setToken('token');
+     * $listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+     * $listTemplateItem->setPlainPrimaryText('一级标题');
+     * $listTemplateItem->setPlainSecondaryText('二级标题');
+     * $listTemplateItem->setPlainTertiaryText('三级标题');
+
      * //把listTemplateItem添加到模版listItems
      * $listTemplate->addItem($listTemplateItem);
      * ListTemplate2 constructor.

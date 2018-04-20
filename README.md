@@ -124,13 +124,13 @@ $card->addItem('http://src.image', 'http://thumbnail.image');
 ```php
 $bodyTemplate = new BodyTemplate1();
 //设置模版token
-$bodyTemplate->setToken($token);
+$bodyTemplate->setToken('token');
 //设置模版背景图片
-$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
-$bodyTemplate->setTitle($title);
+$bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本
-$bodyTemplate->setPlainTextContent($text，$position); 
+$bodyTemplate->setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
 ```
 
 ### 上图下文模版
@@ -139,15 +139,15 @@ $bodyTemplate->setPlainTextContent($text，$position);
 ```php
 $bodyTemplate = new BodyTemplate2();
 //设置模版token
-$bodyTemplate->setToken($token);
+$bodyTemplate->setToken('token');
 //设置模版展示图片
-bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版背景图片
-$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
-$bodyTemplate->setTitle($title);
+$bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本结构
-$bodyTemplate->setPlainContent($text); 
+$bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
 ```
 
 ### 左图右文模版
@@ -156,15 +156,15 @@ $bodyTemplate->setPlainContent($text);
 ```php
 $bodyTemplate = new BodyTemplate3();
 //设置模版token
-$bodyTemplate->setToken($token);
+$bodyTemplate->setToken('token');
 //设置模版展示图片
-bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版背景图片
-$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
-$bodyTemplate->setTitle($title);
+$bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本结构
-$bodyTemplate->setPlainContent($text); 
+$bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙');  
 ```
 ### 右图左文
 `BodyTemplate4`
@@ -172,15 +172,15 @@ $bodyTemplate->setPlainContent($text);
 ```php
 $bodyTemplate = new BodyTemplate4();
 //设置模版token
-$bodyTemplate->setToken($token);
+$bodyTemplate->setToken('token');
 //设置模版展示图片
-bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版背景图片
-$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
-$bodyTemplate->setTitle($title);
-//设置plain类型的文本结构
-$bodyTemplate->setPlainContent($text);
+$bodyTemplate->setTitle('托尔斯泰的格言');
+//设置模版plain类型的文本结构
+$bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
 ```
 ### 图片模板
 `BodyTemplate5`
@@ -188,13 +188,13 @@ $bodyTemplate->setPlainContent($text);
 ```php
 $bodyTemplate = new BodyTemplate5();
 //设置模版token
-$bodyTemplate->setToken($token);
+$bodyTemplate->setToken('token');
 //模版图片数组添加一张图片
-$bodyTemplate->addImages($url, $widthPixels, $heightPixels);
+$bodyTemplate->addImages('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版背景图片
-$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 /设置模版标题
-$bodyTemplate->setTitle($title);
+$bodyTemplate->setTitle('托尔斯泰的格言');
 ```
 ### 横向列表模板
 `ListTemplate1`
@@ -202,18 +202,18 @@ $bodyTemplate->setTitle($title);
 ```php
 $listTemplate = new ListTemplate1();
 //设置模板token
-$listTemplate->setToken($token);
+$listTemplate->setToken('token');
 //设置模板背景图
-$listTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$listTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
-$listTemplate->setTitle($title);
+$listTemplate->setTitle('托尔斯泰的格言');
 
 //设置模版列表数组listItems其中一项，即列表的一个元素
 $listTemplateItem = new ListTemplateItem();
-$listTemplateItem->setToken($token);
-$listTemplateItem->setImage($url, $widthPixels, $heightPixels);
-$listTemplateItem->setPlainPrimaryText($content);  //设置一级标题
-$listTemplateItem->setPlainSecondaryText($content); //设置二级标题
+$listTemplateItem->setToken('token');
+$listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$listTemplateItem->setPlainPrimaryText('一级标题');
+$listTemplateItem->setPlainSecondaryText('二级标题');
 
 //把listTemplateItem添加到模版listItems
 $listTemplate->addItem($listTemplateItem);
@@ -224,18 +224,19 @@ $listTemplate->addItem($listTemplateItem);
 ```php
 $listTemplate = new ListTemplate2();
 //设置模板token
-$listTemplate->setToken($token);
+$listTemplate->setToken('token');
 //设置模板背景图
-$listTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+$listTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
-$listTemplate->setTitle($title);
+$listTemplate->setTitle('托尔斯泰的格言');
 
 //设置列表数组listItems其中一项，即列表的一个元素
 $listTemplateItem = new ListTemplateItem();
-$listTemplateItem->setToken($token);
-$listTemplateItem->setImage($url, $widthPixels, $heightPixels);
-$listTemplateItem->setPlainPrimaryText($content);  //设置一级标题
-$listTemplateItem->setPlainSecondaryText($content); //设置二级标题
+$listTemplateItem->setToken('token');
+$listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$listTemplateItem->setPlainPrimaryText('一级标题');  
+$listTemplateItem->setPlainSecondaryText('二级标题'); 
+$listTemplateItem->setPlainTertiaryText('三级标题');
 
 //把listTemplateItem添加到模版listItems
 $listTemplate->addItem($listTemplateItem);

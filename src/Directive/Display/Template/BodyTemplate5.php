@@ -23,10 +23,10 @@ class BodyTemplate5 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      * @example
      * <pre>
      * $bodyTemplate = new BodyTemplate5();
-     * $bodyTemplate->setToken($token);
-     * $bodyTemplate->addImages($url, $widthPixels, $heightPixels) //设置images数组
-     * $bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
-     * $bodyTemplate->setTitle($title);
+     * $bodyTemplate->setToken('token');
+     * $bodyTemplate->addImages('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg'') //设置images数组
+     * $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg'');
+     * $bodyTemplate->setTitle('托尔斯泰的格言');
      * </pre>
      * BodyTemplate5 constructor.
      */
