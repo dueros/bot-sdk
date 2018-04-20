@@ -47,7 +47,9 @@ abstract class BaseTemplate{
      */
     public function setBackGroundImage($url, $widthPixels = '', $heightPixels = ''){
         $image = $this->createImageStructure($url, $widthPixels, $heightPixels);
-        $this->data['backgroundImage'] = $image;
+        if($image) {
+            $this->data['backgroundImage'] = $image;
+        }
     }
 
     /**
@@ -58,6 +60,10 @@ abstract class BaseTemplate{
      * @return array
      */
     protected function createImageStructure($url, $widthPixels, $heightPixels){
+        if(!$url){
+            return [];
+        }
+
         $image['url'] = $url;
         if($widthPixels){
             $image['widthPixels'] = $widthPixels;
@@ -75,6 +81,10 @@ abstract class BaseTemplate{
      * @return array
      */
     protected function createTextStructure($content, $type = self::PLAIN_TEXT){
+        if(!$content){
+            return [];
+        }
+
         if(in_array($type, self::$textTypeArr)){
             $text['type'] = $type;
         } else {

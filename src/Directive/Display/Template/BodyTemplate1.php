@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc 卡片的基类
+ * @desc 文本展现模板类
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
@@ -32,6 +32,14 @@ class BodyTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
     );
 
     /**
+     * @example
+     * <pre>
+     * $bodyTemplate = new BodyTemplate1();
+     * $bodyTemplate->setToken($token);
+     * $bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+     * $bodyTemplate->setTitle($title);
+     * $bodyTemplate->setPlainTextContent($text，$position); //设置plain类型的文本
+     * </pre>
      * BodyTemplate1 constructor.
      */
     public function __construct() {
@@ -39,14 +47,17 @@ class BodyTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
         parent::__construct(['token', 'title']);
     }
 
-
     /**
-     * @desc 设置文本结构
-     * @param string $content 文本类型
+     * @desc 设置plain类型的文本结构
      * @param string $text 文本内容
+     * @param string $position
+     * @return $this
      */
-    public function setPlainTextContent($text, $position = self::TOP_LEFT){
+    public function setPlainTextContent($text, $position = self::BOTTOM_LEFT){
         $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        if(!$textStructure){
+            return $this;
+        }
         $this->data['textContent']['text'] = $textStructure;
 
         if(in_array($position, self::$positionArr)){
@@ -54,6 +65,7 @@ class BodyTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
         } else {
             $this->data['textContent']['position'] = self::TOP_LEFT;
         }
+        return $this;
     }
 
 }

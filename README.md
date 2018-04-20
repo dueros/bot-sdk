@@ -118,7 +118,128 @@ $card->addItem($item);
 $card = new ImageCard();
 $card->addItem('http://src.image', 'http://thumbnail.image');
 ```
+`template`展现模版
+### 文本展现模板
+`BodyTemplate1`
+```php
+$bodyTemplate = new BodyTemplate1();
+//设置模版token
+$bodyTemplate->setToken($token);
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+//设置模版标题
+$bodyTemplate->setTitle($title);
+//设置模版plain类型的文本
+$bodyTemplate->setPlainTextContent($text，$position); 
+```
 
+### 上图下文模版
+`BodyTemplate2`
+
+```php
+$bodyTemplate = new BodyTemplate2();
+//设置模版token
+$bodyTemplate->setToken($token);
+//设置模版展示图片
+bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+//设置模版标题
+$bodyTemplate->setTitle($title);
+//设置模版plain类型的文本结构
+$bodyTemplate->setPlainContent($text); 
+```
+
+### 左图右文模版
+`BodyTemplate3`
+
+```php
+$bodyTemplate = new BodyTemplate3();
+//设置模版token
+$bodyTemplate->setToken($token);
+//设置模版展示图片
+bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+//设置模版标题
+$bodyTemplate->setTitle($title);
+//设置模版plain类型的文本结构
+$bodyTemplate->setPlainContent($text); 
+```
+### 右图左文
+`BodyTemplate4`
+
+```php
+$bodyTemplate = new BodyTemplate4();
+//设置模版token
+$bodyTemplate->setToken($token);
+//设置模版展示图片
+bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+//设置模版标题
+$bodyTemplate->setTitle($title);
+//设置plain类型的文本结构
+$bodyTemplate->setPlainContent($text);
+```
+### 图片模板
+`BodyTemplate5`
+
+```php
+$bodyTemplate = new BodyTemplate5();
+//设置模版token
+$bodyTemplate->setToken($token);
+//模版图片数组添加一张图片
+$bodyTemplate->addImages($url, $widthPixels, $heightPixels);
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+/设置模版标题
+$bodyTemplate->setTitle($title);
+```
+### 横向列表模板
+`ListTemplate1`
+
+```php
+$listTemplate = new ListTemplate1();
+//设置模板token
+$listTemplate->setToken($token);
+//设置模板背景图
+$listTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+//设置模版标题
+$listTemplate->setTitle($title);
+
+//设置模版列表数组listItems其中一项，即列表的一个元素
+$listTemplateItem = new ListTemplateItem();
+$listTemplateItem->setToken($token);
+$listTemplateItem->setImage($url, $widthPixels, $heightPixels);
+$listTemplateItem->setPlainPrimaryText($content);  //设置一级标题
+$listTemplateItem->setPlainSecondaryText($content); //设置二级标题
+
+//把listTemplateItem添加到模版listItems
+$listTemplate->addItem($listTemplateItem);
+```
+### 纵向列表模板
+`ListTemplate2`
+
+```php
+$listTemplate = new ListTemplate2();
+//设置模板token
+$listTemplate->setToken($token);
+//设置模板背景图
+$listTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+//设置模版标题
+$listTemplate->setTitle($title);
+
+//设置列表数组listItems其中一项，即列表的一个元素
+$listTemplateItem = new ListTemplateItem();
+$listTemplateItem->setToken($token);
+$listTemplateItem->setImage($url, $widthPixels, $heightPixels);
+$listTemplateItem->setPlainPrimaryText($content);  //设置一级标题
+$listTemplateItem->setPlainSecondaryText($content); //设置二级标题
+
+//把listTemplateItem添加到模版listItems
+$listTemplate->addItem($listTemplateItem);
+```
 `directive`返回指令
 
 ### 音乐播放指令

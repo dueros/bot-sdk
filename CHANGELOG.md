@@ -31,3 +31,6 @@
 #2.1.9
 * TTSTemplates 话术模板更新
 * after search服务给出的打分 
+
+#2.1.10
+* 增加template模版展现

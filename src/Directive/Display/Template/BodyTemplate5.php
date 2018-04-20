@@ -14,12 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc 卡片的基类
+ * @desc 图片模板类
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
 class BodyTemplate5 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
     /**
+     * @example
+     * <pre>
+     * $bodyTemplate = new BodyTemplate5();
+     * $bodyTemplate->setToken($token);
+     * $bodyTemplate->addImages($url, $widthPixels, $heightPixels) //设置images数组
+     * $bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+     * $bodyTemplate->setTitle($title);
+     * </pre>
      * BodyTemplate5 constructor.
      */
     public function __construct() {
@@ -34,11 +42,13 @@ class BodyTemplate5 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      * @param string $heightPixels 图片高度
      */
     public function addImages($url, $widthPixels = '', $heightPixels = '') {
-        $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
         if(!$this->data['images']) {
             $this->data['images'] = [];
         }
-        $this->data['images'][] = $imageStructure;
+        $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
+        if($imageStructure) {
+            $this->data['images'][] = $imageStructure;
+        }
     }
 
 }

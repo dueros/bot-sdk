@@ -35,7 +35,9 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      */
     public function setImage($url, $widthPixels = '', $heightPixels = ''){
         $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
-        $this->data['image'] = $imageStructure;
+        if($imageStructure) {
+            $this->data['image'] = $imageStructure;
+        }
     }
 
     /**
@@ -44,7 +46,9 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      */
     public function setPlainPrimaryText($text){
         $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
-        $this->data['textContent']['primaryText'] = $textStructure;
+        if($textStructure) {
+            $this->data['textContent']['primaryText'] = $textStructure;
+        }
     }
 
     /**
@@ -53,7 +57,9 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      */
     public function setPlainSecondaryText($text){
         $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
-        $this->data['textContent']['secondaryText'] = $textStructure;
+        if($textStructure) {
+            $this->data['textContent']['secondaryText'] = $textStructure;
+        }
     }
 
     /**
@@ -62,7 +68,9 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
      */
     public function setPlainTertiaryText($text){
         $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
-        $this->data['textContent']['tertiaryText'] = $textStructure;
+        if($textStructure) {
+            $this->data['textContent']['tertiaryText'] = $textStructure;
+        }
     }
 
 }

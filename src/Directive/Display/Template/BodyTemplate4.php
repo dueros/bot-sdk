@@ -14,12 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc 卡片的基类
+ * @desc 右图左文模版类
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
 class BodyTemplate4 extends \Baidu\Duer\Botsdk\Directive\Display\Template\TextImageTemplate {
     /**
+     * @example
+     * <pre>
+     * $bodyTemplate = new BodyTemplate4();
+     * $bodyTemplate->setToken($token);
+     * $bodyTemplate->setImage($url, $widthPixels, $heightPixels);
+     * $bodyTemplate->setBackGroundImage($url, $widthPixels, $heightPixels);
+     * $bodyTemplate->setTitle($title);
+     * $bodyTemplate->setPlainContent($text); //设置plain类型的文本
+     * </pre>
      * BodyTemplate4 constructor.
      */
     public function __construct() {

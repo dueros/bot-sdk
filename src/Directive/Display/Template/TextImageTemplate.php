@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc 卡片的基类
+ * @desc 图文模版的基类
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
@@ -36,16 +36,20 @@ abstract class TextImageTemplate extends \Baidu\Duer\Botsdk\Directive\Display\Te
      */
     public function setImage($url, $widthPixels = '', $heightPixels = ''){
         $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
-        $this->data['image'] = $imageStructure;
+        if($imageStructure) {
+            $this->data['image'] = $imageStructure;
+        }
     }
 
     /**
      * @desc 设置文本
-     * @param string $type 文本类型
+     * @param string $text 文本内容
      */
     public function setPlainContent($text){
         $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
-        $this->data['content'] =$textStructure ;
+        if($textStructure) {
+            $this->data['content'] = $textStructure;
+        }
     }
 
 }
