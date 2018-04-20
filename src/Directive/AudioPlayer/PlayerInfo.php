@@ -124,7 +124,7 @@ class PlayerInfo{
 
     /**
      * @desc 设置控件列表
-     * @param Control|array $controls 空间列表 
+     * @param Control|array $control 控件列表 
      */
     public function setControls($controls){
         $this->data['controls'] = [];
@@ -138,6 +138,16 @@ class PlayerInfo{
                 }
             }
         } 
+    }
+
+    /**
+     * @desc 增加一个控件
+     * @param Control $control 控件
+     */
+    public function addControl($control){
+        if($control instanceof BaseButton){
+            $this->data['controls'][] = $control->getData();
+        }
     }
 
     /**

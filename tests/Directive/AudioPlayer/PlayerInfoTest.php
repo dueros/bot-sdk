@@ -201,9 +201,30 @@ class PlayerInfoTest extends PHPUnit_Framework_TestCase{
                 'selectedValue' => 'THUMBS_UP',
             )
         );
-        var_dump($this->playerInfo->getData()['controls']);
         $this->playerInfo->setControls($controls);
         $this->assertEquals($this->playerInfo->getData()['controls'], $controlsData);
     }
 
+    /**
+     * @desc 测试addControl方法
+     */
+    function testAddControl(){
+        $controlsData = array(
+            array(
+                'type' => 'BUTTON',
+                'name' => 'PLAY_PAUSE',
+                'enabled' => true,
+                'selected' => false
+            ),
+            array(
+                'type' => 'BUTTON',
+                'name' => 'SHOW_PLAYLIST',
+                'enabled' => true,
+                'selected' => false
+            )
+        );
+        $this->playerInfo->addControl(new PlayPauseButton());
+        $this->playerInfo->addControl(new ShowPlayListButton());
+        $this->assertEquals($this->playerInfo->getData()['controls'], $controlsData);
+    }
 }
