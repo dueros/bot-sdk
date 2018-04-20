@@ -134,6 +134,43 @@ return [
 ];
 ```
 
+### 渲染音频播放器的主界面
+`AudioPlayer.Play`指令中增加playerInfo信息
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\PlayerInfo;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\PlayPauseButton;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\NextButoon;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\PreviousButton;
+//创建音频播放指令
+$directive = new Play('http://www.music', Play::REPLACE_ALL);
+
+//音频播放器的主界面
+$playerInfo = new PlayerInfo();
+
+//创建暂停按钮
+$playpause = new PlayPauseButton();
+$previous = new PreviousButton();
+$next = new NextButoon();
+$controls = array(
+    $playpause, 
+    $previous, 
+    $next
+);
+
+//设置PlayerInfo内容
+$playerInfo->setControls($controls);
+$playerInfo->setTitle('周杰伦');
+$playerInfo->setTitleSubtext1('七里香');
+
+//设置Play指令的PlayerInfo
+$directive->setPlayerInfo($playerInfo);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '周杰伦,七里香',
+];
+```
+
 ### 停止端上的播放音频
 
 `AudioPlayer.Stop`
@@ -145,6 +182,35 @@ $directive = new Stop();
 return [
     'directives' => [$directive],
     'outputSpeech' => '已经停止播放',
+];
+```
+
+### 视频播放指令
+`VideoPlayer.Play`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\VideoPlayer\Play;
+
+$directive = new Play('http://www.video', Play::REPLACE_ALL); 
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '正在为你播放视频',
+];
+```
+### 获取端屏幕展现状态
+```php
+$screenContext = $this->request->getScreenContext();
+```
+### 渲染引导词
+使用`Hint`指令渲染引导词
+```php
+use \Baidu\Duer\Botsdk\Directive\Display\Hint;
+use \Baidu\Duer\Botsdk\Card\TextCard;
+
+$directive = new Hint(['hint1', 'hint2']);
+return [
+    'card' => new TextCard('测试Hint指令'),
+    'directives' => [$directive],
 ];
 ```
 
