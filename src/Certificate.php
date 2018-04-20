@@ -7,6 +7,10 @@ namespace Baidu\Duer\Botsdk;
 
 class Certificate{
     private $verifyRequestSign = false;
+
+    const URL_SCHEME = 'https';
+    const URL_HOST = 'duer.bdstatic.com';
+
     /**
      * @param string $privateKeyContent 私钥内容，使用监控统计功能或者推送功能需要提供
      * @return null
@@ -40,6 +44,22 @@ class Certificate{
     }
 
     /**
+     * @desc 判断是否是百度域
+     * @param string $url
+     * @return bool
+     */
+    public static function isBaiduDomain($url){
+        $array = parse_url($url);
+        $scheme = isset($array['scheme']) ? $array['scheme'] : '';
+        $host = isset($array['host']) ? $array['host'] : '';
+
+        if($scheme == self::URL_SCHEME && $host == self::URL_HOST){
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @param null
      * @return resource
      */
@@ -47,7 +67,7 @@ class Certificate{
         //TODO get from head 
         //$filename = dirname(__file__).'/cacert.pem';
         $filename = $_SERVER['HTTP_SIGNATURECERTURL'];
-        if(!$filename) {
+        if(!$filename || !self::isBaiduDomain($filename)) {
             return; 
         }
 
@@ -71,6 +91,7 @@ class Certificate{
      * @desc 高并发情况下，避免由于证书更新导致不安全读写
      *
      * @param string $filename 文件名
+     * @return string $content
      */
     private function getFileContentSafety($filename) {
         $file = fopen($filename, 'r');

@@ -13,39 +13,34 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
- * @desc 指令类的基类
+ *
+ * @desc 卡片的基类
  **/
-namespace Baidu\Duer\Botsdk\Directive;
+namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
-use Baidu\Duer\Botsdk\Utils; 
-
-abstract class BaseDirective{
-    protected $data = [];
+abstract class ListTemplate extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
     /**
-     * @param string $type 指令类型
-     * @return null
-     **/
+     * TextImageTemplate constructor.
+     * @param string $type
+     */
     public function __construct($type) {
         $this->data['type'] = $type;
+        parent::__construct(['token', 'title']);
     }
 
     /**
-     * 获取命令的数据
-     * @param null
-     * @return array
-     **/
-    public function getData(){
-        return $this->data; 
+     * @param $listTemplateItem ListTemplateItem 列表项
+     * @return $this
+     */
+    public function addItem($listTemplateItem) {
+        if($listTemplateItem instanceof ListTemplateItem) {
+            if(!$this->data['listItems']) {
+                $this->data['listItems'] = [];
+            }
+            $this->data['listItems'][] = $listTemplateItem->getData();
+        }
+        return $this;
     }
 
-    /**
-     * 生成token
-     * @param null
-     * @return string
-     **/
-    protected function genToken(){
-        return Utils::genToken();
-    }
 }
  

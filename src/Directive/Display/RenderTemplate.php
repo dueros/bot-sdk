@@ -14,28 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc ListCard的列表项类
+ * @desc 模版渲染类
  **/
-namespace Baidu\Duer\Botsdk\Card;
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
+namespace Baidu\Duer\Botsdk\Directive\Display;
+use Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate;
+class RenderTemplate extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
-    /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
-     **/
     public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+        parent::__construct('Display.RenderTemplate');
     }
-}
- 
+    
+    /**
+     * @desc 设置模版类别
+     * @param string $templateType 模版类型
+     * @return null
+     */
+    public function setTemplate($template) {
+        if($template instanceof BaseTemplate) {
+            $this->data['template'] = $template->getData();
+        }
+    }
+
+
+}    

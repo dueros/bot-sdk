@@ -31,3 +31,11 @@
 #2.1.9
 * TTSTemplates 话术模板更新
 * after search服务给出的打分 
+
+#2.1.10
+* 增加sample bot
+* 支持AudioPlayerInfo
+* 支持Hint指令
+* 支持VideoPlayer指令及获取端VideoPlayer状态
+* 支持获取端展现的Card状态
+* 增加template模版展现

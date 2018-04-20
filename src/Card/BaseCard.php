@@ -17,6 +17,7 @@
  * @desc 卡片的基类
  **/
 namespace Baidu\Duer\Botsdk\Card;
+use Baidu\Duer\Botsdk\Utils;
 
 abstract class BaseCard{
     protected $data=[];
@@ -27,6 +28,17 @@ abstract class BaseCard{
      **/
     public function __construct($fields=[]) {
         $this->supportSetField = $fields;
+        $this->data['token'] = Utils::genToken();
+    }
+
+    /**
+     * @desc 设置卡片token
+     * @param string $token
+     **/
+    public function setToken($token){
+        if(is_string($token) && $token) {
+            $this->data['token'] = $token; 
+        }
     }
 
     /**

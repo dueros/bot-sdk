@@ -118,7 +118,129 @@ $card->addItem($item);
 $card = new ImageCard();
 $card->addItem('http://src.image', 'http://thumbnail.image');
 ```
+`template`展现模版
+### 文本展现模板
+`BodyTemplate1`
+```php
+$bodyTemplate = new BodyTemplate1();
+//设置模版token
+$bodyTemplate->setToken('token');
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版标题
+$bodyTemplate->setTitle('托尔斯泰的格言');
+//设置模版plain类型的文本
+$bodyTemplate->setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+```
 
+### 上图下文模版
+`BodyTemplate2`
+
+```php
+$bodyTemplate = new BodyTemplate2();
+//设置模版token
+$bodyTemplate->setToken('token');
+//设置模版展示图片
+bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版标题
+$bodyTemplate->setTitle('托尔斯泰的格言');
+//设置模版plain类型的文本结构
+$bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+```
+
+### 左图右文模版
+`BodyTemplate3`
+
+```php
+$bodyTemplate = new BodyTemplate3();
+//设置模版token
+$bodyTemplate->setToken('token');
+//设置模版展示图片
+bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版标题
+$bodyTemplate->setTitle('托尔斯泰的格言');
+//设置模版plain类型的文本结构
+$bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙');  
+```
+### 右图左文
+`BodyTemplate4`
+
+```php
+$bodyTemplate = new BodyTemplate4();
+//设置模版token
+$bodyTemplate->setToken('token');
+//设置模版展示图片
+bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版标题
+$bodyTemplate->setTitle('托尔斯泰的格言');
+//设置模版plain类型的文本结构
+$bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+```
+### 图片模板
+`BodyTemplate5`
+
+```php
+$bodyTemplate = new BodyTemplate5();
+//设置模版token
+$bodyTemplate->setToken('token');
+//模版图片数组添加一张图片
+$bodyTemplate->addImages('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版背景图片
+$bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+/设置模版标题
+$bodyTemplate->setTitle('托尔斯泰的格言');
+```
+### 横向列表模板
+`ListTemplate1`
+
+```php
+$listTemplate = new ListTemplate1();
+//设置模板token
+$listTemplate->setToken('token');
+//设置模板背景图
+$listTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版标题
+$listTemplate->setTitle('托尔斯泰的格言');
+
+//设置模版列表数组listItems其中一项，即列表的一个元素
+$listTemplateItem = new ListTemplateItem();
+$listTemplateItem->setToken('token');
+$listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$listTemplateItem->setPlainPrimaryText('一级标题');
+$listTemplateItem->setPlainSecondaryText('二级标题');
+
+//把listTemplateItem添加到模版listItems
+$listTemplate->addItem($listTemplateItem);
+```
+### 纵向列表模板
+`ListTemplate2`
+
+```php
+$listTemplate = new ListTemplate2();
+//设置模板token
+$listTemplate->setToken('token');
+//设置模板背景图
+$listTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//设置模版标题
+$listTemplate->setTitle('托尔斯泰的格言');
+
+//设置列表数组listItems其中一项，即列表的一个元素
+$listTemplateItem = new ListTemplateItem();
+$listTemplateItem->setToken('token');
+$listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$listTemplateItem->setPlainPrimaryText('一级标题');  
+$listTemplateItem->setPlainSecondaryText('二级标题'); 
+$listTemplateItem->setPlainTertiaryText('三级标题');
+
+//把listTemplateItem添加到模版listItems
+$listTemplate->addItem($listTemplateItem);
+```
 `directive`返回指令
 
 ### 音乐播放指令
@@ -134,6 +256,45 @@ return [
 ];
 ```
 
+### 渲染音频播放器的主界面
+`AudioPlayer.Play`指令中增加playerInfo信息
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\PlayerInfo;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\PlayPauseButton;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\NextButoon;
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\PreviousButton;
+//创建音频播放指令
+$directive = new Play('http://www.music', Play::REPLACE_ALL);
+
+//音频播放器的主界面
+$playerInfo = new PlayerInfo();
+
+//创建暂停按钮
+$playpause = new PlayPauseButton();
+$previous = new PreviousButton();
+$controls = array(
+    $playpause, 
+    $previous
+);
+
+//设置PlayerInfo的Controls内容
+$playerInfo->setControls($controls);
+
+//也可以使用addControl,增加一个control
+$playerInfo->addControl(new NextButoon());
+
+$playerInfo->setTitle('周杰伦');
+$playerInfo->setTitleSubtext1('七里香');
+
+//设置Play指令的PlayerInfo
+$directive->setPlayerInfo($playerInfo);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '周杰伦,七里香',
+];
+```
+
 ### 停止端上的播放音频
 
 `AudioPlayer.Stop`
@@ -145,6 +306,50 @@ $directive = new Stop();
 return [
     'directives' => [$directive],
     'outputSpeech' => '已经停止播放',
+];
+```
+
+### 视频播放指令
+`VideoPlayer.Play`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\VideoPlayer\Play;
+
+$directive = new Play('http://www.video', Play::REPLACE_ALL); 
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '正在为你播放视频',
+];
+```
+
+### 停止端上播放的视频
+`VideoPlayer.Stop`
+
+```php
+use \Baidu\Duer\Botsdk\Directive\VideoPlayer\Stop;
+
+$directive = new Stop(); 
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '已经停止播放',
+];
+```
+
+
+### 获取端屏幕展现状态
+```php
+$screenContext = $this->request->getScreenContext();
+```
+### 渲染引导词
+使用`Hint`指令渲染引导词
+```php
+use \Baidu\Duer\Botsdk\Directive\Display\Hint;
+use \Baidu\Duer\Botsdk\Card\TextCard;
+
+$directive = new Hint(['hint1', 'hint2']);
+return [
+    'card' => new TextCard('测试Hint指令'),
+    'directives' => [$directive],
 ];
 ```
 

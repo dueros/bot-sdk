@@ -13,29 +13,32 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @desc ListCard的列表项类
+ * 
  **/
-namespace Baidu\Duer\Botsdk\Card;
+namespace Baidu\Duer\Botsdk\Directive\AudioPlayer\Control;
+/**
+ * @desc BaseButton基类
+ */
+abstract class BaseButton{
 
-class ListCardItem extends \Baidu\Duer\Botsdk\Card\BaseCard{
+    protected $data = [];
 
     /**
-     *@example
-     * <pre>
-     * $item = new ListCardItem();
-     * $item->setTitle('');
-     * $item->setContent('');
-     * $item->setUrl('');
-     * $item->setImage('');
-     * </pre>
-     *
-     * @param null 
-     * @return null
-     **/
-    public function __construct() {
-        parent::__construct(['title', 'content', 'url', 'image']);
-        unset($this->data['token']);
+     * @param string $type 类型
+     * @param string $name 名称
+     */
+    public function __construct($type, $name) {
+        $this->data['type'] = $type;
+        $this->data['name'] = $name;
+    }
+
+    /**
+     * @desc getData
+     * @return array Control数据
+     */ 
+    public function getData(){
+        return $this->data;
     }
 }
  
+
