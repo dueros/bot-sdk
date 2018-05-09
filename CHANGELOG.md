@@ -39,3 +39,7 @@
 * 支持VideoPlayer指令及获取端VideoPlayer状态
 * 支持获取端展现的Card状态
 * 增加template模版展现
+
+#2.1.11
+* update README
+* fix VideoPlayer.Play.setOffsetInMilliseconds

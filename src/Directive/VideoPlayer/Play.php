@@ -83,13 +83,13 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
     /**
      * @desc 设置directive的属性。从指定的offset开始进行播放
-     * @param integer $milliSeconds  毫秒数。比如5分钟的视频，播放的长度是5*60*1000毫秒，选择起始的播放位置
+     * @param integer $milliseconds毫秒数。比如5分钟的视频，播放的长度是5*60*1000毫秒，选择起始的播放位置
      * @return null
      **/
-    public function setOffsetInMilliSeconds($milliSeconds){
-        if(is_numeric($milliSeconds)) {
-            $milliSeconds = (int)$milliSeconds;
-            $this->data['videoItem']['stream']['offsetInMilliSeconds'] = $milliSeconds;
+    public function setOffsetInMilliseconds($milliseconds){
+        if(is_numeric($milliseconds)) {
+            $milliseconds= (int)$milliseconds;
+            $this->data['videoItem']['stream']['offsetInMilliseconds'] = $milliseconds;
         }
     }
 

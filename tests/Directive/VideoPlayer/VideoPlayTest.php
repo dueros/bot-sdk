@@ -60,7 +60,7 @@ class VideoPlayTest extends PHPUnit_Framework_TestCase{
      */
     function testSetOffsetInMilliSeconds(){
         $this->play->setOffsetInMilliSeconds(1000);
-        $offset = $this->play->getData()['videoItem']['stream']['offsetInMilliSeconds'];
+        $offset = $this->play->getData()['videoItem']['stream']['offsetInMilliseconds'];
         $this->assertEquals($offset, 1000);
     }
 
