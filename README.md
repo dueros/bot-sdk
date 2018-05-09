@@ -131,6 +131,12 @@ $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c7
 $bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本
 $bodyTemplate->setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+//定义RenderTemplate指令
+$directive = new RenderTemplate($bodyTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是BodyTemplate1模板',
+];
 ```
 
 ### 上图下文模版
@@ -148,6 +154,13 @@ $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c7
 $bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本结构
 $bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+//定义RenderTemplate指令
+$directive = new RenderTemplate($bodyTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是BodyTemplate2模板',
+];
+
 ```
 
 ### 左图右文模版
@@ -165,6 +178,13 @@ $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c7
 $bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本结构
 $bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙');  
+//定义RenderTemplate指令
+$directive = new RenderTemplate($bodyTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是BodyTemplate3模板',
+];
+
 ```
 ### 右图左文
 `BodyTemplate4`
@@ -181,6 +201,13 @@ $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c7
 $bodyTemplate->setTitle('托尔斯泰的格言');
 //设置模版plain类型的文本结构
 $bodyTemplate->setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+//定义RenderTemplate指令
+$directive = new RenderTemplate($bodyTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是BodyTemplate4模板',
+];
+
 ```
 ### 图片模板
 `BodyTemplate5`
@@ -195,6 +222,13 @@ $bodyTemplate->addImages('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c0
 $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 /设置模版标题
 $bodyTemplate->setTitle('托尔斯泰的格言');
+//定义RenderTemplate指令
+$directive = new RenderTemplate($bodyTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是BodyTemplate5模板',
+];
+
 ```
 ### 横向列表模板
 `ListTemplate1`
@@ -217,6 +251,13 @@ $listTemplateItem->setPlainSecondaryText('二级标题');
 
 //把listTemplateItem添加到模版listItems
 $listTemplate->addItem($listTemplateItem);
+//定义RenderTemplate指令
+$directive = new RenderTemplate($listTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是ListTemplate1模板',
+];
+
 ```
 ### 纵向列表模板
 `ListTemplate2`
@@ -240,6 +281,14 @@ $listTemplateItem->setPlainTertiaryText('三级标题');
 
 //把listTemplateItem添加到模版listItems
 $listTemplate->addItem($listTemplateItem);
+//定义RenderTemplate指令
+$directive = new RenderTemplate($listTemplate);
+return [
+    'directives' => [$directive],
+    'outputSpeech' => '这是ListTemplate2模板',
+];
+
+
 ```
 `directive`返回指令
 

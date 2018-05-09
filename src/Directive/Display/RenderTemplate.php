@@ -21,8 +21,13 @@ namespace Baidu\Duer\Botsdk\Directive\Display;
 use Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate;
 class RenderTemplate extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
-    public function __construct() {
+    /**
+     * @desc __construct
+     * @param BaseTemplate $template
+     */
+    public function __construct($template == null) {
         parent::__construct('Display.RenderTemplate');
+        $this->setTemplate($template);
     }
     
     /**
