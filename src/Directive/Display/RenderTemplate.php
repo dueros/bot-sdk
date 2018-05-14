@@ -25,7 +25,7 @@ class RenderTemplate extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
      * @desc __construct
      * @param BaseTemplate $template
      */
-    public function __construct($template == null) {
+    public function __construct($template = null) {
         parent::__construct('Display.RenderTemplate');
         $this->setTemplate($template);
     }

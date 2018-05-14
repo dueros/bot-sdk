@@ -43,3 +43,6 @@
 #2.1.11
 * update README
 * fix VideoPlayer.Play.setOffsetInMilliseconds
+
+#2.1.12
+* fix RenderTemplate __construct
