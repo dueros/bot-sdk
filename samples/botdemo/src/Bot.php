@@ -36,6 +36,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     /**
      * encode token
+     * @param $array
      * @return json
      */
     function genToken($array){
@@ -44,6 +45,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
     }
     /**
      * decode token
+     * @param $token
      * @return array
      */
     function decodeToken($token){
@@ -98,9 +100,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     }
 
-/*****意图******/
     /**
      * launch意图
+     * @param null
      * @return array
      */
     function launch(){
@@ -121,6 +123,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     /**
      * 视频意图
+     * @param null
      * @return array
      */
     function videoIntent(){
@@ -159,6 +162,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     /**
      * 音频意图
+     * @param null
      * @return array
      */
     function audioIntent(){
@@ -198,6 +202,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     /**
      * 选择意图
+     * @param null
      * @return array
      */
     function chooseIntent(){
@@ -242,6 +247,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
     }
     /**
      * 返回意图
+     * @param null
      * @return array
      */
     function backIntent(){
@@ -262,13 +268,13 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
             $directive = new Hint(self::$servers[array_rand(self::$servers)]);
             return [
                 'outputSpeech' => $speech, 
-                'reprompt' => $reprompt, 
                 'directives' => [$directive, $template]
             ];
         }
     }
     /**
      * 暂停播放意图
+     * @param null
      * @return array
      */
     function pauseIntent(){
@@ -300,6 +306,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
     }
     /**
      * 继续播放意图
+     * @param null
      * @return array
      */
     function continueIntent(){
@@ -330,9 +337,9 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
         return $this->defaultRes();
     }
 
-/*****事件*****/
     /**
      * 屏幕点击事件
+     * @param null
      * @return array
      */
     function ScreenClickedEvent(){
@@ -413,15 +420,18 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     /**
      * 默认事件
+     * @param null
      * @return array
      */
     function defaultEvent($event){
         $this->waitAnswer();
         $this->setExpectSpeech(false);
     }
-/*****函数*****/
+    
+    
     /**
      * 获取主页卡片
+     * @param null
      * @return Card
      */
     public function getHomeCard(){
@@ -464,6 +474,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
     }
     /**
      * 视频界面卡片
+     * @param null
      * @return array
      */
     function getVideoCard(){
@@ -504,6 +515,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
     }
     /**
      * 音频界面卡片
+     * @param null
      * @return array
      */
     function getAudioCard(){
@@ -672,6 +684,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 
     /**
      * 兜底结果
+     * @param null
      * @return array
      */
     function defaultRes(){
@@ -682,6 +695,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
     }
     /**
      * sessionEndedRequest处理
+     * @param null
      * @return array
      */
     function sessionEndedRequest(){
