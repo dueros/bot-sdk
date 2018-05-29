@@ -67,61 +67,14 @@ public function create(){
 这里`addHandler`可以用来建立(intent) => handler的映射，第一个参数是条件，如果满足则执行对应的回调函数(第二个参数)。
 其中，$this指向当前的Bot，`getSlot`继承自父类Bot，通过slot名字来获取对应的值。回调函数返回值是一个数组，可以包含多个字段，比如：`card`，`directives`，`outputSpeech`，`reprompt`。
 
-`card`展现卡片
-### 文本卡片
-`TextCard`
-```php
-$card = new TextCard('content');
-
-//or
-$card = new TextCard();
-//设置content
-$card->setContent('Content');
-//设置链接
-$card->setAnchor('http://www.baidu.com');
-$card->setAnchor('http://www.baidu.com', 'showtext');
-//设置cueWords
-$card->addCueWords('hint1');
-$card->addCueWords(['hint1', 'hint2']);
-```
-
-### 标准卡片
-`StandardCard`
-
-```json
-$card = new StandardCard();
-
-$card->setTitle('title');
-$card->setContent('content');
-$card->setImage('http://www...');
-$card->setAnchor('http://www.baidu.com');
-```
-
-### 列表卡片
-`ListCard`
-
-```php
-$card = new ListCard();
-$item = new ListCardItem();
-$item->setTitle('title')
-    ->setContent('content')
-    ->setUrl('http://www')
-    ->setImage('http://www.png');
-
-$card->addItem($item);
-$card->addItem($item);
-```
-### 图片卡片
-`ImageCard`
-
-```php
-$card = new ImageCard();
-$card->addItem('http://src.image', 'http://thumbnail.image');
-```
 `template`展现模版
+为了更好的在有屏设备端上展现技能，DuerOS提供了多种展现模板供开发者使用。展现模板分body template和list template两种类型。其中body template由图片和文字组成，list template由一系列list item组成，每个list item由图片和文字组成。不同的展现模板适合不同的场景，开发者可以根据技能展现的需求选择合适的模板。关于模板的详细功能和展现效果可以参考DuerOS模板文档，https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown。
 ### 文本展现模板
 `BodyTemplate1`
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\BodyTemplate1;
+
 $bodyTemplate = new BodyTemplate1();
 //设置模版token
 $bodyTemplate->setToken('token');
@@ -143,11 +96,16 @@ return [
 `BodyTemplate2`
 
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\BodyTemplate2;
+
 $bodyTemplate = new BodyTemplate2();
 //设置模版token
 $bodyTemplate->setToken('token');
 //设置模版展示图片
-bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//or 图片设置宽和高
+$bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg', 200, 200);
 //设置模版背景图片
 $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
@@ -167,11 +125,17 @@ return [
 `BodyTemplate3`
 
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\BodyTemplate3;
+
 $bodyTemplate = new BodyTemplate3();
 //设置模版token
 $bodyTemplate->setToken('token');
 //设置模版展示图片
-bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//or 图片设置宽和高
+$bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg', 200, 200);
+
 //设置模版背景图片
 $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
@@ -190,11 +154,17 @@ return [
 `BodyTemplate4`
 
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\BodyTemplate4;
+
 $bodyTemplate = new BodyTemplate4();
 //设置模版token
 $bodyTemplate->setToken('token');
 //设置模版展示图片
-bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+$bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//or 图片设置宽和高
+$bodyTemplate->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg', 200, 200);
+
 //设置模版背景图片
 $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
 //设置模版标题
@@ -213,6 +183,9 @@ return [
 `BodyTemplate5`
 
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\BodyTemplate5;
+
 $bodyTemplate = new BodyTemplate5();
 //设置模版token
 $bodyTemplate->setToken('token');
@@ -234,6 +207,10 @@ return [
 `ListTemplate1`
 
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplate1;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplateItem;
+
 $listTemplate = new ListTemplate1();
 //设置模板token
 $listTemplate->setToken('token');
@@ -246,6 +223,9 @@ $listTemplate->setTitle('托尔斯泰的格言');
 $listTemplateItem = new ListTemplateItem();
 $listTemplateItem->setToken('token');
 $listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+//or 图片设置宽和高
+$listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg', 200, 200);
+
 $listTemplateItem->setPlainPrimaryText('一级标题');
 $listTemplateItem->setPlainSecondaryText('二级标题');
 
@@ -263,6 +243,10 @@ return [
 `ListTemplate2`
 
 ```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplate2;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplateItem;
+
 $listTemplate = new ListTemplate2();
 //设置模板token
 $listTemplate->setToken('token');
@@ -288,7 +272,127 @@ return [
     'outputSpeech' => '这是ListTemplate2模板',
 ];
 
+```
+### Display.ElementSelected事件
+当点击模板列表中的卡片时，DuerOS会向技能发送Display.ElementSelected事件，请求技能进行相应的处理。
+```php
+use \Baidu\Duer\Botsdk\Directive\Display\RenderTemplate;
+use \Baidu\Duer\Botsdk\Directive\Display\Template\BodyTemplate1;
 
+$this->addEventListener('Display.ElementSelected', function($event){
+    $token = $event['token'];
+    $bodyTemplate = new BodyTemplate1();
+    //设置模版token
+    $bodyTemplate->setToken('token');
+    //设置模版背景图片
+    $bodyTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
+    //设置模版标题
+    $bodyTemplate->setTitle('托尔斯泰的格言');
+    //设置模版plain类型的文本
+    $bodyTemplate->setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙'); 
+    //定义RenderTemplate指令
+    $directive = new RenderTemplate($bodyTemplate);
+    return [
+        'directives' => [$directive],
+        'outputSpeech' => '点击后展现',
+    ];
+});
+
+```
+
+
+`card`展现卡片
+在有屏设备上，您的技能在回复用户时，可以通过使用卡片展现更生动、丰富的内容。常用的展现卡片类型有文本卡片、标准卡片、标准列表卡片、图片卡片。展现卡片随Response消息一起发送给DuerOS。具体展现卡片的功能和展示效果可以参考DuerOS展现卡片文档，https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/cards_markdown。
+### 文本卡片
+`TextCard`
+```php
+use \Baidu\Duer\Botsdk\Card\TextCard;
+$card = new TextCard('content');
+
+//or
+$card = new TextCard();
+//设置content
+$card->setContent('Content');
+//设置链接
+$card->setAnchor('http://www.baidu.com');
+$card->setAnchor('http://www.baidu.com', 'showtext');
+//设置cueWords
+$card->addCueWords('hint1');
+$card->addCueWords(['hint1', 'hint2']);
+
+return [
+    'card' => $card,
+];
+
+```
+
+### 标准卡片
+`StandardCard`
+
+```json
+use \Baidu\Duer\Botsdk\Card\StandardCard;
+$card = new StandardCard();
+
+$card->setTitle('title');
+$card->setContent('content');
+$card->setImage('http://www...');
+$card->setAnchor('http://www.baidu.com');
+
+return [
+    'card' => $card,
+];
+
+```
+
+### 列表卡片
+`ListCard`
+
+```php
+use \Baidu\Duer\Botsdk\Card\ListCard;
+use \Baidu\Duer\Botsdk\Card\ListCardItem;
+
+$card = new ListCard();
+$item = new ListCardItem();
+$item->setTitle('title')
+    ->setContent('content')
+    ->setUrl('http://www')
+    ->setImage('http://www.png');
+
+$card->addItem($item);
+$card->addItem($item);
+
+return [
+    'card' => $card,
+];
+
+```
+
+### 列表卡片点击事件处理
+`Screen.LinkClicked`
+如果卡片或者卡片列表配置了URL地址，当用户点击卡片或者卡片列表时，DuerOS会向技能发送Screen.LinkClicked事件，技能收到该事件后会返回需要展现的内容。
+```php
+use \Baidu\Duer\Botsdk\Card\StandardCard;
+$this->addEventListener('Screen.LinkClicked', function($event){
+    $url = $event['url'];
+    $token = $event['token'];
+
+    $card = new StandardCard();
+    $card->setTitle('title');
+    $card->setContent('content');
+
+    return [
+        'card' => $card,
+    ];
+});
+
+```
+
+### 图片卡片
+`ImageCard`
+
+```php
+$card = new ImageCard();
+$card->addItem('http://src.image', 'http://thumbnail.image');
 ```
 `directive`返回指令
 
@@ -358,6 +462,23 @@ return [
 ];
 ```
 
+### 音频事件处理
+Bot可以通过`addEventListener`接口来监听音频播放的时的事件，下面以AudioPlayer.PlaybackNearlyFinished事件举例。
+```php
+use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play;
+
+$this->addEventListener('AudioPlayer.PlaybackNearlyFinished', function($event){
+    $token = $event['token'];
+    $directive = new Play('http://www.audio', Play::ENQUEUE); 
+    return [
+        'directives' => [$directive],
+    ];
+});
+```
+
+### 视频播放
+VideoPlayer视频播放提供了VideoPlayer指令接口和VideoPlayer事件接口。VideoPlayer指令是技能向DuerOS发送的，对视频进行控制的指令，如播放指令、停止播放指令等。DuerOS收到指令后会转化成端上能识别的播放指令，对视频进行相应的控制。VideoPlayer事件是指在视频播放过程中触发一系列事件，DuerOS会将这些事件上报给技能，请求技能进行处理。具体协议内容可以参考视频协议文档，https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/videoplayer_markdown。
+
 ### 视频播放指令
 `VideoPlayer.Play`
 
@@ -384,6 +505,21 @@ return [
 ];
 ```
 
+### 视频事件处理
+Bot可以通过`addEventListener`接口来监听视频播放的时的事件，下面以VideoPlayer.PlaybackNearlyFinished事件举例。
+```php
+use \Baidu\Duer\Botsdk\Directive\VideoPlayer\Play;
+
+$this->addEventListener('VideoPlayer.PlaybackNearlyFinished', function($event){
+    $token = $event['token'];
+    $offsetInMilliseconds = $event['offsetInMilliseconds'];
+    $directive = new Play('http://www.video', Play::ENQUEUE); 
+    return [
+        'directives' => [$directive],
+    ];
+
+});
+```
 
 ### 获取端屏幕展现状态
 ```php
@@ -520,7 +656,13 @@ getSessionAttribute('key.key1');
 clearSession();
 ```
 
-你的Bot可以订阅端上触发的事件，通过接口`addEventListener`实现，比如端上设置闹钟成功后，会下发`SetAlertSucceeded`的事件，Bot通过注册事件处理函数，进行相关的操作。
+你的Bot可以订阅端上触发的事件，通过接口`addEventListener`实现，比如端上设置闹钟成功后，会下发`SetAlertSucceeded`的事件，Bot通过注册事件处理函数，进行相关的操作。如果不想每个事件都进行处理可以通过接口`addDefaultEventListener`来统一处理，没有通过`addEventListener`订阅的事件。
+```php
+$this->addDefaultEventListener(function($event){
+    $this->waitAnswer();  //不结束回话，即shouldEndSession为false。
+    $this->setExpectSpeech(false);  //端关闭麦克风，不继续监听
+});
+```
 
 ## NLU交互协议
 在DuerOS Bot Platform平台，可以通过nlu工具，添加了针对槽位询问的配置，包括：

@@ -34,7 +34,7 @@ abstract class ListTemplate extends \Baidu\Duer\Botsdk\Directive\Display\Templat
      */
     public function addItem($listTemplateItem) {
         if($listTemplateItem instanceof ListTemplateItem) {
-            if(!$this->data['listItems']) {
+            if(!isset($this->data['listItems']) || !$this->data['listItems']) {
                 $this->data['listItems'] = [];
             }
             $this->data['listItems'][] = $listTemplateItem->getData();
