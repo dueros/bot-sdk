@@ -7,6 +7,7 @@ require (__DIR__.'/src/Bot.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'HEAD'){
     header('HTTP/1.1 204 No Content');
+    exit;
 }
 header("Content-Type:application/json");
 //记录整体执行时间
