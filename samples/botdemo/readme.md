@@ -8,6 +8,7 @@
 我们先来看下在控制台上新建的bot意图以及各个意图的槽位。
 在这里我们创建了如下意图：
 ![意图](http://dbp-resource.gz.bcebos.com/zhaojing_demo/intent.png?authorization=bce-auth-v1%2Fbc881876e7a94578935a868716b6cf69%2F2018-05-29T11%3A20%3A50Z%2F-1%2Fhost%2F9319c0576c2cf3fd6b5ee11874633ca83fcdf09e5f8971d6454f517398aa356e)
+
 右边有dueros的标志的意图表明此为系统意图，可在创建时直接引用。
 
  - 在audio意图中，我们创建了一个槽位：audioname，对应视频名词典；
@@ -57,7 +58,7 @@ use \Baidu\Duer\Botsdk\Directive\AudioPlayer\Play as AudioPlay;
 ```
 此处只列举几个，可根据自己bot开发的需求引入不同的directive
 
-根据我们创建的意图需要将意图与函数绑定，代码如下：
+根据我们创建的意图需要在构造函数中将意图与函数绑定，部分代码如下：
 ```php
 class Bot extends \Baidu\Duer\Botsdk\Bot{
     public function __construct($postData = []) {
@@ -70,6 +71,8 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
         $this->addIntentHandler('video', 'videoIntent');
         //事件1：屏幕点击事件
         $this->addEventListener('Display.ElementSelected', 'ScreenClickedEvent');
+    }
+}
 ```
 第一个参数是意图的名字，第二个参数对应实现函数的函数名。
 我们将各个意图、事件与函数绑定后，可以在函数中自己定义功能。
@@ -95,7 +98,7 @@ class Bot extends \Baidu\Duer\Botsdk\Bot{
 ```
 以audioIntent为例，详细讲解一下如何使用hint指令以及template指令：
 ```php
-/**
+    /**
      * 音频意图
      * @return array
      */
