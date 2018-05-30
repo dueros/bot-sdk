@@ -42,7 +42,7 @@ class BodyTemplate5 extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTe
      * @param string $heightPixels 图片高度
      */
     public function addImages($url, $widthPixels = '', $heightPixels = '') {
-        if(!$this->data['images']) {
+        if(!isset($this->data['images']) || !$this->data['images']) {
             $this->data['images'] = [];
         }
         $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
