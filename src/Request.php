@@ -400,6 +400,18 @@ class Request {
         return $this->data['request']['dialogState'] == 'COMPLETED';
     }
 
+
+    /**
+     * @desc 获取设备端支持的接口类型
+     * @param null
+     * @return array
+     **/
+    public function getSupportedInterfaces() {
+        if(isset($this->data['context']['System']['device']['supportedInterfaces'])){
+            return $this->data['context']['System']['device']['supportedInterfaces'];
+        }
+    }
+
     /**
      * 构造函数
      *

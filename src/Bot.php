@@ -578,6 +578,42 @@ abstract class Bot{
      **/
     public function setFallBack(){
         $this->response->setFallBack();
+    }
+
+    /**
+     * @desc 判断设备是否支持Interface
+     * @param string $interface
+     * @return bool
+     **/
+    public function isSupportInterface($interface){
+        $supportedInterfaces = $this->request->getSupportedInterfaces();
+        if(is_array($supportedInterfaces) && array_key_exists($interface, $supportedInterfaces)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @desc 判断设备是否支持Display
+     * @return bool
+     **/
+    public function isSupportDisplay(){
+        return $this->isSupportInterface('Display');
     } 
 
+    /**
+     * @desc 判断设备是否支持AudioPlayer
+     * @return bool
+     **/
+    public function isSupportAudioPlayer(){
+        return $this->isSupportInterface('AudioPlayer');
+    } 
+
+    /**
+     * @desc 判断设备是否支持VideoPlayer
+     * @return bool
+     **/
+    public function isSupportVideoPlayer(){
+        return $this->isSupportInterface('VideoPlayer');
+    }
 }
