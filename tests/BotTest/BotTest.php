@@ -161,4 +161,35 @@ class BotTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals($ret, $rt);
     }
 
+    /**
+     * @desc 用于测试isSupportDisplay方法
+     */
+    function testIsSupportDisplay(){
+        $data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request1.json'), true);
+        $bot = new Bot($data);
+        $ret = $bot->isSupportDisplay();
+        $this->assertTrue($ret);
+    }
+
+    /**
+     * @desc 用于测试isSupportDisplay方法
+     */
+    function testIsSupportAudioPlayer(){
+        $data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request1.json'), true);
+        $bot = new Bot($data);
+        $ret = $bot->isSupportAudioPlayer();
+        $this->assertTrue($ret);
+    }
+
+    /**
+     * @desc 用于测试isSupportDisplay方法
+     */
+    function testIsSupportVideoPlayer(){
+        $data = json_decode(file_get_contents(dirname(__FILE__).'/../json/intent_request1.json'), true);
+        $bot = new Bot($data);
+        $ret = $bot->isSupportVideoPlayer();
+        $this->assertTrue($ret);
+    }
+
+
 }
