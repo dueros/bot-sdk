@@ -46,3 +46,9 @@
 
 #2.1.12
 * fix RenderTemplate __construct
+
+#2.1.13
+* 增加RenderAudioList
+* 增加RenderVideoList
+* 增加Charge指令
+* 增加supportedInterfaces

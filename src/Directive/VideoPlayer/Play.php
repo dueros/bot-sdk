@@ -136,4 +136,31 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
             $this->data['videoItem']['stream']['expectedPreviousToken'] = $previousToken;
         }
     }
+
+    /**
+     * @desc 设置播放暂停点数组
+     * @param mixed $stopPoints
+     */
+    public function setStopPointsInMilliseconds($stopPoints){
+        if($stopPoints && is_array($stopPoints)) {
+            $this->data['videoItem']['stream']['stopPointsInMilliseconds'] = $stopPoints;
+        }else if($stopPoints && is_numeric($stopPoints)){
+            $this->data['videoItem']['stream']['stopPointsInMilliseconds'] = [intval($stopPoints)];
+        }
+    }
+
+    /**
+     * @desc 增加播放暂停点数组
+     * @param mixed $stopPoints
+     */
+    public function addStopPointsInMilliseconds($stopPoints){
+        if($stopPoints && is_numeric($stopPoints)){
+            $stopPoints = [$stopPoints]; 
+        }
+        if($stopPoints && is_array($stopPoints)) {
+            $currentStopPoints = isset($this->data['videoItem']['stream']['stopPointsInMilliseconds']) ? $this->data['videoItem']['stream']['stopPointsInMilliseconds'] : [];
+            $currentStopPoints = array_merge($currentStopPoints, $stopPoints);
+            $this->setStopPointsInMilliseconds($currentStopPoints);
+        }
+    }
 }

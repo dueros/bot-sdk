@@ -100,4 +100,27 @@ class VideoPlayTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals($previousToken, 'token');
     }
 
+    /**
+     * @desc 测试setStopPointsInMilliseconds方法
+     */
+    public function testSetStopPointsInMilliseconds(){
+        $this->play->addStopPointsInMilliseconds(4000);
+        $stopPoints = [1000, 2000];
+        $this->play->setStopPointsInMilliseconds($stopPoints);
+        $currentStopPoints = $this->play->getData()['videoItem']['stream']['stopPointsInMilliseconds'];
+        $this->assertEquals($currentStopPoints, $stopPoints);
+    }
+
+    /**
+     * @desc 测试addStopPointsInMilliseconds方法
+     */
+    public function testAddStopPointsInMilliseconds(){
+        $play = new Play('www.baidu.com');
+        $stopPoints = [1000, 2000];
+        $res = [1000, 2000, 3000];
+        $play->addStopPointsInMilliseconds($stopPoints);
+        $play->addStopPointsInMilliseconds(3000);
+        $currentStopPoints = $play->getData()['videoItem']['stream']['stopPointsInMilliseconds'];
+        $this->assertEquals($currentStopPoints, $res);
+    }
 }
