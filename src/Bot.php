@@ -94,6 +94,7 @@ abstract class Bot{
 
         $this->nlu = $this->request->getNlu();
         $this->response = new Response($this->request, $this->session, $this->nlu);
+        $this->addDefaultEventListener('defaultEvent');
     }
 
     /**
@@ -616,4 +617,15 @@ abstract class Bot{
     public function isSupportVideoPlayer(){
         return $this->isSupportInterface('VideoPlayer');
     }
+
+    /**
+     * 默认事件处理
+     * @param array $event
+     * @return array
+     */
+    public function defaultEvent($event = null){
+        $this->waitAnswer();
+        $this->setExpectSpeech(false);
+    }
+
 }

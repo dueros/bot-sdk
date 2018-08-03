@@ -14,35 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc 纵向列表模板基类
+ * @desc 横向列表模板
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
 
-class ListTemplate2 extends \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplate {
+class ListTemplate3 extends \Baidu\Duer\Botsdk\Directive\Display\Template\ListTemplate {
     /**
      * @example
      * <pre>
-     * $listTemplate = new ListTemplate2();
+     * $listTemplate = new ListTemplate3();
      * $listTemplate->setToken('token');
      * $listTemplate->setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
-     * $listTemplate->setTitle(''托尔斯泰的格言'');
+     * $listTemplate->setTitle('托尔斯泰的格言');
      *
      * //设置列表数组listItems其中一项
      * $listTemplateItem = new ListTemplateItem();
      * $listTemplateItem->setToken('token');
      * $listTemplateItem->setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg');
-     * $listTemplateItem->setPlainPrimaryText('一级标题');
-     * $listTemplateItem->setPlainSecondaryText('二级标题');
-     * $listTemplateItem->setPlainTertiaryText('三级标题');
-
+     * $listTemplateItem->setContent('一级标题');
+     *
      * //把listTemplateItem添加到模版listItems
      * $listTemplate->addItem($listTemplateItem);
      * </pre>
-     *
-     * ListTemplate2 constructor.
+     * ListTemplate3 constructor.
      */
     public function __construct() {
-        parent::__construct('ListTemplate2');
+        parent::__construct('ListTemplate3');
     }
 
 }
