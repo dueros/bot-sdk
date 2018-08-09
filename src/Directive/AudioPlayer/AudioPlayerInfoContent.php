@@ -14,18 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @desc 用于生成PlayerInfo的类
+ * @desc 用于生成AudioPlayerInfoContent的类
  **/
 namespace Baidu\Duer\Botsdk\Directive\AudioPlayer;
-use Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\BaseButton;
-use Baidu\Duer\Botsdk\Directive\Base\TraitPlayerInfo;
+use Baidu\Duer\Botsdk\Directive\Base\BasePlayerInfoContent;
 /**
- * @desc PlayerInfo类
+ * @desc AudioPlayerInfoContent类
  */
-class PlayerInfo {
-    use TraitPlayerInfo;
-
-    protected $data = [];
+class AudioPlayerInfoContent extends BasePlayerInfoContent{
 
     const AUDIO_TYPE_MUSIC = 'MUSIC';
 
@@ -33,13 +29,10 @@ class PlayerInfo {
 
     /**
      * @desc __construct
-     * @param BasePlayerInfoContent $content
-     * @param array $controls
+     * @param string $type 音频类型
      */
-    public function __construct($content = null, $controls = []) {
-        $this->setContent($content);
-        $this->setControls($controls);
-        $this->data['content']['audioItemType'] = self::AUDIO_TYPE_MUSIC;
+    public function __construct() {
+        $this->data['audioItemType'] = self::AUDIO_TYPE_MUSIC;
     }
 
     /**
@@ -47,7 +40,7 @@ class PlayerInfo {
      * @param string $type 类型值
      */ 
     public function setAudioItemType($type){
-        $this->data['content']['audioItemType'] = $type;
+        $this->data['audioItemType'] = $type;
     }
 
     /**
@@ -56,7 +49,7 @@ class PlayerInfo {
      */
     public function setTitle($title){
         if(is_string($title)){
-            $this->data['content']['title'] = $title;
+            $this->data['title'] = $title;
         }
     }
 
@@ -66,7 +59,7 @@ class PlayerInfo {
      */
     public function setTitleSubtext1($titleSubtext1){
         if(is_string($titleSubtext1)){
-            $this->data['content']['titleSubtext1'] = $titleSubtext1;
+            $this->data['titleSubtext1'] = $titleSubtext1;
         }
     }
 
@@ -76,7 +69,7 @@ class PlayerInfo {
      */
     public function setTitleSubtext2($titleSubtext2){
         if(is_string($titleSubtext2)){
-            $this->data['content']['titleSubtext2'] = $titleSubtext2;
+            $this->data['titleSubtext2'] = $titleSubtext2;
         }
     }
 
@@ -86,8 +79,8 @@ class PlayerInfo {
      */
     public function setLyric($url){
         if(is_string($url)){
-            $this->data['content']['lyric']['url'] = $url;
-            $this->data['content']['lyric']['format'] = self::FORMAT_LRC;
+            $this->data['lyric']['url'] = $url;
+            $this->data['lyric']['format'] = self::FORMAT_LRC;
         }
     }
 
@@ -98,7 +91,7 @@ class PlayerInfo {
     public function setMediaLengthInMs($mediaLengthInMs){
          if(is_numeric($mediaLengthInMs)){
             $mediaLengthInMs = intval($mediaLengthInMs);
-            $this->data['content']['mediaLengthInMilliseconds'] = $mediaLengthInMs;
+            $this->data['mediaLengthInMilliseconds'] = $mediaLengthInMs;
         }
     }
 
@@ -108,7 +101,7 @@ class PlayerInfo {
      */
     public function setArt($src){
         if(is_string($src)){
-            $this->data['content']['art']['src'] = $src;
+            $this->data['art']['src'] = $src;
         }
     }
 
@@ -119,10 +112,10 @@ class PlayerInfo {
      */
     public function setProvider($name, $logo = ''){
         if(is_string($name)){
-            $this->data['content']['provider']['name'] = $name;
+            $this->data['provider']['name'] = $name;
         }
         if(is_string($logo)){
-            $this->data['content']['provider']['logo']['src'] = $logo;
+            $this->data['provider']['logo']['src'] = $logo;
         }
     }
 

@@ -36,6 +36,7 @@ class ListTemplate1 extends \Baidu\Duer\Botsdk\Directive\Display\Template\ListTe
      *
      * //把listTemplateItem添加到模版listItems
      * $listTemplate->addItem($listTemplateItem);
+     * </pre>
      *
      * ListTemplate1 constructor.
      */

@@ -1,0 +1,37 @@
+{
+    "type": "Display.RenderAudioPlayerInfo",
+    "token": "test_token",
+    "content": {
+        "audioItemType": "MUSIC",
+        "title": "title",
+        "titleSubtext1": "titleSubtext1",
+        "titleSubtext2": "titleSubtext2",
+        "lyric": {
+            "url": "www.lyric.com",
+            "format": "LRC"
+        },
+        "mediaLengthInMilliseconds": 10000,
+        "art": {
+            "src": "www.art.com"
+        },
+        "provider": {
+            "name": "provider",
+            "logo": {
+                "src": "www.logo.com"
+            }
+        }
+    },
+    "controls": [
+    {
+        "type": "BUTTON",
+        "name": "PLAY_PAUSE",
+        "enabled": true,
+        "selected": false
+    },
+    {
+        "type": "RADIO_BUTTON",
+        "name": "REPEAT",
+        "selectedValue": "REPEAT_ONE"
+    }
+    ]
+}
