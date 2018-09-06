@@ -14,16 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @desc 卡片的基类
+ * @desc ListTemplateItem类
  **/
 namespace Baidu\Duer\Botsdk\Directive\Display\Template;
+use Baidu\Duer\Botsdk\Directive\Display\Template\Tag\BaseTag;
 
 class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\BaseTemplate {
+
+    protected $imageTags;
+
     /**
      * ListTemplateItem constructor.
      */
     public function __construct() {
-        parent::__construct(['token', 'image']);
+        parent::__construct(['token']);
     }
 
 
@@ -37,6 +41,25 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
         $imageStructure = $this->createImageStructure($url, $widthPixels, $heightPixels);
         if($imageStructure) {
             $this->data['image'] = $imageStructure;
+        }
+    }
+
+    /**
+     * @desc 设置图片tags
+     * @param mixed $tags
+     * @return null
+     */
+    public function setImageTags($tags){
+        if(!$tags){
+            return; 
+        }
+        if(!is_array($tags)){
+            $tags = [$tags]; 
+        }
+        foreach($tags as $tag){
+            if($tag instanceof BaseTag){
+                $this->imageTags[] = $tag;
+            }
         }
     }
 
@@ -71,6 +94,49 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
         if($textStructure) {
             $this->data['textContent']['tertiaryText'] = $textStructure;
         }
+    }
+
+    /**
+     * @desc 设置列表元素标题
+     * @param string $text 文本内容
+     */
+    public function setContent($text){
+        $textStructure = $this->createTextStructure($text, self::PLAIN_TEXT);
+        if($textStructure) {
+            $this->data['content'] = $textStructure;
+        }
+    }
+
+    /**
+     * @desc 返回数据
+     * @param string $key
+     * @return array|mixed
+     */
+    public function getData($key=''){
+        if(isset($this->data['image']) && $this->imageTags){
+            $this->data['image']['tags'] = $this->getImageTagsData($this->imageTags); 
+        }
+        if($key) {
+            return $this->data[$key];
+        }
+        
+        return $this->data;
+    }
+
+    /**
+     * @desc 获取imageTags的数据
+     * @param array $tags
+     * @return array
+     */
+    protected function getImageTagsData($tags){
+        $data = [];
+        if(!$tags || !is_array($tags)){
+            return $data; 
+        } 
+        foreach($tags as $tag){
+            $data[] = $tag->getData(); 
+        }
+        return $data;
     }
 
 }

@@ -1,0 +1,22 @@
+{
+    "type": "Display.RenderVideoPlayerInfo",
+    "token": "test_token",
+    "content": {
+        "title": "title",
+        "mediaLengthInMilliseconds": 10000 
+    },
+    "controls": [
+    {
+        "type": "BUTTON",
+        "name": "PLAY_PAUSE",
+        "enabled": true,
+        "selected": false
+    },
+    {
+        "type": "BUTTON",
+        "name": "SHOW_PLAYLIST",
+        "enabled": true,
+        "selected": false
+    }
+    ]
+}

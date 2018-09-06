@@ -1,0 +1,52 @@
+{
+    "type": "ListTemplate3",
+    "token": "test_token",
+    "backgroundImage": {
+        "url": "www. backgroundImage.com"
+    },
+    "title": "title",
+    "listItems": [
+    {
+        "token": "token1",
+        "image": {
+            "url": "www.image1.com",
+            "widthPixels": 200,
+            "heightPixels": 200,
+            "tags": [
+            {
+                "type": "FREE",
+                "text": "免费"
+            },
+            {
+                "type": "PAY",
+                "text": "付费"
+            }
+            ]
+        },
+        "content": {
+            "type": "PlainText",
+            "text": "text1"
+        }
+    },
+    {
+        "token": "token2",
+        "image": {
+            "url": "www.image2.com",
+            "widthPixels": 200,
+            "heightPixels": 200,
+            "tags": [
+            {
+                "type": "CUSTOM",
+                "text": "自定义",
+                "color": "#000000",
+                "backgroundColor": "#FFFFFF"
+            }
+            ]
+        },
+        "content": {
+            "type": "PlainText",
+            "text": "text2"
+        }
+    }
+    ]
+}
