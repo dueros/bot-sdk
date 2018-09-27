@@ -182,15 +182,7 @@ class Nlu{
      * @return array
      **/
     public function toUpdateIntent(){
-        $ret = [
-            'intent' => isset($this->data[0])?$this->data[0]:[],
-        ]; 
-
-        $afterSearchScore = $this->getAfterSearchScore();
-        if(isset($afterSearchScore) && is_double($afterSearchScore)){
-            $ret['afterSearchScore'] = $afterSearchScore;
-        }
-        return $ret; 
+        return isset($this->data[0])?$this->data[0]:[];
     }
 
     /**

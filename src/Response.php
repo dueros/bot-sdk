@@ -51,6 +51,8 @@ class Response{
 
     private $fallBack = false;
 
+    private $expectResponse;
+
     /**
      * @param Request $request 请求对象
      * @param Session $session session对象
@@ -136,10 +138,9 @@ class Response{
         if($autoCompleteSpeech && !$data['outputSpeech'] && $data['card'] && $data['card'] instanceof Card\TextCard) {
             $data['outputSpeech'] = $data['card']->getData('content');
         }
-
         $ret = [
             'version' => '2.0',
-            'context' => ($this->nlu ? $this->nlu->toUpdateIntent() : null)?($this->nlu ? $this->nlu->toUpdateIntent() : null)    :(object)[], 
+            'context' => $this->buildContext(), 
             'session' => $this->session->toResponse(),
             'response' => [
                 'directives' => $directives,
@@ -224,5 +225,55 @@ class Response{
         $this->fallBack = true; 
     }
 
+    /**
+     * 技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+     * 普通文本
+     * @param string $text 普通文本内容类型回复表达的回复内容。
+     */
+    public function addExpectTextResponse($text){
+        if($text && is_string($text)){
+            $this->expectResponse[] = array(
+                'type' => 'PlainText',
+                'text' => $text 
+            );
+        }
+    }
 
+    /**
+     * 技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+     * 槽位类型
+     * @param string $slot 槽位类型回复表达的槽位名称。
+     */
+    public function addExpectSlotResponse($slot){
+        if($slot && is_string($slot)){
+            $this->expectResponse[] = array(
+                'type' => 'Slot',
+                'slot' => $slot
+            );
+        }
+    }
+
+    /**
+     * 构造context结果
+     * @return array
+     */
+    public function buildContext(){
+        $context = [];
+        if($this->nlu && $this->nlu->toUpdateIntent()){
+            $context['intent'] = $this->nlu->toUpdateIntent(); 
+        }
+        if($this->expectResponse){
+            $context['expectResponse'] = $this->expectResponse;
+        }
+        if($this->nlu){
+            $afterSearchScore = $this->nlu->getAfterSearchScore();
+            if($afterSearchScore && is_double($afterSearchScore)){
+                $context['afterSearchScore'] = $afterSearchScore;
+            }
+        }
+        if(!$context){
+            $context = (object)[]; 
+        }
+        return $context;
+    }
 }
