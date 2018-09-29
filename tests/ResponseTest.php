@@ -126,4 +126,26 @@ class ResponseTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals($json, $rt);
     }
 
+    /**
+     * @desc 测试addExpectTextResponse方法
+     */
+    function testAddExpectTextResponse(){
+        $formatSpeech = $this->response->addExpectTextResponse('test_text');
+        $json = $this->response->build($ret);
+        $rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}},"expectResponse":[{"type":"PlainText","text":"test_text"}]},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":null,"reprompt":null}}';
+        $this->assertEquals($json, $rt);
+    }
+
+    /**
+     * @desc 测试addExpectSlotResponse方法
+     */
+    function testAddExpectSlotResponse(){
+        $formatSpeech = $this->response->addExpectSlotResponse('test_slot');
+        $formatSpeech = $this->response->addExpectTextResponse('test_text');
+        $json = $this->response->build($ret);
+        $rt = '{"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}},"expectResponse":[{"type":"Slot","slot":"test_slot"},{"type":"PlainText","text":"test_text"}]},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":true,"card":null,"resource":null,"outputSpeech":null,"reprompt":null}}';
+        $this->assertEquals($json, $rt);
+    }
+
+
 }

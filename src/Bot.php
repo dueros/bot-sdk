@@ -628,4 +628,21 @@ abstract class Bot{
         $this->setExpectSpeech(false);
     }
 
+    /**
+     * 技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+     * 普通文本
+     * @param string $text 普通文本内容类型回复表达的回复内容。
+     */
+    public function addExpectTextResponse($text){
+        $this->response->addExpectTextResponse($text);    
+    }
+
+    /**
+     * 技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+     * 槽位类型
+     * @param string $slot 槽位类型回复表达的槽位名称。
+     */
+    public function addExpectSlotResponse($slot){
+        $this->response->addExpectTextResponse($slot);    
+    }
 }
