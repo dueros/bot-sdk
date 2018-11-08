@@ -27,14 +27,16 @@ namespace Baidu\Duer\Botsdk\Directive\Permission;
  */
 class AskForPermissionsConsent extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
 
-    const PERMISSION_USER_INFO = 'USER_INFO';
-    const PERMISSION_LOCATION = 'LOCATION';
-    const PERMISSION_RECORD = 'RECORD';
+    const READ_USER_PROFILE = 'READ::USER:PROFILE';
+    const READ_DEVICE_LOCATION = 'READ::DEVICE:LOCATION';
+    const WRITE_SMARTHOME_PRINTER = 'WRITE::SMARTHOME:PRINTER';
+    const RECORD_SPEECH = 'RECORD::SPEECH';
 
     protected static $permissions = array(
-        self::PERMISSION_USER_INFO,
-        self::PERMISSION_LOCATION,
-        self::PERMISSION_RECORD  
+        self::READ_USER_PROFILE,
+        self::READ_DEVICE_LOCATION,
+        self::WRITE_SMARTHOME_PRINTER,
+        self::RECORD_SPEECH
     );
 
     public function __construct() {

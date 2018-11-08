@@ -580,6 +580,20 @@ abstract class Bot{
     public function setFallBack(){
         $this->response->setFallBack();
     }
+    
+    /**
+     * @desc 表示directives中指令顺序随机
+     **/
+    public function setAutoDirectivesArrangement(){
+        $this->response->setAutoDirectivesArrangement();
+    }
+
+    /**
+     * @desc 表示directives中指令保持相对顺序不变 (directives中指令可能会被过滤)
+     **/
+    public function setStrictDirectivesArrangement(){
+        $this->response->setStrictDirectivesArrangement();
+    }
 
     /**
      * @desc 判断设备是否支持Interface
