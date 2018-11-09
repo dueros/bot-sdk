@@ -53,6 +53,8 @@ class Response{
 
     private $expectResponse;
 
+    private $directivesArrangement;
+
     /**
      * @param Request $request 请求对象
      * @param Session $session session对象
@@ -166,6 +168,10 @@ class Response{
             $ret['response']['fallBack'] = $this->fallBack;
         }
 
+        if($this->directivesArrangement) {
+            $ret['response']['directivesArrangement'] = $this->directivesArrangement;
+        }
+
         $str=json_encode($ret, JSON_UNESCAPED_UNICODE);
         return $str;
     }
@@ -225,6 +231,20 @@ class Response{
         $this->fallBack = true; 
     }
 
+    /**
+     * @desc 表示directives中指令顺序随机
+     **/
+    public function setAutoDirectivesArrangement(){
+        $this->directivesArrangement = 'AUTO'; 
+    }
+
+    /**
+     * @desc 表示directives中指令保持相对顺序不变 (directives中指令可能会被过滤)
+     **/
+    public function setStrictDirectivesArrangement(){
+        $this->directivesArrangement = 'STRICT'; 
+    }
+    
     /**
      * 技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
      * 普通文本

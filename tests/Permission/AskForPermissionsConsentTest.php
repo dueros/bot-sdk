@@ -38,13 +38,17 @@ class AskForPermissionsConsentTest extends PHPUnit_Framework_TestCase{
             'type' => 'Permission.AskForPermissionsConsent',
             'permissions' => array(
                 array(
-                    'name' => 'USER_INFO'
+                    'name' => 'RECORD::SPEECH'
+                ),
+                array(
+                    'name' => 'READ::DEVICE:LOCATION'
                 )
             ),
             'token' => 'test_token'
         );
         $directive = new AskForPermissionsConsent();
-        $directive->addPermission('USER_INFO');
+        $directive->addPermission('RECORD::SPEECH');
+        $directive->addPermission('READ::DEVICE:LOCATION');
         $directive->setToken('test_token');
         $this->assertEquals($directive->getData(), $data);
     }

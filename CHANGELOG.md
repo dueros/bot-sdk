@@ -60,8 +60,15 @@
 * 增加ListTemplate4
 * 增加RenderVideoPlayerInfo
 * 增加RenderAudioPlayerInfo
+
 #2.1.16
 * 增加Display.PushStack指令
 * 增加expectResponse
 * 增加Record.RecordSpeech指令
 * 增加Permission.AskForPermissionsConsent指令
+
+#2.1.17
+* 更新Permission
+* directives指令排序方式
+* 增加设备VideoPlayer分辨率
+* 增加UI CONTROL支持

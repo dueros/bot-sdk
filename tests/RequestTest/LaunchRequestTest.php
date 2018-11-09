@@ -195,6 +195,13 @@ class LaunchRequestTest extends PHPUnit_Framework_TestCase{
     /**
      * @desc 测试getAccessToken方法
      */
+    function testGetApiAccessToken(){
+        $this->assertEquals($this->request->getApiAccessToken(), 'api_access_token');
+    }
+
+    /**
+     * @desc 测试getAccessToken方法
+     */
     function testGetAccessToken(){
         $this->assertEquals($this->request->getAccessToken(), 'access_token');
     }
