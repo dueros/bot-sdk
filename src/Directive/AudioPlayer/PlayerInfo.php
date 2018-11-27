@@ -25,8 +25,6 @@ use Baidu\Duer\Botsdk\Directive\Base\TraitPlayerInfo;
 class PlayerInfo {
     use TraitPlayerInfo;
 
-    protected $data = [];
-
     const AUDIO_TYPE_MUSIC = 'MUSIC';
 
     const FORMAT_LRC = 'LRC';

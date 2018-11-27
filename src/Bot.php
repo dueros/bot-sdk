@@ -20,6 +20,7 @@
 namespace Baidu\Duer\Botsdk;
 
 use \Baidu\Apm\BotMonitorsdk;
+use \Curl\Curl;
 
 abstract class Bot{
 	const DEFAULT_EVENT_NAME = '__default__';
@@ -659,4 +660,143 @@ abstract class Bot{
     public function addExpectSlotResponse($slot){
         $this->response->addExpectTextResponse($slot);    
     }
+
+    /**
+     * 获取apiAccessToken
+     * @return string
+     */
+    public function getApiAccessToken(){
+        return $this->request->getApiAccessToken(); 
+    }
+
+    /**
+     * 获取apiEndPoint
+     * @return string
+     */
+    public function getApiEndPoint(){
+        return $this->request->getApiEndPoint(); 
+    }
+
+    /**
+     * curl封装
+     * @param array $opts
+     * @return mixed
+     */
+    public function curl($opts){
+        $apiAccessToken = $this->getApiAccessToken();
+        $apiEndPoint = $this->getApiEndPoint();
+        $headers = array(
+            'Authorization' => 'bearer ' . $apiAccessToken 
+        );
+        $defaultOpts = [
+            'url' => '',
+            'method' => 'get',
+            'timeout' => 1,
+            'uri' => $apiEndPoint,
+            'path' => '',
+            'data' => [],
+            'headers' => $headers,
+        ];
+        $opts = array_merge($defaultOpts, $opts);
+
+        $url = $opts['url'] ? : $opts['uri'] . $opts['path'];
+        $curl = new Curl();
+        $curl->setHeaders($opts['headers']);
+        $curl->setRetry(1);
+        $curl->setTimeout($opts['timeout']);
+        if($opts['method'] == 'get'){
+            $curl->get($url, $opts['data']);
+        }else if($opts['method'] == 'post'){
+            $curl->post($url, $opts['data']);
+        }
+
+        if ($curl->error) {
+            return false;
+        } else {
+            return $curl->response;
+        }
+    }
+
+    /**
+     * 获取用户百度账号信息
+     * 需要用户同意该权限才可以获取到信息，参考https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown
+     * @return mixed
+     */
+    public function getUserProfile(){
+        $opts = array(
+            'path' => '/saiya/v1/user/profile' 
+        );
+        return $this->curl($opts);
+    }
+
+    /**
+     * 获取用户录音数据
+     * 需要用户同意该权限才可以获取到信息，参考https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown
+     * @param string $audioToken RecordSpeechFinished事件中的audioToken
+     * @return mixed
+     */
+    public function getRecordSpeech($audioToken){
+        $opts = array(
+            'path' => '/saiya/v1/user/record/speech',
+            'data' => array(
+                'audioToken' => $audioToken,
+            ) 
+        );
+        return $this->curl($opts);
+    }
+
+    /**
+     * 获取用户地理位置信息
+     * 需要用户同意该权限才可以获取到信息，参考https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown
+     * @return mixed
+     */
+    public function getDeviceLocation(){
+        $opts = array(
+            'path' => '/saiya/v1/devices/location',
+        );
+        return $this->curl($opts);
+    }
+
+    /**
+     * 调用智能家居打印机服务
+     * 需要用户同意该权限才可以获取到信息，参考https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown
+     * @param array $data 
+     * @return mixed
+     */
+    public function callSmarthomePrinter($data){
+        $apiAccessToken = $this->getApiAccessToken();
+        $headers = array(
+            'Authorization' => 'bearer ' . $apiAccessToken,
+            'Content-Type' => 'application/json' 
+        );
+        $opts = array(
+            'path' => '/saiya/v1/smarthome/printer',
+            'method' => 'post',
+            'data' => $data,
+            'headers' => $headers
+        );
+        return $this->curl($opts);
+    }
+
+    /**
+     * 小度音响app通知接口
+     * 需要用户同意该权限才可以获取到信息，参考https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown
+     * @param array $data 
+     * @return mixed
+     */
+    public function sendMateappNotification($data){
+        $apiAccessToken = $this->getApiAccessToken();
+        $headers = array(
+            'Authorization' => 'bearer ' . $apiAccessToken,
+            'Content-Type' => 'application/json' 
+        );
+        $opts = array(
+            'path' => '/saiya/v1/mateapp/notification',
+            'method' => 'post',
+            'data' => $data,
+            'headers' => $headers
+        );
+        return $this->curl($opts);
+    }
+
 }
