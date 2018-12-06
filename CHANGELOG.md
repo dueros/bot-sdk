@@ -72,3 +72,6 @@
 * directives指令排序方式
 * 增加设备VideoPlayer分辨率
 * 增加UI CONTROL支持
+
+#2.1.18
+* 增加权限api请求接口

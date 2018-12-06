@@ -21,7 +21,6 @@ namespace Baidu\Duer\Botsdk\Directive;
 use Baidu\Duer\Botsdk\Utils; 
 
 abstract class BaseDirective{
-    protected $data = [];
     /**
      * @param string $type 指令类型
      * @return null

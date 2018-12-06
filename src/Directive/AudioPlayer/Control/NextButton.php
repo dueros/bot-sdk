@@ -19,7 +19,7 @@ namespace Baidu\Duer\Botsdk\Directive\AudioPlayer\Control;
 /**
  * @desc NextButoon类
  */
-class NextButoon extends Button{
+class NextButton extends Button{
 
     const NAME = 'NEXT';
 

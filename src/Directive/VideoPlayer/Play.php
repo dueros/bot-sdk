@@ -38,7 +38,6 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
         $this->data['playBehavior'] = $playBehavior;
 
         $this->data['videoItem'] = [
-            'videoItemId' => $this->genToken(),
             'stream' => [
                 'url' => $url,
                 'offsetInMilliseconds' => 0,
@@ -67,6 +66,17 @@ class Play extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
      **/
     public function getToken(){
         return $this->data['videoItem']['stream']['token'];
+    }
+
+    /**
+     * 设置视频标题
+     * @param string $title 视频标题
+     * @return null
+     **/
+    public function setTitle($title){
+        if($title) {
+            $this->data['videoItem']['title'] = $title;
+        }
     }
 
     /**

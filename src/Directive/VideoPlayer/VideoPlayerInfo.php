@@ -26,8 +26,6 @@ use Baidu\Duer\Botsdk\Directive\Base\TraitPlayerInfo;
 class VideoPlayerInfo {
     use TraitPlayerInfo;
 
-    protected $data = [];
-
    /**
      * @desc __construct
      * @param BasePlayerInfoContent $content

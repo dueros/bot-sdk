@@ -274,6 +274,18 @@ class Request {
     }
 
     /**
+     * 获取apiEndPoint
+     * @param null
+     * @return string
+     **/
+    public function getApiEndPoint() {
+        if(isset($this->data['context']['System']['apiEndPoint'])){
+            return $this->data['context']['System']['apiEndPoint'];
+        }
+    }
+
+
+    /**
      * 获取externalAccessTokens
      * @param null
      * @return array

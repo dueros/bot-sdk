@@ -5,7 +5,8 @@
     "keywords": ["duer","bot"],
     "require": {
         "php": ">=5.4.0",
-        "monitor/bot-monitor": "^1.4"
+        "monitor/bot-monitor": "^1.4",
+        "php-curl-class/php-curl-class": "^8.3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.3"
