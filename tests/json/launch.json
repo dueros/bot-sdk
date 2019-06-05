@@ -10,6 +10,7 @@
             "application": {
                 "applicationId": "botId"
             },
+            "apiAccessToken" : "api_access_token",
             "user": {
                 "userId": "userId",
 				"accessToken" : "access_token",

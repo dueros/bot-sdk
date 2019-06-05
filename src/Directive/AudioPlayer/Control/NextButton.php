@@ -14,28 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @desc 用于生成VideoPlayerInfo的类
  **/
-namespace Baidu\Duer\Botsdk\Directive\VideoPlayer;
-use Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\BaseButton;
-use Baidu\Duer\Botsdk\Directive\Base\TraitPlayerInfo;
-
+namespace Baidu\Duer\Botsdk\Directive\AudioPlayer\Control;
 /**
- * @desc VideoPlayerInfo类
+ * @desc NextButoon类
  */
-class VideoPlayerInfo {
-    use TraitPlayerInfo;
+class NextButton extends Button{
+
+    const NAME = 'NEXT';
 
    /**
-     * @desc __construct
-     * @param BasePlayerInfoContent $content
-     * @param array $controls
-     */
-    public function __construct($content = null, $controls = []) {
-        $this->setContent($content);
-        $this->setControls($controls);
+    * @desc 构造函数
+    */ 
+    public function __construct() {
+        parent::__construct(self::NAME);
     }
-
 }
  
 

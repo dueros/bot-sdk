@@ -14,28 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @desc 用于生成VideoPlayerInfo的类
- **/
-namespace Baidu\Duer\Botsdk\Directive\VideoPlayer;
-use Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\BaseButton;
-use Baidu\Duer\Botsdk\Directive\Base\TraitPlayerInfo;
-
-/**
- * @desc VideoPlayerInfo类
+ * @desc Stop类的测试类
  */
-class VideoPlayerInfo {
-    use TraitPlayerInfo;
 
-   /**
-     * @desc __construct
-     * @param BasePlayerInfoContent $content
-     * @param array $controls
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+
+class PushStackTest extends PHPUnit_Framework_TestCase{
+
+    /**
+     * @before
      */
-    public function __construct($content = null, $controls = []) {
-        $this->setContent($content);
-        $this->setControls($controls);
+    public function setupSomeFixtures()
+    {
+        $this->directive = new Baidu\Duer\Botsdk\Directive\Display\PushStack();
+    }	
+
+    /**
+     * @desc 测试getData方法
+     */
+    function testGetData(){
+        $data = ['type' => 'Display.PushStack'];
+        $this->assertEquals($this->directive->getData(), $data);
     }
 
 }
- 
-

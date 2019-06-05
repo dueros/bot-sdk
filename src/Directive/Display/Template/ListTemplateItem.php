@@ -139,5 +139,15 @@ class ListTemplateItem extends \Baidu\Duer\Botsdk\Directive\Display\Template\Bas
         return $data;
     }
 
+    /**
+     * @desc 设置当前元素的名字
+     * @param string $anchorWord 名称
+     */
+    public function setAnchorWord($anchorWord){
+        if($anchorWord && is_string($anchorWord)) {
+            $this->data['anchorWord'] = $anchorWord;
+        }
+    }
+
 }
  

@@ -14,28 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @desc 用于生成VideoPlayerInfo的类
- **/
-namespace Baidu\Duer\Botsdk\Directive\VideoPlayer;
-use Baidu\Duer\Botsdk\Directive\AudioPlayer\Control\BaseButton;
-use Baidu\Duer\Botsdk\Directive\Base\TraitPlayerInfo;
-
-/**
- * @desc VideoPlayerInfo类
+ * @desc Stop类的测试类
  */
-class VideoPlayerInfo {
-    use TraitPlayerInfo;
 
-   /**
-     * @desc __construct
-     * @param BasePlayerInfoContent $content
-     * @param array $controls
+require '../vendor/autoload.php';
+use PHPUnit\Framework\TestCase;
+use \Baidu\Duer\Botsdk\Directive\Record\RecordSpeech;
+
+class RecordSpeechTest extends PHPUnit_Framework_TestCase{
+
+    /**
+     * @before
      */
-    public function __construct($content = null, $controls = []) {
-        $this->setContent($content);
-        $this->setControls($controls);
+    public function setupSomeFixtures()
+    {
+    }	
+
+    /**
+     * @desc 测试setToken方法
+     */
+    function testSetToken(){
+        $data = array(
+            'type' => 'Record.RecordSpeech',
+            'token' => 'test_token'
+        );
+        $directive = new RecordSpeech();
+        $directive->setToken('test_token');
+        $this->assertEquals($directive->getData(), $data);
     }
 
 }
- 
-

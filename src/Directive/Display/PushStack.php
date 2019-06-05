@@ -14,20 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
+ * @desc 用于生成PushStack指令的类
  **/
-namespace Baidu\Duer\Botsdk\Directive\AudioPlayer\Control;
-/**
- * @desc NextButoon类
- */
-class NextButoon extends Button{
+namespace Baidu\Duer\Botsdk\Directive\Display;
 
-    const NAME = 'NEXT';
-
-   /**
-    * @desc 构造函数
-    */ 
+class PushStack extends \Baidu\Duer\Botsdk\Directive\BaseDirective{
     public function __construct() {
-        parent::__construct(self::NAME);
+        parent::__construct('Display.PushStack');
     }
 }
  

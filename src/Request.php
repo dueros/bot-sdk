@@ -263,6 +263,29 @@ class Request {
     }
 
     /**
+     * 获取apiAccessToken
+     * @param null
+     * @return string
+     **/
+    public function getApiAccessToken() {
+        if(isset($this->data['context']['System']['apiAccessToken'])){
+            return $this->data['context']['System']['apiAccessToken'];
+        }
+    }
+
+    /**
+     * 获取apiEndPoint
+     * @param null
+     * @return string
+     **/
+    public function getApiEndPoint() {
+        if(isset($this->data['context']['System']['apiEndPoint'])){
+            return $this->data['context']['System']['apiEndPoint'];
+        }
+    }
+
+
+    /**
      * 获取externalAccessTokens
      * @param null
      * @return array
@@ -410,6 +433,26 @@ class Request {
         if(isset($this->data['context']['System']['device']['supportedInterfaces'])){
             return $this->data['context']['System']['device']['supportedInterfaces'];
         }
+    }
+
+    /**
+     * @desc 获取设备端支持的VideoPlayer数据
+     * @param null
+     * @return array
+     **/
+    public function getSupportedVideoPlayer() {
+        $interfaces = $this->getSupportedInterfaces();
+        return isset($interfaces['VideoPlayer']) ? $interfaces['VideoPlayer'] : [];
+    }
+
+    /**
+     * @desc 获取设备端支持的VideoPlayer.preferedBitrate数据
+     * @param null
+     * @return array
+     **/
+    public function getSupportedVideoPlayerPreferedBitrate() {
+        $videoPlayer = $this->getSupportedVideoPlayer();
+        return isset($videoPlayer['preferedBitrate']) ? $videoPlayer['preferedBitrate'] : '';
     }
 
     /**
