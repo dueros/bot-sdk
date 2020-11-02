@@ -126,7 +126,14 @@ class Response{
         //directive to data
         $directives = array_values(array_filter(array_map(function($directive){
             if($directive instanceof Directive\BaseDirective) {
-                return $directive->getData();    
+                $data = $directive->getData();
+                if (isset($data['type']) && $data['type'] === 'DPL.ExecuteCommands') {
+                    $token = $this->getTemplateToken();
+                    if ($token) {
+                        $data['token'] = $token;
+                    }
+                }
+                return $data;
             } 
         }, $directives))); 
 
@@ -295,5 +302,17 @@ class Response{
             $context = (object)[]; 
         }
         return $context;
+    }
+    /**
+     * 自动获取token
+     * @return string
+     */
+    public function getTemplateToken(){
+        $data = $this->request->getData();
+        $token = '';
+        if (isset($data['context']['Screen']['token'])) {
+            $token =  $data['context']['Screen']['token'];
+        }
+        return $token;
     }
 }
