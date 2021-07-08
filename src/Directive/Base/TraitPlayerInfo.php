@@ -25,7 +25,7 @@ use Baidu\Duer\Botsdk\Directive\Base\BasePlayerInfoContent;
  */
 trait TraitPlayerInfo{
 
-    protected $data;
+    protected $data = [];
 
     protected $content;
 
