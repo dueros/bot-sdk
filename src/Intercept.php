@@ -17,7 +17,7 @@
  * @desc 拦截器
  * 通过重载before，能够在处理通过addHandler，addEventListener添加的回调之前，定义一些逻辑。
  * 通过重载after能够对回调函数的返回值，进行统一的处理
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 

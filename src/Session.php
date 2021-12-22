@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  * @desc 短期记忆。DuerOS来维护，如果回复了bot的结果，session才会生效
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 

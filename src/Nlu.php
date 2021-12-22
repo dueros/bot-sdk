@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  * @desc NLU解析query，分析的结果
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 

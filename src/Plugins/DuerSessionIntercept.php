@@ -15,7 +15,7 @@
  * limitations under the License.
  * 
  * @desc 度秘多轮优先，异常退出逻辑
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk\Plugins;
 

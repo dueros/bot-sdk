@@ -1,7 +1,7 @@
 <?php
 /**
  * 认证
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 

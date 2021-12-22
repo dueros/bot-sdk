@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  * @desc DuerOS对Bot的请求封装
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 

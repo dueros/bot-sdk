@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  * @desc Bot-sdk基类。使用都需要继承这个类
- * @author yuanpeng01@baidu.com
+ * @author ******@baidu.com
  **/
 namespace Baidu\Duer\Botsdk;
 
