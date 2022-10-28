@@ -248,6 +248,8 @@ class Request {
     public function getUserId() {
         if(isset($this->data['context']['System']['user']['userId'])){
             return $this->data['context']['System']['user']['userId'];
+        } else if(isset($this->data['context']['System']['extension']['realUserId'])) {
+            return $this->data['context']['System']['extension']['realUserId'];
         }
     }
 
